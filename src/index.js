@@ -25,6 +25,11 @@ whenAdded('#app', (el) => {
   const modifyDice$ = new Subject()
   const modifyDice = (value) => modifyDice$.next(value)
 
+  // TASK
+  // Have a single stream for each action type.
+  // Replace this with custom operator.
+  // modify((count) => (count + 1))
+  // modify((count) => (count <= 0 ? 0 : count - 1))
   const incrementDice = (key) => modifyDice({ action: 'increment', key })
   const decrementDice = (key) => modifyDice({ action: 'decrement', key })
 
@@ -73,6 +78,9 @@ whenAdded('#app', (el) => {
       <ul class='app-plain-list app-plus-list'>
         ${diceList.map((d) => renderDiceSet(d))}
       </ul>
+      <p>
+        <button>Roll</button>
+      </p>
     `
   }
 
