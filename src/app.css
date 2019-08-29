@@ -11,21 +11,40 @@ h1 {
   margin: 0;
 }
 
-table {
-  border: calc(1rem/16) solid gainsboro;
-  border-bottom-width: 0;
-  border-spacing: 0;
-  font-size: 1rem;
+h2 {
+  font-size: calc(20rem/16);
+  font-weight: normal;
   line-height: calc(20rem/16);
+  margin-top: 3rem;
 }
 
-th {
-  background-color: ghostwhite;
+.app-plain-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: -0.5rem;
+  padding: 0;
 }
 
-td,
-th {
-  border-bottom: calc(1rem/16) solid gainsboro;
-  padding: 0.5rem;
-  text-align: left;
+.app-plain-list li {
+  margin: 0.5rem;
+}
+
+.app-plus-list li {
+  align-items: center;
+  display: flex;
+}
+
+.app-plus-list li::after {
+  content: '+';
+  margin-left: 1rem;
+}
+
+.app-plus-list li:last-child::after {
+  content: none;
+}
+
+button {
+  border-radius: calc(4rem/16);
+  font-size: calc(20rem/16);
 }

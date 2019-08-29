@@ -53,7 +53,8 @@ whenAdded('#app', (el) => {
   })
 
   const sub = combineLatestProps({
-    diceList: diceList$
+    diceList: diceList$,
+    diceSides: DICE_SIDES
   }).pipe(
     renderComponent(el, renderApp)
   ).subscribe()
@@ -61,15 +62,15 @@ whenAdded('#app', (el) => {
   return () => sub.unsubscribe()
 
   function renderApp (props) {
-    const { diceList } = props
+    const { diceList, diceSides } = props
     return html`
       <h1>Dice</h1>
       <h2>Add dice</h2>
-      <ul>
-        ${DICE_SIDES.map((d) => renderDiceOption(d))}
+      <ul class='app-plain-list'>
+        ${diceSides.map((d) => renderDiceOption(d))}
       </ul>
-      <h2>Remove dice</h2>
-      <ul>
+      <h2>Selected dice</h2>
+      <ul class='app-plain-list app-plus-list'>
         ${diceList.map((d) => renderDiceSet(d))}
       </ul>
     `
