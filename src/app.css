@@ -1,0 +1,31 @@
+body {
+  font-family: system, sans-serif;
+  font-size: 100%;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: normal;
+  line-height: 2rem;
+  margin: 0;
+}
+
+table {
+  border: calc(1rem/16) solid gainsboro;
+  border-bottom-width: 0;
+  border-spacing: 0;
+  font-size: 1rem;
+  line-height: calc(20rem/16);
+}
+
+th {
+  background-color: ghostwhite;
+}
+
+td,
+th {
+  border-bottom: calc(1rem/16) solid gainsboro;
+  padding: 0.5rem;
+  text-align: left;
+}

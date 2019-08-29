@@ -1,0 +1,42 @@
+{
+  "name": "swit-workshop-rxjs",
+  "version": "1.0.0",
+  "description": "Workshop for Statewide IT 2019, Indiana University: \"Reactive Components with RxJS\"",
+  "main": "index.js",
+  "scripts": {
+    "dep": "pika-web --clean --optimize --no-source-map",
+    "postinstall": "npm run dep",
+    "start": "es-dev-server --open ./src/index.html --watch ./src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/basham/swit-workshop-rxjs.git"
+  },
+  "author": "Chris Basham <chris@bash.am>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/basham/swit-workshop-rxjs/issues"
+  },
+  "homepage": "https://github.com/basham/swit-workshop-rxjs#readme",
+  "dependencies": {
+    "conduit-rxjs": "0.5.0",
+    "es-module-shims": "0.4.0",
+    "lighterhtml": "1.0.4",
+    "rxjs": "6.5.2",
+    "when-elements": "0.2.1"
+  },
+  "devDependencies": {
+    "@pika/web": "0.5.3",
+    "es-dev-server": "1.17.1"
+  },
+  "@pika/web": {
+    "webDependencies": [
+      "conduit-rxjs",
+      "es-module-shims",
+      "lighterhtml",
+      "rxjs",
+      "rxjs/operators",
+      "when-elements"
+    ]
+  }
+}
