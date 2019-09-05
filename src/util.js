@@ -4,23 +4,20 @@ import { map, tap } from 'rxjs/operators'
 
 export const combineLatestProps = (source) => {
   const keys = Object.keys(source)
-  const streams = keys
+  const streamKeys = keys
     .filter((key) => isObservable(source[key]))
-    .map((key) =>
-      source[key].pipe(
-        map((value) => ({ [key]: value }))
-      )
-    )
-  if (!streams.length) {
+  if (!streamKeys.length) {
     return of(source)
   }
+  const streams = streamKeys
+    .map((key) => source[key])
   const data = keys
     .filter((key) => !isObservable(source[key]))
-    .map((key) => ({ [key]: source[key] }))
-    .reduce((out, value) => ({ ...out, ...value }), {})
+    .reduce((out, key) => ({ ...out, [key]: source[key] }), {})
   return combineLatest(streams).pipe(
-    map((props) =>
-      props
+    map((values) =>
+      values
+        .map((value, i) => ({ [streamKeys[i]]: value }))
         .reduce((out, value) => ({ ...out, ...value }), data)
     ),
     map((props) =>
