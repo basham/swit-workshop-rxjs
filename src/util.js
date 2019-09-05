@@ -1,23 +1,31 @@
 import { render } from 'lighterhtml'
-import { combineLatest, isObservable } from 'rxjs'
+import { combineLatest, isObservable, of } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 
 export const combineLatestProps = (source) => {
-  const streams = Object.keys(source)
+  const keys = Object.keys(source)
+  const streams = keys
     .filter((key) => isObservable(source[key]))
     .map((key) =>
       source[key].pipe(
         map((value) => ({ [key]: value }))
       )
     )
-  const data = Object.keys(source)
+  if (!streams.length) {
+    return of(source)
+  }
+  const data = keys
     .filter((key) => !isObservable(source[key]))
     .map((key) => ({ [key]: source[key] }))
-    .reduce((prev, curr) => ({ ...prev, ...curr }), {})
+    .reduce((out, value) => ({ ...out, ...value }), {})
   return combineLatest(streams).pipe(
     map((props) =>
       props
-        .reduce((prev, curr) => ({ ...prev, ...curr }), data)
+        .reduce((out, value) => ({ ...out, ...value }), data)
+    ),
+    map((props) =>
+      keys
+        .reduce((out, key) => ({ ...out, [key]: props[key] }), {})
     )
   )
 }
