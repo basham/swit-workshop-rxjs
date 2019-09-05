@@ -1,3 +1,7 @@
+html {
+  background-color: whitesmoke;
+}
+
 body {
   font-family: system, sans-serif;
   font-size: 100%;
@@ -47,4 +51,19 @@ h2 {
 button {
   border-radius: calc(4rem/16);
   font-size: calc(20rem/16);
+}
+
+my-dice {
+  display: inline-block;
+  text-align: center;
+}
+
+my-dice .type {
+  font-size: calc(14rem/16);
+  margin-top: 0.25rem;
+}
+
+my-dice .face {
+  height: 3rem;
+  width: 3rem;
 }

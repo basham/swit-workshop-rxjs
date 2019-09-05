@@ -2,6 +2,7 @@ import { html } from 'lighterhtml'
 import { BehaviorSubject, Subject } from 'rxjs'
 import { map, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
+import './dice.js'
 import { combineLatestProps, renderComponent } from './util.js'
 
 const DICE_SIDES = [ 4, 6, 8, 10, 12, 20 ]
@@ -70,6 +71,12 @@ whenAdded('#app', (el) => {
     const { diceList, diceSides } = props
     return html`
       <h1>Dice</h1>
+      <my-dice sides='4' />
+      <my-dice sides='6' />
+      <my-dice sides='8' />
+      <my-dice sides='10' />
+      <my-dice sides='12' />
+      <my-dice sides='20' />
       <h2>Add dice</h2>
       <ul class='app-plain-list'>
         ${diceSides.map((d) => renderDiceOption(d))}
