@@ -22,17 +22,22 @@ export const combineLatestProps = (source) => {
   )
 }
 
-// https://gist.github.com/gre/1650294
-export function easeInQuad (t) {
-  return t * t
-}
-
 export function pluralize (value, str) {
   return `${str}${value === 1 ? '' : 's'}`
 }
 
 export function random (min, max) {
   return Math.round(Math.random() * (max - min)) + min
+}
+
+export function randomItem (source) {
+  return source[random(0, source.length - 1)]
+}
+
+// https://stackoverflow.com/a/10050831
+export function range (size, startAt = 0) {
+  return [ ...Array(size).keys() ]
+    .map((i) => i + startAt)
 }
 
 export const renderComponent = (element, renderer) => (source$) => source$.pipe(
