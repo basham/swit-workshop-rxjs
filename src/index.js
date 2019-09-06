@@ -1,9 +1,9 @@
 import { html } from 'lighterhtml'
 import { BehaviorSubject, Subject } from 'rxjs'
-import { map, withLatestFrom } from 'rxjs/operators'
+import { map, shareReplay, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import './dice.js'
-import { combineLatestProps, renderComponent } from './util.js'
+import { combineLatestProps, range as numRange, renderComponent } from './util.js'
 
 const DICE_SIDES = [ 4, 6, 8, 10, 12, 20 ]
   .map((sides) => `d${sides}`)
@@ -20,8 +20,20 @@ whenAdded('#app', (el) => {
           return { key, count, label, sides }
         })
         .sort((a, b) => a.sides - b.sides)
+    ),
+    shareReplay(1)
+  )
+
+  /*
+  const diceSet$ = diceList$.pipe(
+    map((list) =>
+      list
+      .map(({ count, sides }) =>
+        numRange(count, 0)
+      )
     )
   )
+  */
 
   const modifyDice$ = new Subject()
   const modifyDice = (value) => modifyDice$.next(value)
@@ -88,6 +100,12 @@ whenAdded('#app', (el) => {
       <p>
         <button>Roll</button>
       </p>
+      <h2>Dice</h2>
+      ${diceList.map(({ count, sides }) =>
+        numRange(count).map(() =>
+          html`<my-dice sides=${sides} />`
+        )
+      )}
     `
   }
 
