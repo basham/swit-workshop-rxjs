@@ -4,7 +4,7 @@ import { concatMap, scan, switchMap } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import { combineLatestProps, random, randomItem, range as numRange, renderComponent } from './util.js'
 
-whenAdded('my-dice', (el) => {
+whenAdded('app-dice', (el) => {
   const sides = parseInt(el.getAttribute('sides') || 6)
   const value = parseInt(el.getAttribute('value')) || random(1, sides)
 

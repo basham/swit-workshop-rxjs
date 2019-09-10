@@ -53,17 +53,17 @@ button {
   font-size: calc(20rem/16);
 }
 
-my-dice {
+app-dice {
   display: inline-block;
   text-align: center;
 }
 
-my-dice .type {
+app-dice .type {
   font-size: calc(14rem/16);
   margin-top: 0.25rem;
 }
 
-my-dice .face {
+app-dice .face {
   height: 3rem;
   width: 3rem;
 }

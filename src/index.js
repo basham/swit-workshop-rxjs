@@ -8,7 +8,7 @@ import { combineLatestProps, createKeychain, range as numRange, renderComponent 
 const DICE_SIDES = [ 4, 6, 8, 10, 12, 20 ]
   .map((sides) => `d${sides}`)
 
-whenAdded('#app', (el) => {
+whenAdded('app-root', (el) => {
   const dice$ = new BehaviorSubject({ d6: 2, d20: 1 })
 
   const diceList$ = dice$.pipe(
@@ -100,7 +100,7 @@ whenAdded('#app', (el) => {
       </p>
       <h2>Dice</h2>
       ${allDice.map(({ key, sides }) =>
-        html.for(key)`<my-dice sides=${sides} />`
+        html.for(key)`<app-dice sides=${sides} />`
       )}
     `
   }
