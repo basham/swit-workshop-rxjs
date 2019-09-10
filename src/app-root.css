@@ -8,21 +8,21 @@ body {
   padding: 2rem;
 }
 
-h1 {
+app-root h1 {
   font-size: 2rem;
   font-weight: normal;
   line-height: 2rem;
   margin: 0;
 }
 
-h2 {
+app-root h2 {
   font-size: calc(20rem/16);
   font-weight: normal;
   line-height: calc(20rem/16);
   margin-top: 3rem;
 }
 
-.app-plain-list {
+app-root .app-plain-list {
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
@@ -30,40 +30,25 @@ h2 {
   padding: 0;
 }
 
-.app-plain-list li {
+app-root .app-plain-list li {
   margin: 0.5rem;
 }
 
-.app-plus-list li {
+app-root .app-plus-list li {
   align-items: center;
   display: flex;
 }
 
-.app-plus-list li::after {
+app-root .app-plus-list li::after {
   content: '+';
   margin-left: 1rem;
 }
 
-.app-plus-list li:last-child::after {
+app-root .app-plus-list li:last-child::after {
   content: none;
 }
 
-button {
+app-root button {
   border-radius: calc(4rem/16);
   font-size: calc(20rem/16);
-}
-
-app-dice {
-  display: inline-block;
-  text-align: center;
-}
-
-app-dice .type {
-  font-size: calc(14rem/16);
-  margin-top: 0.25rem;
-}
-
-app-dice .face {
-  height: 3rem;
-  width: 3rem;
 }

@@ -1,0 +1,14 @@
+app-dice {
+  display: inline-block;
+  text-align: center;
+}
+
+app-dice .type {
+  font-size: calc(14rem/16);
+  margin-top: 0.25rem;
+}
+
+app-dice .face {
+  height: 3rem;
+  width: 3rem;
+}

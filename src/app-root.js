@@ -1,9 +1,13 @@
+import 'construct-style-sheets-polyfill'
 import { html } from 'lighterhtml'
 import { BehaviorSubject, Subject } from 'rxjs'
 import { map, shareReplay, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import './dice.js'
+import './app-dice.js'
 import { combineLatestProps, createKeychain, range as numRange, renderComponent } from './util.js'
+import css from './app-root.css'
+
+document.adoptedStyleSheets = [ ...document.adoptedStyleSheets, css ]
 
 const DICE_SIDES = [ 4, 6, 8, 10, 12, 20 ]
   .map((sides) => `d${sides}`)
