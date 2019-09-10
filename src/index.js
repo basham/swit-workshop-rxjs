@@ -3,7 +3,7 @@ import { BehaviorSubject, Subject } from 'rxjs'
 import { map, shareReplay, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import './dice.js'
-import { combineLatestProps, range as numRange, renderComponent } from './util.js'
+import { combineLatestProps, createKeychain, range as numRange, renderComponent } from './util.js'
 
 const DICE_SIDES = [ 4, 6, 8, 10, 12, 20 ]
   .map((sides) => `d${sides}`)
@@ -24,16 +24,19 @@ whenAdded('#app', (el) => {
     shareReplay(1)
   )
 
-  /*
-  const diceSet$ = diceList$.pipe(
+  const diceKeys = createKeychain()
+
+  const allDice$ = diceList$.pipe(
     map((list) =>
       list
-      .map(({ count, sides }) =>
-        numRange(count, 0)
-      )
+        .map(({ count, sides }) =>
+          numRange(count)
+            .map((i) => `d${sides}-${i}`)
+            .map((id) => ({ key: diceKeys(id), id, sides }))
+        )
+        .flat()
     )
   )
-  */
 
   const modifyDice$ = new Subject()
   const modifyDice = (value) => modifyDice$.next(value)
@@ -72,6 +75,7 @@ whenAdded('#app', (el) => {
 
   const sub = combineLatestProps({
     diceList: diceList$,
+    allDice: allDice$,
     diceSides: DICE_SIDES
   }).pipe(
     renderComponent(el, renderApp)
@@ -80,15 +84,9 @@ whenAdded('#app', (el) => {
   return () => sub.unsubscribe()
 
   function renderApp (props) {
-    const { diceList, diceSides } = props
+    const { diceList, diceSides, allDice } = props
     return html`
       <h1>Dice</h1>
-      <my-dice sides='4' />
-      <my-dice sides='6' />
-      <my-dice sides='8' />
-      <my-dice sides='10' />
-      <my-dice sides='12' />
-      <my-dice sides='20' />
       <h2>Add dice</h2>
       <ul class='app-plain-list'>
         ${diceSides.map((d) => renderDiceOption(d))}
@@ -101,10 +99,8 @@ whenAdded('#app', (el) => {
         <button>Roll</button>
       </p>
       <h2>Dice</h2>
-      ${diceList.map(({ count, sides }) =>
-        numRange(count).map(() =>
-          html`<my-dice sides=${sides} />`
-        )
+      ${allDice.map(({ key, sides }) =>
+        html.for(key)`<my-dice sides=${sides} />`
       )}
     `
   }
