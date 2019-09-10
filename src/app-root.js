@@ -1,9 +1,7 @@
-import 'construct-style-sheets-polyfill'
 import { html } from 'lighterhtml'
 import { BehaviorSubject, Subject } from 'rxjs'
 import { map, shareReplay, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import './app-dice.js'
 import { combineLatestProps, createKeychain, range as numRange, renderComponent } from './util.js'
 import css from './app-root.css'
 

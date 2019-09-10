@@ -1,4 +1,3 @@
-import 'construct-style-sheets-polyfill'
 import { html } from 'lighterhtml'
 import { BehaviorSubject, Subject, range, timer } from 'rxjs'
 import { concatMap, scan, switchMap } from 'rxjs/operators'
