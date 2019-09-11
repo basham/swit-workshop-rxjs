@@ -18,6 +18,8 @@ whenAdded('app-dice', (el) => {
     roll$.next(null)
   }
 
+  el.roll = roll
+
   const rollSub = roll$.pipe(
     // Trigger a roll.
     switchMap(() =>

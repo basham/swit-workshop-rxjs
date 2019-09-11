@@ -34,12 +34,20 @@ whenAdded('app-root', (el) => {
           const type = `d${sideCount}`
           const dieCount = bag[type] || 0
           const dice = numRange(dieCount)
-            .map((i) => `d${sideCount}-${i}`)
+            .map((i) => `${type}-${i}`)
             .map((id) => ({ key: diceKeys(id), id, sideCount }))
           return { sideCount, dieCount, dice, type }
         })
     )
   )
+
+  const rollDice$ = new Subject()
+  const rollDice = () => rollDice$.next(null)
+
+  const rollSub = rollDice$.subscribe(() => {
+    el.querySelectorAll('app-dice')
+      .forEach((d) => d.roll())
+  })
 
   const modifyDice$ = new Subject()
   const modifyDice = (value) => modifyDice$.next(value)
@@ -52,7 +60,7 @@ whenAdded('app-root', (el) => {
   const incrementDice = (key) => modifyDice({ action: 'increment', key })
   const decrementDice = (key) => modifyDice({ action: 'decrement', key })
 
-  modifyDice$.pipe(
+  const reducerSub = modifyDice$.pipe(
     withLatestFrom(dice$),
     map(([ event, dice ]) => {
       const { action, key } = event
@@ -76,20 +84,24 @@ whenAdded('app-root', (el) => {
     dice$.next(value)
   })
 
-  const sub = combineLatestProps({
+  const renderSub = combineLatestProps({
     diceGrid: diceGrid$
   }).pipe(
     renderComponent(el, renderRoot)
   ).subscribe()
 
-  return () => sub.unsubscribe()
+  return () => {
+    rollSub.unsubscribe()
+    reducerSub.unsubscribe()
+    renderSub.unsubscribe()
+  }
 
   function renderRoot (props) {
     const { diceGrid } = props
     return html`
       <h1>Dice</h1>
       <div>
-        <button>Roll</button>
+        <button onclick=${rollDice}>Roll</button>
       </div>
       <div class='board'>
         ${diceGrid.map(renderDiceGroup)}
