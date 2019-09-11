@@ -54,6 +54,19 @@ app-root .actions {
   margin: 1rem 0;
 }
 
+app-root .picker {
+  background-color: lightgray;
+  border-radius: 0.5rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 0.5rem;
+  grid-template-columns: repeat(auto-fill, auto);
+  grid-template-rows: repeat(2, auto);
+  margin: 1rem auto;
+  padding: 0.5rem;
+  width: max-content;
+}
+
 app-root .notation {
   font-size: 1.5rem;
 }
@@ -68,7 +81,7 @@ app-root .board {
   grid-auto-flow: column;
   grid-gap: 1rem;
   grid-template-columns: repeat(auto-fill, 3rem);
-  grid-template-rows: repeat(2, auto) 1fr;
+  grid-template-rows: auto 1fr;
   justify-items: center;
   margin: 1rem auto;
   width: min-content;

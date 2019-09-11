@@ -55,11 +55,12 @@ whenAdded('app-root', (el) => {
       DICE_SIDES
         .map((sideCount) => {
           const type = `d${sideCount}`
+          const key = diceKeys(type)
           const dieCount = bag[type] || 0
           const dice = numRange(dieCount)
             .map((i) => `${type}-${i}`)
             .map((id) => ({ key: diceKeys(id), id, sideCount }))
-          return { sideCount, dieCount, dice, type }
+          return { sideCount, dieCount, dice, key, type }
         })
         .filter(({ dieCount }) => dieCount > 0)
     )
@@ -137,7 +138,7 @@ whenAdded('app-root', (el) => {
   }
 
   function renderRoot (props) {
-    const { count, grid, notation, total } = props
+    const { count, grid, total } = props
     return html`
       <h1>Dice</h1>
       <div class='actions'>
@@ -146,11 +147,9 @@ whenAdded('app-root', (el) => {
           onclick=${rollDice}>
           Roll
         </button>
-        |
-        ${DICE_SIDES.map(renderAddDie)}
       </div>
-      <div class='notation'>
-        ${notation}
+      <div class='picker'>
+        ${DICE_SIDES.map(renderDiePicker)}
       </div>
       <div class='total'>
         ${total > 0 ? total : null}
@@ -161,31 +160,30 @@ whenAdded('app-root', (el) => {
     `
   }
 
-  function renderAddDie (sides) {
+  function renderDiePicker (sides) {
     const type = `d${sides}`
     const add = () => incrementDice(type)
+    const remove = () => decrementDice(type)
     return html`
       <button
         aria-label=${`Add ${type}`}
         onclick=${add}>
         ${type}
       </button>
+      <button
+        aria-label=${`Remove ${type}`}
+        onclick=${remove}>
+        &minus;
+      </button>
     `
   }
 
   function renderDiceGroup (props) {
-    const { dice, dieCount, type } = props
-    const remove = () => decrementDice(type)
-    return html`
+    const { dice, dieCount, key, type } = props
+    return html.for(key)`
       <h2 class='board__type'>
         ${dieCount}${type}
       </h2>
-      <button
-        aria-label=${`Remove ${type}`}
-        disabled=${!dieCount}
-        onclick=${remove}>
-        &minus;
-      </button>
       <div class='board__dice'>
         ${dice.map(renderDie)}
       </div>
