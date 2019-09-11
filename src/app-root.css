@@ -52,3 +52,25 @@ app-root button {
   border-radius: calc(4rem/16);
   font-size: calc(20rem/16);
 }
+
+.board {
+  align-items: start;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(3, auto) 1fr;
+  margin: 1rem 0;
+}
+
+.board__type {
+  color: #777;
+  font-size: calc(18rem/16);
+  font-weight: bold;
+  margin: 0;
+}
+
+.board__dice {
+  display: grid;
+  grid-gap: 0.5rem;
+  grid-template-columns: repeat(auto-fill, 3rem);
+  min-height: 3rem;
+}

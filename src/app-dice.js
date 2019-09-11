@@ -54,14 +54,11 @@ whenAdded('app-dice', (el) => {
   }
 
   function render (props) {
-    const { sides, value } = props
+    const { value } = props
     return html`
       <button class='face' onclick=${roll}>
         ${value}
       </button>
-      <div class='type'>
-        d${sides}
-      </div>
     `
   }
 })

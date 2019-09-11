@@ -8,7 +8,6 @@ import css from './app-root.css'
 document.adoptedStyleSheets = [ ...document.adoptedStyleSheets, css ]
 
 const DICE_SIDES = [ 4, 6, 8, 10, 12, 20 ]
-  .map((sides) => `d${sides}`)
 
 whenAdded('app-root', (el) => {
   const dice$ = new BehaviorSubject({ d6: 2, d20: 1 })
@@ -28,15 +27,17 @@ whenAdded('app-root', (el) => {
 
   const diceKeys = createKeychain()
 
-  const allDice$ = diceList$.pipe(
-    map((list) =>
-      list
-        .map(({ count, sides }) =>
-          numRange(count)
-            .map((i) => `d${sides}-${i}`)
-            .map((id) => ({ key: diceKeys(id), id, sides }))
-        )
-        .flat()
+  const diceGrid$ = dice$.pipe(
+    map((bag) =>
+      DICE_SIDES
+        .map((sideCount) => {
+          const type = `d${sideCount}`
+          const dieCount = bag[type] || 0
+          const dice = numRange(dieCount)
+            .map((i) => `d${sideCount}-${i}`)
+            .map((id) => ({ key: diceKeys(id), id, sideCount }))
+          return { sideCount, dieCount, dice, type }
+        })
     )
   )
 
@@ -76,53 +77,53 @@ whenAdded('app-root', (el) => {
   })
 
   const sub = combineLatestProps({
-    diceList: diceList$,
-    allDice: allDice$,
-    diceSides: DICE_SIDES
+    diceGrid: diceGrid$
   }).pipe(
-    renderComponent(el, renderApp)
+    renderComponent(el, renderRoot)
   ).subscribe()
 
   return () => sub.unsubscribe()
 
-  function renderApp (props) {
-    const { diceList, diceSides, allDice } = props
+  function renderRoot (props) {
+    const { diceGrid } = props
     return html`
       <h1>Dice</h1>
-      <h2>Add dice</h2>
-      <ul class='app-plain-list'>
-        ${diceSides.map((d) => renderDiceOption(d))}
-      </ul>
-      <h2>Selected dice</h2>
-      <ul class='app-plain-list app-plus-list'>
-        ${diceList.map((d) => renderDiceSet(d))}
-      </ul>
-      <p>
+      <div>
         <button>Roll</button>
-      </p>
-      <h2>Dice</h2>
-      ${allDice.map(({ key, sides }) =>
-        html.for(key)`<app-dice sides=${sides} />`
-      )}
+      </div>
+      <div class='board'>
+        ${diceGrid.map(renderDiceGroup)}
+      </div>
     `
   }
 
-  function renderDiceOption (key) {
-    const click = () => incrementDice(key)
+  function renderDiceGroup (props) {
+    const { dice, dieCount, type } = props
+    const add = () => incrementDice(type)
+    const remove = () => decrementDice(type)
     return html`
-      <li>
-        <button onclick=${click}>${key}</button>
-      </li>
+      <h2 class='board__type'>${type}</h2>
+      <button
+        aria-label=${`Add ${type}`}
+        onclick=${add}>
+        +
+      </button>
+      <button
+        aria-label=${`Remove ${type}`}
+        disabled=${!dieCount}
+        onclick=${remove}>
+        &minus;
+      </button>
+      <div class='board__dice'>
+        ${dice.map(renderDie)}
+      </div>
     `
   }
 
-  function renderDiceSet (props) {
-    const { key, label } = props
-    const click = () => decrementDice(key)
-    return html`
-      <li>
-        <button onclick=${click}>${label}</button>
-      </li>
+  function renderDie (props) {
+    const { key, sideCount } = props
+    return html.for(key)`
+      <app-dice sides=${sideCount} />
     `
   }
 })
