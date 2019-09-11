@@ -1,6 +1,6 @@
 import { html } from 'lighterhtml'
-import { BehaviorSubject, Subject } from 'rxjs'
-import { map, shareReplay, withLatestFrom } from 'rxjs/operators'
+import { BehaviorSubject, Subject, fromEvent, merge } from 'rxjs'
+import { distinctUntilChanged, map, shareReplay, startWith, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import { combineLatestProps, createKeychain, range as numRange, renderComponent } from './util.js'
 import css from './app-root.css'
@@ -11,6 +11,29 @@ const DICE_SIDES = [ 4, 6, 8, 10, 12, 20 ]
 
 whenAdded('app-root', (el) => {
   const dice$ = new BehaviorSubject({ d6: 2, d20: 1 })
+
+  const diceCount$ = dice$.pipe(
+    map((d) =>
+      Object.values(d)
+        .reduce((sum, count) => (sum + count), 0)
+    ),
+    distinctUntilChanged()
+  )
+
+  const diceNotion$ = dice$.pipe(
+    map((d) =>
+      Object.entries(d)
+        .map(([ key, count ]) => {
+          const label = `${count}${key}`
+          const sides = parseInt(key.substring(1))
+          return { key, count, label, sides }
+        })
+        .sort((a, b) => a.sides - b.sides)
+        .map(({ label }) => label)
+        .join(' + ')
+    ),
+    distinctUntilChanged()
+  )
 
   const diceList$ = dice$.pipe(
     map((d) =>
@@ -52,6 +75,19 @@ whenAdded('app-root', (el) => {
   const modifyDice$ = new Subject()
   const modifyDice = (value) => modifyDice$.next(value)
 
+  const total$ = merge(
+    fromEvent(el, 'roll'),
+    modifyDice$
+  ).pipe(
+    map(() =>
+      [ ...el.querySelectorAll('app-dice') ]
+        .map(({ value = 0 }) => value)
+        .reduce((sum, value) => (sum + value), 0)
+    ),
+    startWith(0),
+    distinctUntilChanged()
+  )
+
   // TASK
   // Have a single stream for each action type.
   // Replace this with custom operator.
@@ -85,7 +121,10 @@ whenAdded('app-root', (el) => {
   })
 
   const renderSub = combineLatestProps({
-    diceGrid: diceGrid$
+    count: diceCount$,
+    grid: diceGrid$,
+    notation: diceNotion$,
+    total: total$
   }).pipe(
     renderComponent(el, renderRoot)
   ).subscribe()
@@ -97,14 +136,24 @@ whenAdded('app-root', (el) => {
   }
 
   function renderRoot (props) {
-    const { diceGrid } = props
+    const { count, grid, notation, total } = props
     return html`
       <h1>Dice</h1>
-      <div>
-        <button onclick=${rollDice}>Roll</button>
+      <div class='actions'>
+        <button
+          disabled=${!count}
+          onclick=${rollDice}>
+          Roll
+        </button>
+      </div>
+      <div class='notation'>
+        ${notation}
+      </div>
+      <div class='total'>
+        ${total > 0 ? total : null}
       </div>
       <div class='board'>
-        ${diceGrid.map(renderDiceGroup)}
+        ${grid.map(renderDiceGroup)}
       </div>
     `
   }

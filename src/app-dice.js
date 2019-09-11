@@ -1,6 +1,6 @@
 import { html } from 'lighterhtml'
 import { BehaviorSubject, Subject, range, timer } from 'rxjs'
-import { concatMap, scan, switchMap } from 'rxjs/operators'
+import { concatMap, scan, switchMap, tap } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import { combineLatestProps, random, randomItem, range as numRange, renderComponent } from './util.js'
 import css from './app-dice.css'
@@ -38,7 +38,15 @@ whenAdded('app-dice', (el) => {
       const options = numRange(sides, 1)
         .filter((v) => v !== lastRoll)
       return randomItem(options)
-    }, -1)
+    }, -1),
+    tap((value) => {
+      el.value = value
+      const event = new CustomEvent('roll', {
+        bubbles: true,
+        detail: value
+      })
+      el.dispatchEvent(event)
+    })
   ).subscribe(value$)
 
   const renderSub = combineLatestProps({

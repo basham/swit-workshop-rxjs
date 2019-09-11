@@ -15,13 +15,6 @@ app-root h1 {
   margin: 0;
 }
 
-app-root h2 {
-  font-size: calc(20rem/16);
-  font-weight: normal;
-  line-height: calc(20rem/16);
-  margin-top: 3rem;
-}
-
 app-root .app-plain-list {
   display: flex;
   flex-wrap: wrap;
@@ -53,7 +46,20 @@ app-root button {
   font-size: calc(20rem/16);
 }
 
-.board {
+app-root .actions {
+  margin: 1rem 0;
+}
+
+app-root .notation {
+  font-size: 1.5rem;
+}
+
+app-root .total {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+app-root .board {
   align-items: start;
   display: grid;
   grid-gap: 1rem;
@@ -61,14 +67,14 @@ app-root button {
   margin: 1rem 0;
 }
 
-.board__type {
+app-root .board__type {
   color: #777;
   font-size: calc(18rem/16);
   font-weight: bold;
   margin: 0;
 }
 
-.board__dice {
+app-root .board__dice {
   display: grid;
   grid-gap: 0.5rem;
   grid-template-columns: repeat(auto-fill, 3rem);
