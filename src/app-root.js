@@ -61,6 +61,7 @@ whenAdded('app-root', (el) => {
             .map((id) => ({ key: diceKeys(id), id, sideCount }))
           return { sideCount, dieCount, dice, type }
         })
+        .filter(({ dieCount }) => dieCount > 0)
     )
   )
 
@@ -145,6 +146,8 @@ whenAdded('app-root', (el) => {
           onclick=${rollDice}>
           Roll
         </button>
+        |
+        ${DICE_SIDES.map(renderAddDie)}
       </div>
       <div class='notation'>
         ${notation}
@@ -158,17 +161,25 @@ whenAdded('app-root', (el) => {
     `
   }
 
-  function renderDiceGroup (props) {
-    const { dice, dieCount, type } = props
+  function renderAddDie (sides) {
+    const type = `d${sides}`
     const add = () => incrementDice(type)
-    const remove = () => decrementDice(type)
     return html`
-      <h2 class='board__type'>${type}</h2>
       <button
         aria-label=${`Add ${type}`}
         onclick=${add}>
-        +
+        ${type}
       </button>
+    `
+  }
+
+  function renderDiceGroup (props) {
+    const { dice, dieCount, type } = props
+    const remove = () => decrementDice(type)
+    return html`
+      <h2 class='board__type'>
+        ${dieCount}${type}
+      </h2>
       <button
         aria-label=${`Remove ${type}`}
         disabled=${!dieCount}
