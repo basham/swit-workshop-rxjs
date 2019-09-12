@@ -85,7 +85,7 @@ whenAdded('app-root', (el) => {
   const rollDice = () => rollDice$.next(null)
 
   const rollSub = rollDice$.subscribe(() => {
-    el.querySelectorAll('app-dice')
+    el.querySelectorAll('app-die-roll')
       .forEach((d) => d.roll())
   })
 
@@ -107,7 +107,7 @@ whenAdded('app-root', (el) => {
     dice$
   ).pipe(
     map(() =>
-      [ ...el.querySelectorAll('app-dice') ]
+      [ ...el.querySelectorAll('app-die-roll') ]
         .map(({ value = 0 }) => value)
         .reduce((sum, value) => (sum + value), 0)
     ),
@@ -233,7 +233,7 @@ whenAdded('app-root', (el) => {
   function renderDie (props) {
     const { key, sideCount } = props
     return html.for(key)`
-      <app-dice sides=${sideCount} />
+      <app-die-roll sides=${sideCount} />
     `
   }
 })

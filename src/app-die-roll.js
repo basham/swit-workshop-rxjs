@@ -3,11 +3,11 @@ import { BehaviorSubject, Subject, range, timer } from 'rxjs'
 import { concatMap, scan, switchMap, tap } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import { combineLatestProps, random, randomItem, range as numRange, renderComponent } from './util.js'
-import css from './app-dice.css'
+import css from './app-die-roll.css'
 
 document.adoptedStyleSheets = [ ...document.adoptedStyleSheets, css ]
 
-whenAdded('app-dice', (el) => {
+whenAdded('app-die-roll', (el) => {
   const sides = parseInt(el.getAttribute('sides') || 6)
   const value = parseInt(el.getAttribute('value')) || random(1, sides)
 

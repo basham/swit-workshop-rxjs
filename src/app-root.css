@@ -121,6 +121,6 @@ app-root .board {
   width: min-content;
 }
 
-app-root app-dice + app-dice {
+app-root .board__dice > * + * {
   margin-top: 0.5rem;
 }
