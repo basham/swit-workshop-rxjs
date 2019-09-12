@@ -165,13 +165,18 @@ whenAdded('app-root', (el) => {
   }
 
   function renderRoot (props) {
-    const { grid, total } = props
+    const { grid, notation, total } = props
     return html`
       <h1>Dice</h1>
       ${renderPicker(props)}
       <div class='total'>
         ${total > 0 ? total : null}
       </div>
+      <h2 class='notation'>
+        ${notation.split(' ').map((str) =>
+          html`<span>${str}</span>`
+        )}
+      </h2>
       <div class='board'>
         ${grid.map(renderDiceGroup)}
       </div>
@@ -179,14 +184,11 @@ whenAdded('app-root', (el) => {
   }
 
   function renderPicker (props) {
-    const { count, notation, picker } = props
+    const { count, picker } = props
     return html`
       <div
         class='picker'
         tabindex='-1'>
-        <h2 class='picker__label'>
-          ${count ? notation : 'Select Dice'}
-        </h2>
         ${picker.map(renderPickerAddDie)}
         <button
           class='picker__clear'

@@ -159,7 +159,22 @@ app-root .picker__die:active .picker__die-icon {
 }
 
 app-root .notation {
-  font-size: 1.5rem;
+  display: grid;
+  font-size: calc(20rem/16);
+  font-weight: normal;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(auto-fill, auto);
+  margin: 1rem auto;
+  width: min-content;
+}
+
+app-root .notation :nth-child(odd) {
+  width: 4rem;
+}
+
+app-root .notation :nth-child(even) {
+  color: gray;
+  width: 1rem;
 }
 
 app-root .total {
