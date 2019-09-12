@@ -213,7 +213,7 @@ whenAdded('app-root', (el) => {
     const icon = `dice.svg#${type}`
     return html`
       <button
-        class=${`picker__die picker__die--${type}`}
+        class='picker__die'
         aria-label=${`Add ${type}`}
         onclick=${add}>
         <svg class='picker__die-icon'>

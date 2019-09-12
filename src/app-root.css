@@ -104,42 +104,6 @@ app-root .picker__die {
   width: 3rem;
 }
 
-app-root .picker__die--d4 {
-  grid-area: d4;
-}
-
-app-root .picker__die--d6 {
-  grid-area: d6;
-}
-
-app-root .picker__die--d8 {
-  grid-area: d8;
-}
-
-app-root .picker__die--d10 {
-  grid-area: d10;
-}
-
-app-root .picker__die--d12 {
-  grid-area: d12;
-}
-
-app-root .picker__die--d20 {
-  grid-area: d20;
-}
-
-app-root .picker__clear {
-  grid-area: clear;
-}
-
-app-root .picker__roll {
-  grid-area: roll;
-}
-
-app-root .picker__ {
-  min-width: 2rem;
-}
-
 app-root .picker__die-icon {
   fill: var(--color-main-01);
   height: 3rem;
