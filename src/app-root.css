@@ -62,13 +62,13 @@ app-root .app-plus-list li:last-child::after {
   content: none;
 }
 
-app-root button {
-  border-radius: calc(4rem/16);
-  font-size: calc(20rem/16);
-}
-
 app-root .actions {
   margin: 1rem 0;
+}
+
+app-root .actions button {
+  border-radius: calc(4rem/16);
+  font-size: calc(20rem/16);
 }
 
 app-root .picker {
@@ -83,57 +83,8 @@ app-root .picker:focus {
   outline: none;
 }
 
-app-root .picker__label {
-  grid-area: label;
-  font-size: 1rem;
-  font-weight: bold;
-  line-height: calc(20rem/16);
-  margin: 0;
-  padding: 0.5rem;
-}
-
-app-root .picker__die {
-  background-color: transparent;
-  border: none;
-  color: var(--color-main-08);
-  display: inline-block;
-  height: 3rem;
+app-root .picker app-die {
   margin: 0.5rem;
-  padding: 0;
-  position: relative;
-  width: 3rem;
-}
-
-app-root .picker__die-icon {
-  fill: var(--color-main-01);
-  height: 3rem;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 3rem;
-}
-
-app-root .picker__die-label {
-  font-size: 1rem;
-  font-weight: bold;
-  position: relative;
-}
-
-app-root .picker__die:hover .picker__die-icon {
-  fill: var(--color-main-00);
-}
-
-app-root .picker__die:focus {
-  color: var(--color-main-00);
-  outline: none;
-}
-
-app-root .picker__die:focus .picker__die-icon {
-  fill: var(--color-main-07);
-}
-
-app-root .picker__die:active .picker__die-icon {
-  fill: var(--color-main-09);
 }
 
 app-root .notation {

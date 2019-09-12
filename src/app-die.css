@@ -1,0 +1,92 @@
+app-die,
+app-die[size="small"] {
+  --font-size: 1rem;
+  --size: 3rem;
+}
+
+app-die[size="medium"] {
+  --font-size: calc(20rem/16);
+  --size: 4rem;
+}
+
+app-die,
+app-die[theme="dark"] {
+  --color-bg-default: var(--color-main-05);
+  --color-text-default: var(--color-main-00);
+  --color-bg-hover: var(--color-main-06);
+  --color-text-hover: var(--color-main-00);
+  --color-bg-focus: var(--color-main-07);
+  --color-text-focus: var(--color-main-00);
+  --color-bg-active: var(--color-main-09);
+  --color-text-active: var(--color-main-00);
+}
+
+app-die[theme="light"] {
+  --color-bg-default: var(--color-main-01);
+  --color-text-default: var(--color-main-08);
+  --color-bg-hover: var(--color-main-00);
+  --color-text-hover: var(--color-main-08);
+  --color-bg-focus: var(--color-main-07);
+  --color-text-focus: var(--color-main-00);
+  --color-bg-active: var(--color-main-09);
+  --color-text-active: var(--color-main-00);
+}
+
+app-die {
+  display: inline-block;
+  height: var(--size);
+  width: var(--size);
+}
+
+app-die .button {
+  background-color: transparent;
+  border: none;
+  color: var(--color-text-default);
+  height: 100%;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+
+app-die .icon {
+  fill: var(--color-bg-default);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+app-die .label {
+  font-size: var(--font-size);
+  font-weight: bold;
+  position: relative;
+}
+
+app-die .button:hover .icon {
+  fill: var(--color-bg-hover);
+}
+
+app-die .button:hover .label {
+  color: var(--color-text-hover);
+}
+
+app-die .button:focus {
+  outline: none;
+}
+
+app-die .button:focus .icon {
+  fill: var(--color-bg-focus);
+}
+
+app-die .button:focus .label {
+  color: var(--color-text-focus);
+}
+
+app-die .button:active .icon {
+  fill: var(--color-bg-active);
+}
+
+app-die .button:active .label {
+  color: var(--color-text-active);
+}
