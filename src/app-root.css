@@ -58,29 +58,67 @@ app-root .picker {
   background-color: lightgray;
   border-radius: 0.5rem;
   display: grid;
-  grid-auto-flow: column;
-  grid-gap: 0.25rem 1rem;
-  grid-template-columns: repeat(auto-fill, auto);
-  grid-template-rows: repeat(3, auto);
-  justify-items: center;
+  grid-gap: 0.5rem;
+  grid-template-areas:
+    "label label label"
+    "d4 d6 d8"
+    "d10 d12 d20"
+    "clear roll roll";
+  grid-template-columns: repeat(3, 4rem);
+  grid-template-rows: auto repeat(3, 2rem);
   margin: 1rem auto;
   padding: 0.5rem;
   width: max-content;
 }
 
-app-root .picker div {
+app-root .picker__label {
+  grid-area: label;
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: calc(20rem/16);
+  margin: 0;
+  padding: 0.5rem;
+}
+
+app-root .picker__d4 {
+  grid-area: d4;
+}
+
+app-root .picker__d6 {
+  grid-area: d6;
+}
+
+app-root .picker__d8 {
+  grid-area: d8;
+}
+
+app-root .picker__d10 {
+  grid-area: d10;
+}
+
+app-root .picker__d12 {
+  grid-area: d12;
+}
+
+app-root .picker__d20 {
+  grid-area: d20;
+}
+
+app-root .picker__clear {
+  grid-area: clear;
+}
+
+app-root .picker__roll {
+  grid-area: roll;
+}
+
+app-root .picker__ {
   min-width: 2rem;
 }
 
 app-root .picker button {
-  align-items: center;
-  border-radius: 50%;
-  display: flex;
-  height: 1.5rem;
-  justify-content: center;
-  line-height: 1.5rem;
-  padding: 0;
-  width: 1.5rem;
+  padding: 0 0.25rem;
+  width: 100%;
 }
 
 app-root .notation {

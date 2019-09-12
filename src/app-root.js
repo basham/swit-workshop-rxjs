@@ -1,6 +1,6 @@
 import { html } from 'lighterhtml'
 import { BehaviorSubject, Subject, fromEvent, merge } from 'rxjs'
-import { distinctUntilChanged, map, shareReplay, startWith, withLatestFrom } from 'rxjs/operators'
+import { distinctUntilChanged, map, mapTo, shareReplay, startWith, tap, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import { combineLatestProps, createKeychain, range as numRange, renderComponent } from './util.js'
 import css from './app-root.css'
@@ -50,6 +50,21 @@ whenAdded('app-root', (el) => {
 
   const diceKeys = createKeychain()
 
+  const picker$ = dice$.pipe(
+    map((bag) =>
+      DICE_SIDES
+        .map((sideCount) => {
+          const type = `d${sideCount}`
+          const key = diceKeys(type)
+          const dieCount = bag[type] || 0
+          const dice = numRange(dieCount)
+            .map((i) => `${type}-${i}`)
+            .map((id) => ({ key: diceKeys(id), id, sideCount }))
+          return { sideCount, dieCount, dice, key, type }
+        })
+    )
+  )
+
   const diceGrid$ = dice$.pipe(
     map((bag) =>
       DICE_SIDES
@@ -77,9 +92,19 @@ whenAdded('app-root', (el) => {
   const modifyDice$ = new Subject()
   const modifyDice = (value) => modifyDice$.next(value)
 
+  const clearDice$ = new Subject()
+  const clearDice = () => clearDice$.next(null)
+
+  const reducerClearSub = clearDice$.pipe(
+    tap(() => {
+      el.querySelector('.picker').focus()
+    }),
+    mapTo({})
+  ).subscribe(dice$)
+
   const total$ = merge(
     fromEvent(el, 'roll'),
-    modifyDice$
+    dice$
   ).pipe(
     map(() =>
       [ ...el.querySelectorAll('app-dice') ]
@@ -126,6 +151,7 @@ whenAdded('app-root', (el) => {
     count: diceCount$,
     grid: diceGrid$,
     notation: diceNotion$,
+    picker: picker$,
     total: total$
   }).pipe(
     renderComponent(el, renderRoot)
@@ -133,24 +159,16 @@ whenAdded('app-root', (el) => {
 
   return () => {
     rollSub.unsubscribe()
+    reducerClearSub.unsubscribe()
     reducerSub.unsubscribe()
     renderSub.unsubscribe()
   }
 
   function renderRoot (props) {
-    const { count, grid, total } = props
+    const { grid, total } = props
     return html`
       <h1>Dice</h1>
-      <div class='actions'>
-        <button
-          disabled=${!count}
-          onclick=${rollDice}>
-          Roll
-        </button>
-      </div>
-      <div class='picker'>
-        ${DICE_SIDES.map(renderDiePicker)}
-      </div>
+      ${renderPicker(props)}
       <div class='total'>
         ${total > 0 ? total : null}
       </div>
@@ -160,21 +178,41 @@ whenAdded('app-root', (el) => {
     `
   }
 
-  function renderDiePicker (sides) {
-    const type = `d${sides}`
-    const add = () => incrementDice(type)
-    const remove = () => decrementDice(type)
+  function renderPicker (props) {
+    const { count, picker } = props
     return html`
-      <div>${type}</div>
+      <div
+        class='picker'
+        tabindex='-1'>
+        <h2 class='picker__label'>
+          Select Dice
+        </h2>
+        ${picker.map(renderPickerAddDie)}
+        <button
+          class='picker__clear'
+          disabled=${!count}
+          onclick=${clearDice}>
+          Clear
+        </button>
+        <button
+          class='picker__roll'
+          disabled=${!count}
+          onclick=${rollDice}>
+          Roll
+        </button>
+      </div>
+    `
+  }
+
+  function renderPickerAddDie (props) {
+    const { type } = props
+    const add = () => incrementDice(type)
+    return html`
       <button
+        class=${`picker__${type}`}
         aria-label=${`Add ${type}`}
         onclick=${add}>
-        +
-      </button>
-      <button
-        aria-label=${`Remove ${type}`}
-        onclick=${remove}>
-        &minus;
+        ${type}
       </button>
     `
   }
