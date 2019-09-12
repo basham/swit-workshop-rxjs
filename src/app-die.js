@@ -1,21 +1,24 @@
 import { html } from 'lighterhtml'
+import { map } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { combineLatestProps, renderComponent } from './util.js'
+import { combineLatestProps, fromAttribute, fromProperty, renderComponent } from './util.js'
 import css from './app-die.css'
 
 document.adoptedStyleSheets = [ ...document.adoptedStyleSheets, css ]
 
 whenAdded('app-die', (el) => {
-  const description = el.getAttribute('description')
-  const label = el.getAttribute('label')
-  const sides = parseInt(el.getAttribute('sides') || 6)
-  const { click = (() => {}) } = el
+  const click$ = fromProperty(el, 'click')
+  const description$ = fromAttribute(el, 'description')
+  const label$ = fromAttribute(el, 'label')
+  const sides$ = fromAttribute(el, 'sides').pipe(
+    map((value) => parseInt(value) || 6)
+  )
 
   const renderSub = combineLatestProps({
-    description,
-    click,
-    label,
-    sides
+    click: click$,
+    description: description$,
+    label: label$,
+    sides: sides$
   }).pipe(
     renderComponent(el, render)
   ).subscribe()
@@ -30,8 +33,8 @@ whenAdded('app-die', (el) => {
     const icon = `dice.svg#${type}`
     return html`
       <button
-        class='button'
         aria-label=${description}
+        class='button'
         onclick=${click}>
         <svg class='icon'>
           <use xlink:href=${icon} />

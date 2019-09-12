@@ -1,6 +1,6 @@
 import { render } from 'lighterhtml'
-import { combineLatest, isObservable, of } from 'rxjs'
-import { map, tap } from 'rxjs/operators'
+import { BehaviorSubject, Observable, combineLatest, isObservable, of } from 'rxjs'
+import { map, shareReplay, tap } from 'rxjs/operators'
 
 export const combineLatestProps = (source) => {
   const streamKeys = Object.keys(source)
@@ -37,6 +37,38 @@ export function createKeychain () {
     keys.set(id, key)
     return key
   }
+}
+
+export function fromAttribute (target, name) {
+  return new Observable((subscriber) => {
+    const next = () => subscriber.next(target.getAttribute(name))
+    next()
+    const mutationObserver = new MutationObserver((mutationsList) =>
+      mutationsList
+        .filter(({ type }) => type === 'attributes')
+        .filter(({ attributeName }) => attributeName === name)
+        .forEach(next)
+    )
+    mutationObserver.observe(target, { attributes: true });
+    return () => mutationObserver.disconnect()
+  }).pipe(
+    shareReplay(1)
+  )
+}
+
+// Listen to an element property change.
+// Useful for getting `data` or `props` properties from lighterhtml elements.
+export function fromProperty (target, name) {
+  const property$ = new BehaviorSubject(target[name])
+  Object.defineProperty(target, name, {
+    get () {
+      return property$.getValue()
+    },
+    set (value) {
+      property$.next(value)
+    }
+  })
+  return property$
 }
 
 export function pluralize (value, str) {
