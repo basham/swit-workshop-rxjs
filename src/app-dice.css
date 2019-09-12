@@ -5,7 +5,7 @@ app-dice {
 app-dice .die {
   background-color: transparent;
   border: none;
-  color: white;
+  color: var(--color-main-00);
   height: 4rem;
   padding: 0;
   position: relative;
@@ -13,7 +13,7 @@ app-dice .die {
 }
 
 app-dice .icon {
-  fill: slategray;
+  fill: var(--color-main-05);
   height: 100%;
   left: 0;
   position: absolute;
@@ -32,13 +32,13 @@ app-dice .die:focus {
 }
 
 app-dice .die:focus .icon {
-  fill: darkslategray;
+  fill: var(--color-main-07);
 }
 
 app-dice .die:focus .label {
-  color: white;
+  color: var(--color-main-00);
 }
 
 app-dice .die:active .icon {
-  fill: black;
+  fill: var(--color-main-09);
 }

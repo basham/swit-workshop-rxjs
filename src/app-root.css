@@ -1,8 +1,24 @@
+/* Colors: https://codepen.io/basham/pen/OpNybO */
+:root {
+  --color-main-00: #ffffff;
+  --color-main-01: #e2e2e2;
+  --color-main-02: #c6c6c6;
+  --color-main-03: #ababab;
+  --color-main-04: #919191;
+  --color-main-05: #777777;
+  --color-main-06: #5e5e5e;
+  --color-main-07: #474747;
+  --color-main-08: #303030;
+  --color-main-09: #1b1b1b;
+  --color-main-10: #000000;
+}
+
 html {
-  background-color: whitesmoke;
+  background-color: var(--color-main-01);
 }
 
 body {
+  color: var(--color-main-09);
   font-family: system, sans-serif;
   font-size: 100%;
   margin: 0;
@@ -56,7 +72,7 @@ app-root .actions {
 }
 
 app-root .picker {
-  background-color: darkgray;
+  background-color: var(--color-main-04);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -79,7 +95,7 @@ app-root .picker__label {
 app-root .picker__die {
   background-color: transparent;
   border: none;
-  color: darkslategray;
+  color: var(--color-main-08);
   display: inline-block;
   height: 3rem;
   margin: 0.5rem;
@@ -125,7 +141,7 @@ app-root .picker__ {
 }
 
 app-root .picker__die-icon {
-  fill: gainsboro;
+  fill: var(--color-main-01);
   height: 3rem;
   left: 0;
   position: absolute;
@@ -140,20 +156,20 @@ app-root .picker__die-label {
 }
 
 app-root .picker__die:hover .picker__die-icon {
-  fill: white;
+  fill: var(--color-main-00);
 }
 
 app-root .picker__die:focus {
-  color: white;
+  color: var(--color-main-00);
   outline: none;
 }
 
 app-root .picker__die:focus .picker__die-icon {
-  fill: slategray;
+  fill: var(--color-main-07);
 }
 
 app-root .picker__die:active .picker__die-icon {
-  fill: darkslategray;
+  fill: var(--color-main-09);
 }
 
 app-root .notation {
@@ -171,7 +187,7 @@ app-root .notation :nth-child(odd) {
 }
 
 app-root .notation :nth-child(even) {
-  color: gray;
+  color: var(--color-main-05);
   width: 1rem;
 }
 
@@ -188,13 +204,6 @@ app-root .board {
   justify-items: center;
   margin: 1rem auto;
   width: min-content;
-}
-
-app-root .board__type {
-  color: #777;
-  font-size: calc(18rem/16);
-  font-weight: bold;
-  margin: 0;
 }
 
 app-root app-dice + app-dice {
