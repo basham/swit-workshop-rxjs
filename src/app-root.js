@@ -165,10 +165,23 @@ whenAdded('app-root', (el) => {
   }
 
   function renderRoot (props) {
-    const { grid, notation, total } = props
+    const { count, grid, notation, total } = props
     return html`
-      <h1>Dice</h1>
       ${renderPicker(props)}
+      <div class='actions'>
+        <button
+          class='picker__clear'
+          disabled=${!count}
+          onclick=${clearDice}>
+          Clear
+        </button>
+        <button
+          class='picker__roll'
+          disabled=${!count}
+          onclick=${rollDice}>
+          Roll
+        </button>
+      </div>
       <div class='total'>
         ${total > 0 ? total : null}
       </div>
@@ -184,24 +197,12 @@ whenAdded('app-root', (el) => {
   }
 
   function renderPicker (props) {
-    const { count, picker } = props
+    const { picker } = props
     return html`
       <div
         class='picker'
         tabindex='-1'>
         ${picker.map(renderPickerAddDie)}
-        <button
-          class='picker__clear'
-          disabled=${!count}
-          onclick=${clearDice}>
-          Clear
-        </button>
-        <button
-          class='picker__roll'
-          disabled=${!count}
-          onclick=${rollDice}>
-          Roll
-        </button>
       </div>
     `
   }
