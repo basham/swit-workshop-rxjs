@@ -165,10 +165,11 @@ whenAdded('app-root', (el) => {
     const add = () => incrementDice(type)
     const remove = () => decrementDice(type)
     return html`
+      <div>${type}</div>
       <button
         aria-label=${`Add ${type}`}
         onclick=${add}>
-        ${type}
+        +
       </button>
       <button
         aria-label=${`Remove ${type}`}

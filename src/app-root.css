@@ -59,12 +59,28 @@ app-root .picker {
   border-radius: 0.5rem;
   display: grid;
   grid-auto-flow: column;
-  grid-gap: 0.5rem;
+  grid-gap: 0.25rem 1rem;
   grid-template-columns: repeat(auto-fill, auto);
-  grid-template-rows: repeat(2, auto);
+  grid-template-rows: repeat(3, auto);
+  justify-items: center;
   margin: 1rem auto;
   padding: 0.5rem;
   width: max-content;
+}
+
+app-root .picker div {
+  min-width: 2rem;
+}
+
+app-root .picker button {
+  align-items: center;
+  border-radius: 50%;
+  display: flex;
+  height: 1.5rem;
+  justify-content: center;
+  line-height: 1.5rem;
+  padding: 0;
+  width: 1.5rem;
 }
 
 app-root .notation {
