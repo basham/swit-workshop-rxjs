@@ -179,13 +179,13 @@ whenAdded('app-root', (el) => {
   }
 
   function renderPicker (props) {
-    const { count, picker } = props
+    const { count, notation, picker } = props
     return html`
       <div
         class='picker'
         tabindex='-1'>
         <h2 class='picker__label'>
-          Select Dice
+          ${count ? notation : 'Select Dice'}
         </h2>
         ${picker.map(renderPickerAddDie)}
         <button
