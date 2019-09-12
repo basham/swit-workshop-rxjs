@@ -205,14 +205,20 @@ whenAdded('app-root', (el) => {
   }
 
   function renderPickerAddDie (props) {
-    const { type } = props
+    const { sideCount, type } = props
     const add = () => incrementDice(type)
+    const icon = `dice.svg#${type}`
     return html`
       <button
-        class=${`picker__${type}`}
+        class=${`picker__die picker__die--${type}`}
         aria-label=${`Add ${type}`}
         onclick=${add}>
-        ${type}
+        <svg class='picker__die-icon'>
+          <use xlink:href=${icon} />
+        </svg>
+        <div class='picker__die-label'>
+          ${sideCount}
+        </div>
       </button>
     `
   }

@@ -63,9 +63,9 @@ app-root .picker {
     "label label label"
     "d4 d6 d8"
     "d10 d12 d20"
-    "clear roll roll";
-  grid-template-columns: repeat(3, 4rem);
-  grid-template-rows: auto repeat(3, 2rem);
+    "clear clear roll";
+  grid-template-columns: repeat(3, 3rem);
+  grid-template-rows: auto repeat(2, 3rem) 2rem;
   margin: 1rem auto;
   padding: 0.5rem;
   width: max-content;
@@ -80,27 +80,38 @@ app-root .picker__label {
   padding: 0.5rem;
 }
 
-app-root .picker__d4 {
+app-root .picker button {
+  width: 100%;
+}
+
+app-root .picker__die {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  position: relative;
+}
+
+app-root .picker__die--d4 {
   grid-area: d4;
 }
 
-app-root .picker__d6 {
+app-root .picker__die--d6 {
   grid-area: d6;
 }
 
-app-root .picker__d8 {
+app-root .picker__die--d8 {
   grid-area: d8;
 }
 
-app-root .picker__d10 {
+app-root .picker__die--d10 {
   grid-area: d10;
 }
 
-app-root .picker__d12 {
+app-root .picker__die--d12 {
   grid-area: d12;
 }
 
-app-root .picker__d20 {
+app-root .picker__die--d20 {
   grid-area: d20;
 }
 
@@ -116,9 +127,35 @@ app-root .picker__ {
   min-width: 2rem;
 }
 
-app-root .picker button {
-  padding: 0 0.25rem;
-  width: 100%;
+app-root .picker__die-icon {
+  fill: white;
+  height: 3rem;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 3rem;
+}
+
+app-root .picker__die-label {
+  font-size: 1rem;
+  font-weight: bold;
+  position: relative;
+}
+
+app-root .picker__die:focus {
+  outline: none;
+}
+
+app-root .picker__die:focus .picker__die-icon {
+  fill: slategray;
+}
+
+app-root .picker__die:focus .picker__die-label {
+  color: white;
+}
+
+app-root .picker__die:active .picker__die-icon {
+  fill: darkslategray;
 }
 
 app-root .notation {
