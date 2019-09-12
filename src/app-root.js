@@ -224,11 +224,8 @@ whenAdded('app-root', (el) => {
   }
 
   function renderDiceGroup (props) {
-    const { dice, dieCount, key, type } = props
+    const { dice, key } = props
     return html.for(key)`
-      <h2 class='board__type'>
-        ${dieCount}${type}
-      </h2>
       <div class='board__dice'>
         ${dice.map(renderDie)}
       </div>

@@ -1,14 +1,44 @@
 app-dice {
   display: inline-block;
-  text-align: center;
 }
 
-app-dice .type {
-  font-size: calc(14rem/16);
-  margin-top: 0.25rem;
+app-dice .die {
+  background-color: transparent;
+  border: none;
+  color: white;
+  height: 4rem;
+  padding: 0;
+  position: relative;
+  width: 4rem;
 }
 
-app-dice .face {
-  height: 3rem;
-  width: 3rem;
+app-dice .icon {
+  fill: slategray;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+app-dice .label {
+  font-size: calc(20rem/16);
+  font-weight: bold;
+  position: relative;
+}
+
+app-dice .die:focus {
+  outline: none;
+}
+
+app-dice .die:focus .icon {
+  fill: darkslategray;
+}
+
+app-dice .die:focus .label {
+  color: white;
+}
+
+app-dice .die:active .icon {
+  fill: black;
 }

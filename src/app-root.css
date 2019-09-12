@@ -171,8 +171,7 @@ app-root .board {
   display: grid;
   grid-auto-flow: column;
   grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fill, 3rem);
-  grid-template-rows: auto 1fr;
+  grid-template-columns: repeat(auto-fill, 4rem);
   justify-items: center;
   margin: 1rem auto;
   width: min-content;

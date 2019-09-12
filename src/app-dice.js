@@ -65,9 +65,19 @@ whenAdded('app-dice', (el) => {
 
   function render (props) {
     const { value } = props
+    const type = `d${sides}`
+    const icon = `dice.svg#${type}`
     return html`
-      <button class='face' onclick=${roll}>
-        ${value}
+      <button
+        class='die'
+        aria-label=${`${value}, ${type}`}
+        onclick=${roll}>
+        <svg class='icon'>
+          <use xlink:href=${icon} />
+        </svg>
+        <div class='label'>
+          ${value}
+        </div>
       </button>
     `
   }
