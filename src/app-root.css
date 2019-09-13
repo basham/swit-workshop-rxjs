@@ -115,6 +115,7 @@ app-root .total {
   background-color: var(--color-main-01);
   grid-area: total;
   padding: 2rem;
+  text-align: center;
 }
 
 app-root .total__count {

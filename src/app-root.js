@@ -183,7 +183,7 @@ whenAdded('app-root', (el) => {
       <div class='total'>
         <div class=${total > 0 ? null : 'hidden'}>
           <span class='total__count'>
-            ${total > 0 ? total : null}
+            ${total}
           </span>
           <span class='total__label'>
             Total
