@@ -9,19 +9,23 @@ app-die[size="medium"] {
   --size: 4rem;
 }
 
-app-die,
+app-die {
+  --color-focus-fill: var(--color-default-fill);
+  --color-focus-text: var(--color-default-text);
+
+  --color-active-stroke: var(--color-focus-stroke);
+  --color-active-text: var(--color-default-text);
+}
+
+
 app-die[theme="ghost"] {
-  --color-default-fill: var(--color-black-08);
+  --color-default-fill: transparent;
   --color-default-stroke: var(--color-black-05);
   --color-default-text: var(--color-black-01);
 
-  --color-focus-fill: var(--color-default-fill);
   --color-focus-stroke: var(--color-black-03);
-  --color-focus-text: var(--color-default-text);
 
-  --color-active-fill: var(--color-black-07);
-  --color-active-stroke: var(--color-focus-stroke);
-  --color-active-text: var(--color-default-text);
+  --color-active-fill: var(--color-black-09);
 }
 
 app-die[theme="solid"] {
@@ -29,13 +33,9 @@ app-die[theme="solid"] {
   --color-default-stroke: var(--color-default-fill);
   --color-default-text: var(--color-black-00);
 
-  --color-focus-fill: var(--color-default-fill);
   --color-focus-stroke: var(--color-black-08);
-  --color-focus-text: var(--color-default-text);
 
   --color-active-fill: var(--color-black-07);
-  --color-active-stroke: var(--color-focus-stroke);
-  --color-active-text: var(--color-default-text);
 }
 
 app-die[theme="solid"][sides="4"] {
