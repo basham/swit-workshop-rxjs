@@ -10,26 +10,22 @@ app-die[size="medium"] {
 }
 
 app-die,
-app-die[theme="dark"] {
-  --color-bg-default: var(--color-main-05);
-  --color-text-default: var(--color-main-00);
-  --color-bg-hover: var(--color-main-06);
-  --color-text-hover: var(--color-main-00);
-  --color-bg-focus: var(--color-main-07);
-  --color-text-focus: var(--color-main-00);
-  --color-bg-active: var(--color-main-09);
-  --color-text-active: var(--color-main-00);
-}
-
 app-die[theme="light"] {
-  --color-bg-default: var(--color-main-01);
-  --color-text-default: var(--color-main-08);
-  --color-bg-hover: var(--color-main-00);
-  --color-text-hover: var(--color-main-08);
-  --color-bg-focus: var(--color-main-07);
-  --color-text-focus: var(--color-main-00);
-  --color-bg-active: var(--color-main-09);
-  --color-text-active: var(--color-main-00);
+  --color-default-fill: var(--color-main-00);
+  --color-default-stroke: var(--color-main-02);
+  --color-default-text: var(--color-main-06);
+
+  --color-hover-fill: var(--color-main-00);
+  --color-hover-stroke: var(--color-main-06);
+  --color-hover-text: var(--color-main-06);
+
+  --color-focus-fill: var(--color-main-00);
+  --color-focus-stroke: var(--color-main-06);
+  --color-focus-text: var(--color-main-06);
+
+  --color-active-fill: var(--color-main-01);
+  --color-active-stroke: var(--color-main-06);
+  --color-active-text: var(--color-main-09);
 }
 
 app-die {
@@ -41,7 +37,7 @@ app-die {
 app-die .button {
   background-color: transparent;
   border: none;
-  color: var(--color-text-default);
+  color: var(--color-default-text);
   height: 100%;
   padding: 0;
   position: relative;
@@ -49,10 +45,13 @@ app-die .button {
 }
 
 app-die .icon {
-  fill: var(--color-bg-default);
+  fill: var(--color-default-fill);
   height: 100%;
   left: 0;
   position: absolute;
+  stroke: var(--color-default-stroke);
+  stroke-linejoin: round;
+  stroke-width: 2;
   top: 0;
   width: 100%;
 }
@@ -64,11 +63,12 @@ app-die .label {
 }
 
 app-die .button:hover .icon {
-  fill: var(--color-bg-hover);
+  fill: var(--color-hover-fill);
+  stroke: var(--color-hover-stroke);
 }
 
 app-die .button:hover .label {
-  color: var(--color-text-hover);
+  color: var(--color-hover-text);
 }
 
 app-die .button:focus {
@@ -76,17 +76,19 @@ app-die .button:focus {
 }
 
 app-die .button:focus .icon {
-  fill: var(--color-bg-focus);
+  fill: var(--color-focus-fill);
+  stroke: var(--color-focus-stroke);
 }
 
 app-die .button:focus .label {
-  color: var(--color-text-focus);
+  color: var(--color-focus-text);
 }
 
 app-die .button:active .icon {
-  fill: var(--color-bg-active);
+  fill: var(--color-active-fill);
+  stroke: var(--color-active-stroke);
 }
 
 app-die .button:active .label {
-  color: var(--color-text-active);
+  color: var(--color-active-text);
 }
