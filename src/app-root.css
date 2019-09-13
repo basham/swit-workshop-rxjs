@@ -157,16 +157,26 @@ app-root .picker:focus {
 }
 
 app-root .picker__button {
-  background-color: var(--color-black-01);
-  border: none;
+  background-color: var(--color-black-05);
+  border: calc(2rem/16) solid var(--color-black-05);
   border-radius: calc(4rem/16);
-  color: var(--color-black-08);
+  color: var(--color-black-10);
   display: inline-block;
   font-size: calc(14rem/16);
   font-weight: bold;
-  line-height: calc(20rem/16);
+  line-height: calc(16rem/16);
   padding: 0 0.5rem;
   white-space: nowrap;
+}
+
+app-root .picker__button:focus,
+app-root .picker__button:hover {
+  border-color: var(--color-black-02);
+  outline: none;
+}
+
+app-root .picker__button:active {
+  background-color: var(--color-black-06);
 }
 
 app-root .picker__button:disabled {
@@ -223,14 +233,26 @@ app-root .roll {
 }
 
 app-root .toolbar__button {
-  border: calc(2rem/16) solid var(--color-black-04);
+  background-color: var(--color-black-07);
+  border: calc(4rem/16) solid var(--color-black-05);
   border-radius: 0.25rem;
+  color: var(--color-black-01);
   font-size: calc(24rem/16);
   font-weight: bold;
   line-height: calc(40rem/16);
   padding: 0 1rem;
   white-space: nowrap;
   width: 100%;
+}
+
+app-root .toolbar__button:focus,
+app-root .toolbar__button:hover {
+  border-color: var(--color-black-01);
+  outline: none;
+}
+
+app-root .toolbar__button:active {
+  background-color: var(--color-black-08);
 }
 
 .hidden,

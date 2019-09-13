@@ -217,6 +217,7 @@ whenAdded('app-root', (el) => {
         size='small'
         theme=${dieCount ? 'solid' : 'ghost'} />
       <button
+        aria-label=${`Remove ${type}, ${dieCount} total`}
         class='picker__button picker__button--count'
         disabled=${!dieCount}
         onclick=${remove}>
