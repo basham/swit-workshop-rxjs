@@ -165,51 +165,49 @@ whenAdded('app-root', (el) => {
   }
 
   function renderRoot (props) {
-    const { count, grid, notation, total } = props
-    return html`
-      ${renderPicker(props)}
-      <div class='actions'>
-        <button
-          class='picker__clear'
-          disabled=${!count}
-          onclick=${clearDice}>
-          Clear
-        </button>
-        <button
-          class='picker__roll'
-          disabled=${!count}
-          onclick=${rollDice}>
-          Roll
-        </button>
-      </div>
-      <div class='total'>
-        ${total > 0 ? total : null}
-      </div>
-      <h2 class='notation'>
-        ${notation.split(' ').map((str) =>
-          html`<span>${str}</span>`
-        )}
-      </h2>
-      <div class='board'>
-        ${grid.map(renderDiceGroup)}
-      </div>
-    `
-  }
-
-  function renderPicker (props) {
-    const { picker } = props
+    const { count, grid, picker, total } = props
     return html`
       <div
         class='picker'
         tabindex='-1'>
         ${picker.map(renderPickerAddDie)}
       </div>
+      <div class='toolbar'>
+        <button
+          class='toolbar__button'
+          disabled=${!count}
+          onclick=${clearDice}>
+          Remove all
+        </button>
+      </div>
+      <div class='total'>
+        <div class=${total > 0 ? null : 'hidden'}>
+          <span class='total__count'>
+            ${total > 0 ? total : null}
+          </span>
+          <span class='total__label'>
+            Total
+          </span>
+        </div>
+      </div>
+      <div class='roll'>
+        <button
+          class='toolbar__button'
+          disabled=${!count}
+          onclick=${rollDice}>
+          Roll
+        </button>
+      </div>
+      <div class='board'>
+        ${grid.map(renderDiceGroup)}
+      </div>
     `
   }
 
   function renderPickerAddDie (props) {
-    const { sideCount, type } = props
+    const { dieCount, sideCount, type } = props
     const add = () => incrementDice(type)
+    const remove = () => decrementDice(type)
     return html`
       <app-die
         click=${add}
@@ -217,7 +215,13 @@ whenAdded('app-root', (el) => {
         label=${sideCount}
         sides=${sideCount}
         size='small'
-        theme='light' />
+        theme=${dieCount ? 'solid' : 'ghost'} />
+      <button
+        class='picker__button picker__button--count'
+        disabled=${!dieCount}
+        onclick=${remove}>
+        ${dieCount}
+      </button>
     `
   }
 

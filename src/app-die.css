@@ -10,7 +10,7 @@ app-die[size="medium"] {
 }
 
 app-die,
-app-die[theme="light"] {
+app-die[theme="ghost"] {
   --color-default-fill: var(--color-main-00);
   --color-default-stroke: var(--color-main-02);
   --color-default-text: var(--color-main-06);

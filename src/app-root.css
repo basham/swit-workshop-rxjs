@@ -26,7 +26,15 @@ body {
 }
 
 app-root {
-  text-align: center;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas:
+    "toolbar picker"
+    "total board"
+    "roll board";
+  height: 100vh;
+  width: 100vw;
 }
 
 app-root h1 {
@@ -36,55 +44,52 @@ app-root h1 {
   margin: 0;
 }
 
-app-root .app-plain-list {
-  display: flex;
-  flex-wrap: wrap;
-  list-style-type: none;
-  margin: -0.5rem;
-  padding: 0;
+app-root .toolbar {
+  background-color: var(--color-main-01);
+  grid-area: toolbar;
+  padding: 2rem;
 }
 
-app-root .app-plain-list li {
-  margin: 0.5rem;
-}
-
-app-root .app-plus-list li {
-  align-items: center;
-  display: flex;
-}
-
-app-root .app-plus-list li::after {
-  content: '+';
-  margin-left: 1rem;
-}
-
-app-root .app-plus-list li:last-child::after {
-  content: none;
-}
-
-app-root .actions {
-  margin: 1rem 0;
-}
-
-app-root .actions button {
+app-root .toolbar button {
   border-radius: calc(4rem/16);
   font-size: calc(20rem/16);
 }
 
 app-root .picker {
-  _background-color: var(--color-main-04);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 0.5rem;
+  display: grid;
+  grid-area: picker;
+  grid-auto-flow: column;
+  grid-gap: 0.5rem 1rem;
+  grid-template-columns: repeat(auto-fill, auto);
+  grid-template-rows: repeat(2, auto);
+  justify-items: center;
+  padding: 2rem;
+  width: min-content;
 }
 
 app-root .picker:focus {
   outline: none;
 }
 
-app-root .picker app-die {
-  margin: 0.5rem;
+app-root .picker__button {
+  background-color: var(--color-main-01);
+  border: none;
+  border-radius: calc(4rem/16);
+  color: var(--color-main-08);
+  display: inline-block;
+  font-size: calc(14rem/16);
+  font-weight: bold;
+  line-height: calc(20rem/16);
+  padding: 0 0.5rem;
+  white-space: nowrap;
+}
+
+app-root .picker__button:disabled {
+  visibility: hidden;
+}
+
+app-root .picker__button--count {
+  min-width: 2rem;
 }
 
 app-root .notation {
@@ -107,17 +112,53 @@ app-root .notation :nth-child(even) {
 }
 
 app-root .total {
+  background-color: var(--color-main-01);
+  grid-area: total;
+  padding: 2rem;
+}
+
+app-root .total__count {
+  display: block;
   font-size: 3rem;
   font-weight: bold;
 }
 
+app-root .total__label {
+  display: block;
+  font-size: calc(20rem/16);
+  letter-spacing: 0.15ch;
+}
+
+app-root .roll {
+  background-color: var(--color-main-01);
+  grid-area: roll;
+  padding: 2rem;
+}
+
+app-root .toolbar__button {
+  border: calc(2rem/16) solid var(--color-main-04);
+  border-radius: 0.25rem;
+  font-size: calc(24rem/16);
+  font-weight: bold;
+  line-height: calc(40rem/16);
+  padding: 0 1rem;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.hidden,
+app-root .toolbar__button:disabled {
+  visibility: hidden;
+}
+
 app-root .board {
   display: grid;
+  grid-area: board;
   grid-auto-flow: column;
   grid-gap: 1rem;
   grid-template-columns: repeat(auto-fill, 4rem);
   justify-items: center;
-  margin: 1rem auto;
+  padding: 2rem;
   width: min-content;
 }
 
