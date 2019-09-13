@@ -73,7 +73,7 @@ whenAdded('app-die-roll', (el) => {
         label=${value}
         sides=${sides}
         size='medium'
-        theme='dark' />
+        theme='solid' />
     `
   }
 })

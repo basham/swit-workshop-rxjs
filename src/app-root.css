@@ -1,24 +1,109 @@
-/* Colors: https://codepen.io/basham/pen/OpNybO */
+/*
+Color palette: http://clrs.cc/
+Color variations: https://codepen.io/basham/pen/OpNybO
+*/
 :root {
-  --color-main-00: #ffffff;
-  --color-main-01: #e2e2e2;
-  --color-main-02: #c6c6c6;
-  --color-main-03: #ababab;
-  --color-main-04: #919191;
-  --color-main-05: #777777;
-  --color-main-06: #5e5e5e;
-  --color-main-07: #474747;
-  --color-main-08: #303030;
-  --color-main-09: #1b1b1b;
-  --color-main-10: #000000;
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  --color-black-00: var(--color-white);
+  --color-black-01: #e2e2e2;
+  --color-black-02: #c6c6c6;
+  --color-black-03: #ababab;
+  --color-black-04: #919191;
+  --color-black-05: #777777;
+  --color-black-06: #5e5e5e;
+  --color-black-07: #474747;
+  --color-black-08: #303030;
+  --color-black-09: #1b1b1b;
+  --color-black-10: var(--color-black);
+
+  --color-blue: #0074d9;
+  --color-blue-00: var(--color-white);
+  --color-blue-01: #dce2f8;
+  --color-blue-02: #b7c6f1;
+  --color-blue-03: #91aaea;
+  --color-blue-04: #6590e2;
+  --color-blue-05: #1b77da;
+  --color-blue-06: #185eae;
+  --color-blue-07: #1e467f;
+  --color-blue-08: #1b3054;
+  --color-blue-09: #141b2c;
+  --color-blue-10: var(--color-black);
+
+  --color-green: #2ecc40;
+  --color-green-00: var(--color-white);
+  --color-green-01: #c1eebb;
+  --color-green-02: #7ddc78;
+  --color-green-03: #2ec53e;
+  --color-green-04: #2da637;
+  --color-green-05: #2a882f;
+  --color-green-06: #266c28;
+  --color-green-07: #215120;
+  --color-green-08: #1a3719;
+  --color-green-09: #121f10;
+  --color-green-10: var(--color-black);
+
+  --color-orange: #ff851b;
+  --color-orange-00: var(--color-white);
+  --color-orange-01: #ffd9b9;
+  --color-orange-02: #ffb376;
+  --color-orange-03: #ff8c2d;
+  --color-orange-04: #de741b;
+  --color-orange-05: #b6601b;
+  --color-orange-06: #8f4d19;
+  --color-orange-07: #6a3b16;
+  --color-orange-08: #482912;
+  --color-orange-09: #28180c;
+  --color-orange-10: var(--color-black);
+
+  --color-purple: #b10dc9;
+  --color-purple-00: var(--color-white);
+  --color-purple-01: #f5daf6;
+  --color-purple-02: #e9b6ed;
+  --color-purple-03: #db91e3;
+  --color-purple-04: #cc6ad9;
+  --color-purple-05: #bc3ccf;
+  --color-purple-06: #a014b5;
+  --color-purple-07: #761984;
+  --color-purple-08: #4f1857;
+  --color-purple-09: #2a122d;
+  --color-purple-10: var(--color-black);
+
+  --color-teal: #39cccc;
+  --color-teal-00: var(--color-white);
+  --color-teal-01: #bdebea;
+  --color-teal-02: #71d6d6;
+  --color-teal-03: #37bdbd;
+  --color-teal-04: #349f9f;
+  --color-teal-05: #2f8383;
+  --color-teal-06: #296767;
+  --color-teal-07: #234d4d;
+  --color-teal-08: #1b3534;
+  --color-teal-09: #121d1d;
+  --color-teal-10: var(--color-black);
+
+  --color-yellow: #ffdc00;
+  --color-yellow-00: var(--color-white);
+  --color-yellow-01: #ffe149;
+  --color-yellow-02: #e5c50d;
+  --color-yellow-03: #c5aa14;
+  --color-yellow-04: #a79018;
+  --color-yellow-05: #897619;
+  --color-yellow-06: #6d5e18;
+  --color-yellow-07: #524616;
+  --color-yellow-08: #383012;
+  --color-yellow-09: #201b0c;
+  --color-yellow-10: var(--color-black);
 }
 
 html {
-  background-color: var(--color-main-00);
+  background-color: var(--color-black-08);
+  color: var(--color-black-01);
 }
 
 body {
-  color: var(--color-main-09);
+  color: var(--color-black-09);
   font-family: system, sans-serif;
   font-size: 100%;
   margin: 0;
@@ -45,7 +130,7 @@ app-root h1 {
 }
 
 app-root .toolbar {
-  background-color: var(--color-main-01);
+  background-color: var(--color-black-09);
   grid-area: toolbar;
   padding: 2rem;
 }
@@ -72,10 +157,10 @@ app-root .picker:focus {
 }
 
 app-root .picker__button {
-  background-color: var(--color-main-01);
+  background-color: var(--color-black-01);
   border: none;
   border-radius: calc(4rem/16);
-  color: var(--color-main-08);
+  color: var(--color-black-08);
   display: inline-block;
   font-size: calc(14rem/16);
   font-weight: bold;
@@ -107,12 +192,13 @@ app-root .notation :nth-child(odd) {
 }
 
 app-root .notation :nth-child(even) {
-  color: var(--color-main-05);
+  color: var(--color-black-05);
   width: 1rem;
 }
 
 app-root .total {
-  background-color: var(--color-main-01);
+  background-color: var(--color-black-09);
+  color: var(--color-black-01);
   grid-area: total;
   padding: 2rem;
   text-align: center;
@@ -131,13 +217,13 @@ app-root .total__label {
 }
 
 app-root .roll {
-  background-color: var(--color-main-01);
+  background-color: var(--color-black-09);
   grid-area: roll;
   padding: 2rem;
 }
 
 app-root .toolbar__button {
-  border: calc(2rem/16) solid var(--color-main-04);
+  border: calc(2rem/16) solid var(--color-black-04);
   border-radius: 0.25rem;
   font-size: calc(24rem/16);
   font-weight: bold;

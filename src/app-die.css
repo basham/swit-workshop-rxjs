@@ -11,21 +11,86 @@ app-die[size="medium"] {
 
 app-die,
 app-die[theme="ghost"] {
-  --color-default-fill: var(--color-main-00);
-  --color-default-stroke: var(--color-main-02);
-  --color-default-text: var(--color-main-06);
+  --color-default-fill: var(--color-black-08);
+  --color-default-stroke: var(--color-black-05);
+  --color-default-text: var(--color-black-01);
 
-  --color-hover-fill: var(--color-main-00);
-  --color-hover-stroke: var(--color-main-06);
-  --color-hover-text: var(--color-main-06);
+  --color-focus-fill: var(--color-default-fill);
+  --color-focus-stroke: var(--color-black-03);
+  --color-focus-text: var(--color-default-text);
 
-  --color-focus-fill: var(--color-main-00);
-  --color-focus-stroke: var(--color-main-06);
-  --color-focus-text: var(--color-main-06);
+  --color-active-fill: var(--color-black-07);
+  --color-active-stroke: var(--color-focus-stroke);
+  --color-active-text: var(--color-default-text);
+}
 
-  --color-active-fill: var(--color-main-01);
-  --color-active-stroke: var(--color-main-06);
-  --color-active-text: var(--color-main-09);
+app-die[theme="solid"] {
+  --color-default-fill: var(--color-black-06);
+  --color-default-stroke: var(--color-default-fill);
+  --color-default-text: var(--color-black-00);
+
+  --color-focus-fill: var(--color-default-fill);
+  --color-focus-stroke: var(--color-black-08);
+  --color-focus-text: var(--color-default-text);
+
+  --color-active-fill: var(--color-black-07);
+  --color-active-stroke: var(--color-focus-stroke);
+  --color-active-text: var(--color-default-text);
+}
+
+app-die[theme="solid"][sides="4"] {
+  --color-default-fill: var(--color-blue-04);
+  --color-default-text: var(--color-blue-09);
+
+  --color-focus-stroke: var(--color-blue-02);
+
+  --color-active-fill: var(--color-blue-05);
+}
+
+app-die[theme="solid"][sides="6"] {
+  --color-default-fill: var(--color-orange-03);
+  --color-default-text: var(--color-orange-08);
+
+  --color-focus-stroke: var(--color-orange-01);
+
+  --color-active-fill: var(--color-orange-04);
+}
+
+app-die[theme="solid"][sides="8"] {
+  --color-default-fill: var(--color-green-03);
+  --color-default-text: var(--color-green-08);
+
+  --color-focus-stroke: var(--color-green-01);
+
+  --color-active-fill: var(--color-green-04);
+}
+
+app-die[theme="solid"][sides="10"] {
+  --color-default-fill: var(--color-purple-04);
+  --color-default-text: var(--color-purple-09);
+
+  --color-focus-stroke: var(--color-purple-02);
+
+  --color-active-fill: var(--color-purple-05);
+}
+
+
+app-die[theme="solid"][sides="12"] {
+  --color-default-fill: var(--color-teal-03);
+  --color-default-text: var(--color-teal-08);
+
+  --color-focus-stroke: var(--color-teal-01);
+
+  --color-active-fill: var(--color-teal-04);
+}
+
+app-die[theme="solid"][sides="20"] {
+  --color-default-fill: var(--color-yellow-02);
+  --color-default-text: var(--color-yellow-07);
+
+  --color-focus-stroke: var(--color-yellow-00);
+
+  --color-active-fill: var(--color-yellow-03);
 }
 
 app-die {
@@ -62,25 +127,18 @@ app-die .label {
   position: relative;
 }
 
-app-die .button:hover .icon {
-  fill: var(--color-hover-fill);
-  stroke: var(--color-hover-stroke);
-}
-
-app-die .button:hover .label {
-  color: var(--color-hover-text);
-}
-
 app-die .button:focus {
   outline: none;
 }
 
-app-die .button:focus .icon {
+app-die .button:focus .icon,
+app-die .button:hover .icon {
   fill: var(--color-focus-fill);
   stroke: var(--color-focus-stroke);
 }
 
-app-die .button:focus .label {
+app-die .button:focus .label,
+app-die .button:hover .label {
   color: var(--color-focus-text);
 }
 
