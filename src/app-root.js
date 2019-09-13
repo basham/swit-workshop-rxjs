@@ -209,19 +209,21 @@ whenAdded('app-root', (el) => {
     const add = () => incrementDice(type)
     const remove = () => decrementDice(type)
     return html`
+      <div class='picker__label'>
+        ${type}
+      </div>
       <app-die
         click=${add}
         description=${`Add ${type}`}
-        label=${sideCount}
         sides=${sideCount}
         size='small'
         theme=${dieCount ? 'solid' : 'ghost'} />
       <button
         aria-label=${`Remove ${type}, ${dieCount} total`}
-        class='picker__button picker__button--count'
+        class='picker__button'
         disabled=${!dieCount}
         onclick=${remove}>
-        ${dieCount}
+        &times; ${dieCount}
       </button>
     `
   }

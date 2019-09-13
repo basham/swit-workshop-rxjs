@@ -135,18 +135,13 @@ app-root .toolbar {
   padding: 2rem;
 }
 
-app-root .toolbar button {
-  border-radius: calc(4rem/16);
-  font-size: calc(20rem/16);
-}
-
 app-root .picker {
   display: grid;
   grid-area: picker;
   grid-auto-flow: column;
   grid-gap: 0.5rem 1rem;
   grid-template-columns: repeat(auto-fill, auto);
-  grid-template-rows: repeat(2, auto);
+  grid-template-rows: repeat(3, auto);
   justify-items: center;
   padding: 2rem;
   width: min-content;
@@ -156,17 +151,25 @@ app-root .picker:focus {
   outline: none;
 }
 
+app-root .picker__label {
+  color: var(--color-black-02);
+  font-size: calc(18rem/16);
+  font-weight: bold;
+  line-height: calc(20rem/16);
+}
+
 app-root .picker__button {
   background-color: var(--color-black-05);
   border: calc(2rem/16) solid var(--color-black-05);
   border-radius: calc(4rem/16);
   color: var(--color-black-10);
-  display: inline-block;
+  display: block;
   font-size: calc(14rem/16);
   font-weight: bold;
   line-height: calc(16rem/16);
-  padding: 0 0.5rem;
+  padding: 0 0.25rem;
   white-space: nowrap;
+  width: 100%;
 }
 
 app-root .picker__button:focus,
@@ -181,10 +184,6 @@ app-root .picker__button:active {
 
 app-root .picker__button:disabled {
   visibility: hidden;
-}
-
-app-root .picker__button--count {
-  min-width: 2rem;
 }
 
 app-root .notation {
@@ -237,7 +236,7 @@ app-root .toolbar__button {
   border: calc(4rem/16) solid var(--color-black-05);
   border-radius: 0.25rem;
   color: var(--color-black-01);
-  font-size: calc(24rem/16);
+  font-size: calc(18rem/16);
   font-weight: bold;
   line-height: calc(40rem/16);
   padding: 0 1rem;
