@@ -1,7 +1,7 @@
 app-die,
 app-die[size="small"] {
   --font-size: calc(14rem/16);
-  --size: 3rem;
+  --size: 2rem;
 }
 
 app-die[size="medium"] {

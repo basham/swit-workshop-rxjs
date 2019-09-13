@@ -140,7 +140,7 @@ app-root .picker {
   grid-area: picker;
   grid-auto-flow: column;
   grid-gap: 0.5rem 1rem;
-  grid-template-columns: repeat(auto-fill, auto);
+  grid-template-columns: repeat(6, 3rem);
   grid-template-rows: repeat(3, auto);
   justify-items: center;
   padding: 2rem;
