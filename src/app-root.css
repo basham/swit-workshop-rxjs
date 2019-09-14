@@ -260,16 +260,14 @@ app-root .toolbar__button:disabled {
 }
 
 app-root .board {
-  display: grid;
   grid-area: board;
-  grid-auto-flow: column;
-  grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fill, 4rem);
-  justify-items: center;
-  padding: 2rem;
-  width: min-content;
+  padding: 1.5rem;
 }
 
-app-root .board__dice > * + * {
-  margin-top: 0.5rem;
+app-root .board__dice {
+  padding: 0.25rem;
+}
+
+app-root .board__dice app-die-roll {
+  margin: 0.25rem;
 }
