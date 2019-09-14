@@ -98,12 +98,11 @@ Color variations: https://codepen.io/basham/pen/OpNybO
 }
 
 html {
-  background-color: var(--color-black-08);
+  background-color: var(--color-black-09);
   color: var(--color-black-01);
 }
 
 body {
-  color: var(--color-black-09);
   font-family: system, sans-serif;
   font-size: 100%;
   margin: 0;
@@ -118,8 +117,8 @@ app-root {
     "toolbar picker"
     "total board"
     "roll board";
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  min-width: 100vw;
 }
 
 app-root h1 {
@@ -130,12 +129,12 @@ app-root h1 {
 }
 
 app-root .toolbar {
-  background-color: var(--color-black-09);
   grid-area: toolbar;
   padding: 2rem;
 }
 
 app-root .picker {
+  background-color: var(--color-black-08);
   display: grid;
   grid-area: picker;
   grid-auto-flow: column;
@@ -144,7 +143,6 @@ app-root .picker {
   grid-template-rows: repeat(3, auto);
   justify-items: center;
   padding: 2rem;
-  width: min-content;
 }
 
 app-root .picker:focus {
@@ -206,7 +204,6 @@ app-root .notation :nth-child(even) {
 }
 
 app-root .total {
-  background-color: var(--color-black-09);
   color: var(--color-black-01);
   grid-area: total;
   padding: 2rem;
@@ -226,7 +223,6 @@ app-root .total__label {
 }
 
 app-root .roll {
-  background-color: var(--color-black-09);
   grid-area: roll;
   padding: 2rem;
 }
@@ -260,6 +256,7 @@ app-root .toolbar__button:disabled {
 }
 
 app-root .board {
+  background-color: var(--color-black-08);
   grid-area: board;
   padding: 1.5rem;
 }
