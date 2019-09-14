@@ -23,7 +23,7 @@ app-die[theme="ghost"] {
   --color-default-stroke: var(--color-black-05);
   --color-default-text: var(--color-black-01);
 
-  --color-focus-stroke: var(--color-black-03);
+  --color-focus-stroke: var(--color-black-02);
 
   --color-active-fill: var(--color-black-09);
 }
