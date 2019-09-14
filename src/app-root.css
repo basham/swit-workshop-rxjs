@@ -112,12 +112,12 @@ body {
 
 app-root {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: min-content 1fr;
   grid-template-rows: auto auto 1fr;
   grid-template-areas:
-    "toolbar picker"
+    ". picker"
     "total board"
-    "roll board";
+    "toolbar board";
   min-height: 100vh;
   min-width: 100vw;
 }
@@ -239,6 +239,10 @@ app-root .toolbar__button {
   padding: 0 1rem;
   white-space: nowrap;
   width: 100%;
+}
+
+app-root .toolbar__button + .toolbar__button {
+  margin-top: 2rem;
 }
 
 app-root .toolbar__button:focus,

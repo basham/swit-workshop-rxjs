@@ -172,14 +172,6 @@ whenAdded('app-root', (el) => {
         tabindex='-1'>
         ${picker.map(renderPickerAddDie)}
       </div>
-      <div class='toolbar'>
-        <button
-          class='toolbar__button'
-          disabled=${!count}
-          onclick=${clearDice}>
-          Remove all
-        </button>
-      </div>
       <div class='total'>
         <div class=${total > 0 ? null : 'hidden'}>
           <span class='total__count'>
@@ -190,12 +182,18 @@ whenAdded('app-root', (el) => {
           </span>
         </div>
       </div>
-      <div class='roll'>
+      <div class='toolbar'>
         <button
           class='toolbar__button'
           disabled=${!count}
           onclick=${rollDice}>
           Roll
+        </button>
+        <button
+          class='toolbar__button'
+          disabled=${!count}
+          onclick=${clearDice}>
+          Remove all
         </button>
       </div>
       <div class='board'>
