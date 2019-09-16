@@ -2,6 +2,10 @@ import { render } from 'lighterhtml'
 import { BehaviorSubject, Observable, combineLatest, isObservable, of } from 'rxjs'
 import { map, shareReplay, tap } from 'rxjs/operators'
 
+export function adoptStyles (css) {
+  document.adoptedStyleSheets = [ ...document.adoptedStyleSheets, css ]
+}
+
 export const combineLatestProps = (source) => {
   const streamKeys = Object.keys(source)
     .filter((key) => isObservable(source[key]))

@@ -1,10 +1,10 @@
 import { html } from 'lighterhtml'
 import { map } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { combineLatestProps, fromAttribute, fromProperty, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, fromAttribute, fromProperty, renderComponent } from './util.js'
 import css from './app-die.css'
 
-document.adoptedStyleSheets = [ ...document.adoptedStyleSheets, css ]
+adoptStyles(css)
 
 whenAdded('app-die', (el) => {
   const click$ = fromProperty(el, 'click')

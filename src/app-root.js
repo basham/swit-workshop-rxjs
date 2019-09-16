@@ -2,10 +2,10 @@ import { html } from 'lighterhtml'
 import { fromEvent, merge } from 'rxjs'
 import { distinctUntilChanged, map, startWith } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { combineLatestProps, createKeychain, range as numRange, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, createKeychain, range as numRange, renderComponent } from './util.js'
 import css from './app-root.css'
 
-document.adoptedStyleSheets = [ ...document.adoptedStyleSheets, css ]
+adoptStyles(css)
 
 const DICE_SIDES = [ 4, 6, 8, 10, 12, 20 ]
 
