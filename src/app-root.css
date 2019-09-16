@@ -134,6 +134,11 @@ app-root .toolbar {
   padding: 2rem;
 }
 
+app-root > app-dice-picker {
+  grid-area: picker;
+}
+
+/*
 app-root .picker {
   background-color: var(--color-black-08);
   display: grid;
@@ -184,6 +189,7 @@ app-root .picker__button:active {
 app-root .picker__button:disabled {
   visibility: hidden;
 }
+*/
 
 app-root .notation {
   display: grid;
