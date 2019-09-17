@@ -2,8 +2,7 @@ import { html } from 'lighterhtml'
 import { fromEvent, merge } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { FACES } from './constants.js'
-import { adoptStyles, combineLatestProps, createKeychain, fromAttribute, range as numRange, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, createKeychain, decodeDiceFormula, fromAttribute, range as numRange, renderComponent } from './util.js'
 import css from './app-dice-board.css'
 
 adoptStyles(css)
@@ -11,18 +10,11 @@ adoptStyles(css)
 whenAdded('app-dice-board', (el) => {
   const getKey = createKeychain()
 
-  const diceGroups$ = fromAttribute(el, 'formula').pipe(
-    map((value) => value ? value : ''),
-    map((formula) =>
-      formula
-        .split(' ')
-        .map((value) => value.match(/(\d+)d(\d+)/i))
-        .filter((match) => match)
-        .map(([ , dieCount, faceCount ]) => [ parseInt(faceCount), parseInt(dieCount) ])
-        .filter(([ faceCount ]) => FACES.includes(faceCount))
-        .sort((a, b) => a[0] - b[0])
-        .map(([ faceCount, dieCount ]) => {
-          const type = `d${faceCount}`
+  const diceSets$ = fromAttribute(el, 'formula').pipe(
+    map(decodeDiceFormula),
+    map((diceSet) =>
+      diceSet
+        .map(({ dieCount, faceCount, type }) => {
           const key = getKey(type)
           const dice = numRange(dieCount)
             .map((i) => getKey(`${type}-${i}`))
@@ -35,11 +27,12 @@ whenAdded('app-dice-board', (el) => {
 
   const roll$ = merge(
     fromEvent(el, 'roll'),
-    diceGroups$
+    diceSets$
   ).pipe(
     map(() => {
       const dice = [ ...el.querySelectorAll('app-die-roll') ]
         .map(({ faces, value = 0 }) => ({ faces, value }))
+      const count = dice.length
       const total = dice
         .reduce((sum, { value }) => (sum + value), 0)
       const results = dice
@@ -50,7 +43,6 @@ whenAdded('app-dice-board', (el) => {
             [type]: [ ...(all[type] || []), value ].sort()
           }
         }, {})
-      const count = dice.length
       return { count, results, total }
     })
   )
@@ -68,7 +60,7 @@ whenAdded('app-dice-board', (el) => {
   })
 
   const renderSub = combineLatestProps({
-    diceGroups: diceGroups$
+    diceSets: diceSets$
   }).pipe(
     renderComponent(el, renderRoot)
   ).subscribe()
@@ -86,11 +78,11 @@ whenAdded('app-dice-board', (el) => {
   }
 
   function renderRoot (props) {
-    const { diceGroups } = props
-    return html`${diceGroups.map(renderDiceGroup)}`
+    const { diceSets } = props
+    return html`${diceSets.map(renderDiceSet)}`
   }
 
-  function renderDiceGroup (props) {
+  function renderDiceSet (props) {
     const { dice, key } = props
     return html.for(key)`
       <div>
@@ -100,7 +92,7 @@ whenAdded('app-dice-board', (el) => {
   }
 
   function renderDie (props) {
-    const { key, faceCount } = props
+    const { faceCount, key } = props
     return html.for(key)`
       <app-die-roll faces=${faceCount} />
     `

@@ -24,7 +24,7 @@ whenAdded('app-dice-picker', (el) => {
           const dice = numRange(dieCount)
             .map((i) => `${type}-${i}`)
             .map((id) => ({ key: getKey(id), id, faceCount }))
-          return { faceCount, dieCount, dice, key, type }
+          return { dice, dieCount, faceCount, key, type }
         })
     )
   )
@@ -105,12 +105,12 @@ whenAdded('app-dice-picker', (el) => {
       <div
         class='picker'
         tabindex='-1'>
-        ${picker.map(renderPickerAddDie)}
+        ${picker.map(renderDieInput)}
       </div>
     `
   }
 
-  function renderPickerAddDie (props) {
+  function renderDieInput (props) {
     const { dieCount, faceCount, type } = props
     const add = () => incrementDice(type)
     const remove = () => decrementDice(type)

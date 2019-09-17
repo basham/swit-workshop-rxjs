@@ -1,6 +1,7 @@
 import { render } from 'lighterhtml'
 import { BehaviorSubject, Observable, combineLatest, isObservable, of } from 'rxjs'
 import { map, shareReplay, tap } from 'rxjs/operators'
+import { FACES } from './constants.js'
 
 export function adoptStyles (css) {
   document.adoptedStyleSheets = [ ...document.adoptedStyleSheets, css ]
@@ -41,6 +42,37 @@ export function createKeychain () {
     keys.set(id, key)
     return key
   }
+}
+
+// In: '2d6 1d20'
+// Out:
+//   [
+//     { dieCount: 2, faceCount: 6, notation: '2d6', type: 'd6' },
+//     { dieCount: 1, faceCount: 20, notation: '1d20', type: 'd20' }
+//   ]
+export function decodeDiceFormula (formula) {
+  return (formula || '')
+    .split(' ')
+    .map((value) => value.match(/(\d+)d(\d+)/i))
+    .filter((match) => match)
+    .map(([ , dieCount, faceCount ]) => [ parseInt(faceCount), parseInt(dieCount) ])
+    .filter(([ faceCount ]) => FACES.includes(faceCount))
+    .sort((a, b) => a[0] - b[0])
+    .map(([ faceCount, dieCount ]) => {
+      const type = `d${faceCount}`
+      const notation = `${dieCount}${type}`
+      return { dieCount, faceCount, notation, type }
+    })
+}
+
+// In:
+//   [
+//     { dieCount: 2, faceCount: 6 },
+//     { dieCount: 1, faceCount: 20 }
+//   ]
+// Out: '2d6 1d20'
+export function encodeDiceFormula (formulaObject) {
+
 }
 
 export function fromAttribute (target, name) {
