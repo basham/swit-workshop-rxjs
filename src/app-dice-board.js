@@ -17,7 +17,7 @@ whenAdded('app-dice-board', (el) => {
     map((formula) =>
       formula
         .split(' ')
-        .map((value) => value.match(/(\d+)d(\d+)/))
+        .map((value) => value.match(/(\d+)d(\d+)/i))
         .filter((match) => match)
         .map(([ , dieCount, sideCount ]) => [ parseInt(sideCount), parseInt(dieCount) ])
         .filter(([ sideCount ]) => DICE_SIDES.includes(sideCount))
