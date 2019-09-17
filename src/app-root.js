@@ -1,5 +1,5 @@
 import { html } from 'lighterhtml'
-import { fromEvent, merge } from 'rxjs'
+import { fromEvent } from 'rxjs'
 import { distinctUntilChanged, map, startWith } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import { adoptStyles, combineLatestProps, renderComponent } from './util.js'
@@ -7,59 +7,50 @@ import css from './app-root.css'
 
 adoptStyles(css)
 
-const DICE_SIDES = [ 4, 6, 8, 10, 12, 20 ]
-
 whenAdded('app-root', (el) => {
   const dice$ = fromEvent(el, 'dicePickerChange').pipe(
     map(({ detail }) => detail),
     startWith({})
   )
 
-  const diceCount$ = dice$.pipe(
-    map((d) =>
-      Object.values(d)
-        .reduce((sum, count) => (sum + count), 0)
-    ),
+  const boardRoll$ = fromEvent(el, 'boardRoll').pipe(
+    map(({ detail }) => detail)
+  )
+
+  const count$ = boardRoll$.pipe(
+    map(({ count }) => count),
+    startWith(0),
     distinctUntilChanged()
   )
 
-  function rollDice () {
-    el.querySelectorAll('app-die-roll')
-      .forEach((d) => d.roll())
-  }
-
-  function clearDice () {
-    el.querySelector('app-dice-picker').clearDice()
-  }
-
-  const total$ = merge(
-    fromEvent(el, 'roll'),
-    dice$
-  ).pipe(
-    map(() =>
-      [ ...el.querySelectorAll('app-die-roll') ]
-        .map(({ value = 0 }) => value)
-        .reduce((sum, value) => (sum + value), 0)
-    ),
+  const total$ = boardRoll$.pipe(
+    map(({ total }) => total),
     startWith(0),
     distinctUntilChanged()
   )
 
   const renderSub = combineLatestProps({
-    count: diceCount$,
+    count: count$,
+    formula: '2d6 1d10',
     total: total$
   }).pipe(
     renderComponent(el, renderRoot)
   ).subscribe()
 
   return () => {
-    rollSub.unsubscribe()
-    reducerSub.unsubscribe()
     renderSub.unsubscribe()
   }
 
+  function removeAllDice () {
+    el.querySelector('app-dice-picker').removeAll()
+  }
+
+  function rollDice () {
+    el.querySelector('app-dice-board').roll()
+  }
+
   function renderRoot (props) {
-    const { count, total } = props
+    const { count, formula, total } = props
     return html`
       <app-dice-picker />
       <div class='total'>
@@ -82,11 +73,11 @@ whenAdded('app-root', (el) => {
         <button
           class='toolbar__button'
           disabled=${!count}
-          onclick=${clearDice}>
+          onclick=${removeAllDice}>
           Remove all
         </button>
       </div>
-      <app-dice-board formula='1d20 2d6 1d8' />
+      <app-dice-board formula=${formula} />
     `
   }
 })

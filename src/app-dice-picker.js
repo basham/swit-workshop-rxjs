@@ -33,10 +33,10 @@ whenAdded('app-dice-picker', (el) => {
   const modifyDice$ = new Subject()
   const modifyDice = (value) => modifyDice$.next(value)
 
-  const clearDice$ = new Subject()
-  const clearDice = () => clearDice$.next(null)
+  const removeAll$ = new Subject()
+  const removeAll = () => removeAll$.next(null)
 
-  const reducerClearSub = clearDice$.pipe(
+  const reducerClearSub = removeAll$.pipe(
     mapTo({}),
     tap((value) => {
       el.querySelector('.picker').focus()
@@ -83,7 +83,7 @@ whenAdded('app-dice-picker', (el) => {
     renderComponent(el, renderRoot)
   ).subscribe()
 
-  el.clearDice = clearDice
+  el.removeAll = removeAll
 
   return () => {
     reducerClearSub.unsubscribe()

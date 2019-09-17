@@ -18,6 +18,7 @@ whenAdded('app-die-roll', (el) => {
     roll$.next(null)
   }
 
+  el.sides = sides
   el.roll = roll
 
   const rollSub = roll$.pipe(
