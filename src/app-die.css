@@ -38,7 +38,7 @@ app-die[theme="solid"] {
   --color-active-fill: var(--color-black-07);
 }
 
-app-die[theme="solid"][sides="4"] {
+app-die[theme="solid"][faces="4"] {
   --color-default-fill: var(--color-blue-04);
   --color-default-text: var(--color-blue-09);
 
@@ -47,7 +47,7 @@ app-die[theme="solid"][sides="4"] {
   --color-active-fill: var(--color-blue-05);
 }
 
-app-die[theme="solid"][sides="6"] {
+app-die[theme="solid"][faces="6"] {
   --color-default-fill: var(--color-orange-03);
   --color-default-text: var(--color-orange-08);
 
@@ -56,7 +56,7 @@ app-die[theme="solid"][sides="6"] {
   --color-active-fill: var(--color-orange-04);
 }
 
-app-die[theme="solid"][sides="8"] {
+app-die[theme="solid"][faces="8"] {
   --color-default-fill: var(--color-green-03);
   --color-default-text: var(--color-green-08);
 
@@ -65,7 +65,7 @@ app-die[theme="solid"][sides="8"] {
   --color-active-fill: var(--color-green-04);
 }
 
-app-die[theme="solid"][sides="10"] {
+app-die[theme="solid"][faces="10"] {
   --color-default-fill: var(--color-purple-04);
   --color-default-text: var(--color-purple-09);
 
@@ -75,7 +75,7 @@ app-die[theme="solid"][sides="10"] {
 }
 
 
-app-die[theme="solid"][sides="12"] {
+app-die[theme="solid"][faces="12"] {
   --color-default-fill: var(--color-teal-03);
   --color-default-text: var(--color-teal-08);
 
@@ -84,7 +84,7 @@ app-die[theme="solid"][sides="12"] {
   --color-active-fill: var(--color-teal-04);
 }
 
-app-die[theme="solid"][sides="20"] {
+app-die[theme="solid"][faces="20"] {
   --color-default-fill: var(--color-yellow-02);
   --color-default-text: var(--color-yellow-07);
 

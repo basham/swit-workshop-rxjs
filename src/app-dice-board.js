@@ -2,12 +2,11 @@ import { html } from 'lighterhtml'
 import { fromEvent, merge } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
+import { FACES } from './constants.js'
 import { adoptStyles, combineLatestProps, createKeychain, fromAttribute, range as numRange, renderComponent } from './util.js'
 import css from './app-dice-board.css'
 
 adoptStyles(css)
-
-const DICE_SIDES = [ 4, 6, 8, 10, 12, 20 ]
 
 whenAdded('app-dice-board', (el) => {
   const getKey = createKeychain()
@@ -19,15 +18,15 @@ whenAdded('app-dice-board', (el) => {
         .split(' ')
         .map((value) => value.match(/(\d+)d(\d+)/i))
         .filter((match) => match)
-        .map(([ , dieCount, sideCount ]) => [ parseInt(sideCount), parseInt(dieCount) ])
-        .filter(([ sideCount ]) => DICE_SIDES.includes(sideCount))
+        .map(([ , dieCount, faceCount ]) => [ parseInt(faceCount), parseInt(dieCount) ])
+        .filter(([ faceCount ]) => FACES.includes(faceCount))
         .sort((a, b) => a[0] - b[0])
-        .map(([ sideCount, dieCount ]) => {
-          const type = `d${sideCount}`
+        .map(([ faceCount, dieCount ]) => {
+          const type = `d${faceCount}`
           const key = getKey(type)
           const dice = numRange(dieCount)
             .map((i) => getKey(`${type}-${i}`))
-            .map((key) => ({ key, sideCount }))
+            .map((key) => ({ key, faceCount }))
           return { dieCount, dice, key }
         })
     ),
@@ -40,12 +39,12 @@ whenAdded('app-dice-board', (el) => {
   ).pipe(
     map(() => {
       const dice = [ ...el.querySelectorAll('app-die-roll') ]
-        .map(({ sides, value = 0 }) => ({ sides, value }))
+        .map(({ faces, value = 0 }) => ({ faces, value }))
       const total = dice
         .reduce((sum, { value }) => (sum + value), 0)
       const results = dice
-        .reduce((all, { sides, value }) => {
-          const type = `d${sides}`
+        .reduce((all, { faces, value }) => {
+          const type = `d${faces}`
           return {
             ...all,
             [type]: [ ...(all[type] || []), value ].sort()
@@ -101,9 +100,9 @@ whenAdded('app-dice-board', (el) => {
   }
 
   function renderDie (props) {
-    const { key, sideCount } = props
+    const { key, faceCount } = props
     return html.for(key)`
-      <app-die-roll sides=${sideCount} />
+      <app-die-roll faces=${faceCount} />
     `
   }
 })

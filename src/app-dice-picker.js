@@ -2,12 +2,11 @@ import { html } from 'lighterhtml'
 import { BehaviorSubject, Subject } from 'rxjs'
 import { map, mapTo, tap, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
+import { FACES } from './constants.js'
 import { adoptStyles, combineLatestProps, createKeychain, range as numRange, renderComponent } from './util.js'
 import css from './app-dice-picker.css'
 
 adoptStyles(css)
-
-const DICE_SIDES = [ 4, 6, 8, 10, 12, 20 ]
 
 whenAdded('app-dice-picker', (el) => {
   const dice$ = new BehaviorSubject({ d6: 2, d20: 1 })
@@ -17,15 +16,15 @@ whenAdded('app-dice-picker', (el) => {
 
   const picker$ = dice$.pipe(
     map((bag) =>
-      DICE_SIDES
-        .map((sideCount) => {
-          const type = `d${sideCount}`
+      FACES
+        .map((faceCount) => {
+          const type = `d${faceCount}`
           const key = getKey(type)
           const dieCount = bag[type] || 0
           const dice = numRange(dieCount)
             .map((i) => `${type}-${i}`)
-            .map((id) => ({ key: getKey(id), id, sideCount }))
-          return { sideCount, dieCount, dice, key, type }
+            .map((id) => ({ key: getKey(id), id, faceCount }))
+          return { faceCount, dieCount, dice, key, type }
         })
     )
   )
@@ -57,10 +56,10 @@ whenAdded('app-dice-picker', (el) => {
     map(([ event, dice ]) => {
       const { action, key } = event
       const count = countFromAction({ action, count: dice[key] })
-      const { [key]: thisSide, ...otherSides } = dice
+      const { [key]: thisFace, ...otherFaces } = dice
       return count === 0
-        ? otherSides
-        : { ...otherSides, [key]: count }
+        ? otherFaces
+        : { ...otherFaces, [key]: count }
 
       function countFromAction ({ action, count = 0 }) {
         if (action === 'increment') {
@@ -112,7 +111,7 @@ whenAdded('app-dice-picker', (el) => {
   }
 
   function renderPickerAddDie (props) {
-    const { dieCount, sideCount, type } = props
+    const { dieCount, faceCount, type } = props
     const add = () => incrementDice(type)
     const remove = () => decrementDice(type)
     return html`
@@ -122,7 +121,7 @@ whenAdded('app-dice-picker', (el) => {
       <app-die
         click=${add}
         description=${`Add ${type}`}
-        sides=${sideCount}
+        faces=${faceCount}
         size='small'
         theme=${dieCount ? 'solid' : 'ghost'} />
       <button

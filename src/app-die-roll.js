@@ -8,8 +8,8 @@ import css from './app-die-roll.css'
 adoptStyles(css)
 
 whenAdded('app-die-roll', (el) => {
-  const sides = parseInt(el.getAttribute('sides') || 6)
-  const value = parseInt(el.getAttribute('value')) || random(1, sides)
+  const faces = parseInt(el.getAttribute('faces') || 6)
+  const value = parseInt(el.getAttribute('value')) || random(1, faces)
 
   const roll$ = new Subject()
   const value$ = new BehaviorSubject(value)
@@ -18,7 +18,7 @@ whenAdded('app-die-roll', (el) => {
     roll$.next(null)
   }
 
-  el.sides = sides
+  el.faces = faces
   el.roll = roll
 
   const rollSub = roll$.pipe(
@@ -36,7 +36,7 @@ whenAdded('app-die-roll', (el) => {
     ),
     // Randomly choose a side, while preventing repeats.
     scan((lastRoll) => {
-      const options = numRange(sides, 1)
+      const options = numRange(faces, 1)
         .filter((v) => v !== lastRoll)
       return randomItem(options)
     }, -1),
@@ -51,7 +51,7 @@ whenAdded('app-die-roll', (el) => {
   ).subscribe(value$)
 
   const renderSub = combineLatestProps({
-    sides,
+    faces,
     value: value$
   }).pipe(
     renderComponent(el, render)
@@ -66,13 +66,13 @@ whenAdded('app-die-roll', (el) => {
 
   function render (props) {
     const { value } = props
-    const type = `d${sides}`
+    const type = `d${faces}`
     return html`
       <app-die
         click=${roll}
         description=${`${value}, ${type}`}
+        faces=${faces}
         label=${value}
-        sides=${sides}
         size='medium'
         theme='solid' />
     `

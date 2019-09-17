@@ -9,16 +9,16 @@ adoptStyles(css)
 whenAdded('app-die', (el) => {
   const click$ = fromProperty(el, 'click')
   const description$ = fromAttribute(el, 'description')
-  const label$ = fromAttribute(el, 'label')
-  const sides$ = fromAttribute(el, 'sides').pipe(
+  const faces$ = fromAttribute(el, 'faces').pipe(
     map((value) => parseInt(value) || 6)
   )
+  const label$ = fromAttribute(el, 'label')
 
   const renderSub = combineLatestProps({
     click: click$,
     description: description$,
     label: label$,
-    sides: sides$
+    faces: faces$
   }).pipe(
     renderComponent(el, render)
   ).subscribe()
@@ -28,8 +28,8 @@ whenAdded('app-die', (el) => {
   }
 
   function render (props) {
-    const { click, description, label, sides } = props
-    const type = `d${sides}`
+    const { click, description, faces, label } = props
+    const type = `d${faces}`
     const icon = `dice.svg#${type}`
     return html`
       <button
