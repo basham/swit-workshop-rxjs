@@ -13,18 +13,18 @@ whenAdded('app-dice-picker', (el) => {
   const dice$ = new BehaviorSubject({ d6: 2, d20: 1 })
   dispatch(dice$.getValue())
 
-  const diceKeys = createKeychain()
+  const getKey = createKeychain()
 
   const picker$ = dice$.pipe(
     map((bag) =>
       DICE_SIDES
         .map((sideCount) => {
           const type = `d${sideCount}`
-          const key = diceKeys(type)
+          const key = getKey(type)
           const dieCount = bag[type] || 0
           const dice = numRange(dieCount)
             .map((i) => `${type}-${i}`)
-            .map((id) => ({ key: diceKeys(id), id, sideCount }))
+            .map((id) => ({ key: getKey(id), id, sideCount }))
           return { sideCount, dieCount, dice, key, type }
         })
     )
