@@ -1,4 +1,5 @@
 import 'construct-style-sheets-polyfill'
+import './app-dice-board.js'
 import './app-dice-picker.js'
 import './app-die.js'
 import './app-die-roll.js'

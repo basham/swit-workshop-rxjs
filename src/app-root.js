@@ -2,7 +2,7 @@ import { html } from 'lighterhtml'
 import { fromEvent, merge } from 'rxjs'
 import { distinctUntilChanged, map, startWith } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, createKeychain, range as numRange, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, renderComponent } from './util.js'
 import css from './app-root.css'
 
 adoptStyles(css)
@@ -21,24 +21,6 @@ whenAdded('app-root', (el) => {
         .reduce((sum, count) => (sum + count), 0)
     ),
     distinctUntilChanged()
-  )
-
-  const diceKeys = createKeychain()
-
-  const diceGrid$ = dice$.pipe(
-    map((bag) =>
-      DICE_SIDES
-        .map((sideCount) => {
-          const type = `d${sideCount}`
-          const key = diceKeys(type)
-          const dieCount = bag[type] || 0
-          const dice = numRange(dieCount)
-            .map((i) => `${type}-${i}`)
-            .map((id) => ({ key: diceKeys(id), id, sideCount }))
-          return { sideCount, dieCount, dice, key, type }
-        })
-        .filter(({ dieCount }) => dieCount > 0)
-    )
   )
 
   function rollDice () {
@@ -65,7 +47,6 @@ whenAdded('app-root', (el) => {
 
   const renderSub = combineLatestProps({
     count: diceCount$,
-    grid: diceGrid$,
     total: total$
   }).pipe(
     renderComponent(el, renderRoot)
@@ -78,7 +59,7 @@ whenAdded('app-root', (el) => {
   }
 
   function renderRoot (props) {
-    const { count, grid, total } = props
+    const { count, total } = props
     return html`
       <app-dice-picker />
       <div class='total'>
@@ -105,25 +86,7 @@ whenAdded('app-root', (el) => {
           Remove all
         </button>
       </div>
-      <div class='board'>
-        ${grid.map(renderDiceGroup)}
-      </div>
-    `
-  }
-
-  function renderDiceGroup (props) {
-    const { dice, key } = props
-    return html.for(key)`
-      <div class='board__dice'>
-        ${dice.map(renderDie)}
-      </div>
-    `
-  }
-
-  function renderDie (props) {
-    const { key, sideCount } = props
-    return html.for(key)`
-      <app-die-roll sides=${sideCount} />
+      <app-dice-board formula='1d20 2d6 1d8' />
     `
   }
 })

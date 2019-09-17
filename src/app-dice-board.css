@@ -1,0 +1,7 @@
+app-dice-board .board__dice {
+  padding: 0.25rem;
+}
+
+app-dice-board .board__dice app-die-roll {
+  margin: 0.25rem;
+}

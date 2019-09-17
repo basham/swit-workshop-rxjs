@@ -135,79 +135,15 @@ app-root .toolbar {
 }
 
 app-root > app-dice-picker {
-  grid-area: picker;
-}
-
-/*
-app-root .picker {
   background-color: var(--color-black-08);
-  display: grid;
   grid-area: picker;
-  grid-auto-flow: column;
-  grid-gap: 0.5rem 1rem;
-  grid-template-columns: repeat(6, 3rem);
-  grid-template-rows: repeat(3, auto);
-  justify-items: center;
   padding: 2rem;
 }
 
-app-root .picker:focus {
-  outline: none;
-}
-
-app-root .picker__label {
-  color: var(--color-black-02);
-  font-size: calc(18rem/16);
-  font-weight: bold;
-  line-height: calc(20rem/16);
-}
-
-app-root .picker__button {
-  background-color: var(--color-black-05);
-  border: calc(2rem/16) solid var(--color-black-05);
-  border-radius: calc(4rem/16);
-  color: var(--color-black-10);
-  display: block;
-  font-size: calc(14rem/16);
-  font-weight: bold;
-  line-height: calc(16rem/16);
-  padding: 0 0.25rem;
-  white-space: nowrap;
-  width: 100%;
-}
-
-app-root .picker__button:focus,
-app-root .picker__button:hover {
-  border-color: var(--color-black-02);
-  outline: none;
-}
-
-app-root .picker__button:active {
-  background-color: var(--color-black-06);
-}
-
-app-root .picker__button:disabled {
-  visibility: hidden;
-}
-*/
-
-app-root .notation {
-  display: grid;
-  font-size: calc(20rem/16);
-  font-weight: normal;
-  grid-auto-flow: column;
-  grid-template-columns: repeat(auto-fill, auto);
-  margin: 1rem auto;
-  width: min-content;
-}
-
-app-root .notation :nth-child(odd) {
-  width: 4rem;
-}
-
-app-root .notation :nth-child(even) {
-  color: var(--color-black-05);
-  width: 1rem;
+app-root > app-dice-board {
+  background-color: var(--color-black-08);
+  grid-area: board;
+  padding: 1.5rem;
 }
 
 app-root .total {
@@ -264,18 +200,4 @@ app-root .toolbar__button:active {
 .hidden,
 app-root .toolbar__button:disabled {
   visibility: hidden;
-}
-
-app-root .board {
-  background-color: var(--color-black-08);
-  grid-area: board;
-  padding: 1.5rem;
-}
-
-app-root .board__dice {
-  padding: 0.25rem;
-}
-
-app-root .board__dice app-die-roll {
-  margin: 0.25rem;
 }
