@@ -1,24 +1,27 @@
 import { html } from 'lighterhtml'
 import { BehaviorSubject, Subject, range, timer } from 'rxjs'
-import { concatMap, scan, switchMap, tap } from 'rxjs/operators'
+import { concatMap, map, scan, switchMap, tap, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, random, randomItem, range as numRange, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, fromAttribute, random, randomItem, range as numRange, renderComponent } from './util.js'
 import css from './app-die-roll.css'
 
 adoptStyles(css)
 
 whenAdded('app-die-roll', (el) => {
-  const faces = parseInt(el.getAttribute('faces') || 6)
-  const value = parseInt(el.getAttribute('value')) || random(1, faces)
+  const faces$ = fromAttribute(el, 'faces').pipe(
+    map((value) => parseInt(value) || 6),
+    tap((faces) => {
+      el.faces = faces
+    })
+  )
 
   const roll$ = new Subject()
-  const value$ = new BehaviorSubject(value)
+  const value$ = new BehaviorSubject(1)
 
   function roll () {
     roll$.next(null)
   }
 
-  el.faces = faces
   el.roll = roll
 
   const rollSub = roll$.pipe(
@@ -34,8 +37,10 @@ whenAdded('app-die-roll', (el) => {
         )
       )
     ),
+    withLatestFrom(faces$),
+    map(([ , faces ]) => faces),
     // Randomly choose a side, while preventing repeats.
-    scan((lastRoll) => {
+    scan((lastRoll, faces) => {
       const options = numRange(faces, 1)
         .filter((v) => v !== lastRoll)
       return randomItem(options)
@@ -51,7 +56,7 @@ whenAdded('app-die-roll', (el) => {
   ).subscribe(value$)
 
   const renderSub = combineLatestProps({
-    faces,
+    faces: faces$,
     value: value$
   }).pipe(
     renderComponent(el, render)
@@ -65,7 +70,7 @@ whenAdded('app-die-roll', (el) => {
   }
 
   function render (props) {
-    const { value } = props
+    const { faces, value } = props
     const type = `d${faces}`
     return html`
       <app-die-button
