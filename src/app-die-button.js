@@ -2,11 +2,11 @@ import { html } from 'lighterhtml'
 import { map } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import { adoptStyles, combineLatestProps, fromAttribute, fromProperty, renderComponent } from './util.js'
-import css from './app-die.css'
+import css from './app-die-button.css'
 
 adoptStyles(css)
 
-whenAdded('app-die', (el) => {
+whenAdded('app-die-button', (el) => {
   const click$ = fromProperty(el, 'click')
   const description$ = fromAttribute(el, 'description')
   const faces$ = fromAttribute(el, 'faces').pipe(

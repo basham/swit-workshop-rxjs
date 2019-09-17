@@ -118,7 +118,7 @@ whenAdded('app-dice-picker', (el) => {
       <div class='picker__label'>
         ${type}
       </div>
-      <app-die
+      <app-die-button
         click=${add}
         description=${`Add ${type}`}
         faces=${faceCount}

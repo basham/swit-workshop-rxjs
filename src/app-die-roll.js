@@ -68,7 +68,7 @@ whenAdded('app-die-roll', (el) => {
     const { value } = props
     const type = `d${faces}`
     return html`
-      <app-die
+      <app-die-button
         click=${roll}
         description=${`${value}, ${type}`}
         faces=${faces}
