@@ -32,16 +32,6 @@ whenAdded('app-dice-picker', (el) => {
     )
   )
 
-  const removeAll$ = fromEvent(document, 'remove-all-dice')
-
-  const reducerClearSub = removeAll$.pipe(
-    mapTo(''),
-    tap((value) => {
-      el.querySelector('.picker').focus()
-      dispatch(value)
-    }),
-  ).subscribe(value$)
-
   const updateCount = (fn) => (source$) => source$.pipe(
     withLatestFrom(diceSets$),
     map(([ key, diceSets ]) => {
@@ -60,7 +50,7 @@ whenAdded('app-dice-picker', (el) => {
     updateCount((count) => count <= 0 ? 0 : count - 1)
   )
 
-  const reducerSub = merge(
+  const addRemoveSub = merge(
     addDice$,
     removeDice$
   ).pipe(
@@ -78,6 +68,15 @@ whenAdded('app-dice-picker', (el) => {
     tap(dispatch)
   ).subscribe(value$)
 
+  const removeAll$ = fromEvent(document, 'remove-all-dice')
+  const removeAllSub = removeAll$.pipe(
+    mapTo(''),
+    tap((value) => {
+      el.querySelector('.picker').focus()
+      dispatch(value)
+    }),
+  ).subscribe(value$)
+
   const renderSub = combineLatestProps({
     picker: picker$
   }).pipe(
@@ -85,8 +84,8 @@ whenAdded('app-dice-picker', (el) => {
   ).subscribe()
 
   return () => {
-    reducerClearSub.unsubscribe()
-    reducerSub.unsubscribe()
+    addRemoveSub.unsubscribe()
+    removeAllSub.unsubscribe()
     renderSub.unsubscribe()
   }
 
