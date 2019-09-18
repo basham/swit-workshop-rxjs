@@ -109,6 +109,10 @@ app-die-button .button {
   width: 100%;
 }
 
+app-die-button .button > * {
+  pointer-events: none;
+}
+
 app-die-button .icon {
   fill: var(--color-default-fill);
   height: 100%;
