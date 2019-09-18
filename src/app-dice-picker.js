@@ -1,8 +1,8 @@
 import { html } from 'lighterhtml'
-import { BehaviorSubject, Subject } from 'rxjs'
+import { BehaviorSubject, fromEvent, merge } from 'rxjs'
 import { map, mapTo, shareReplay, tap, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, createKeychain, decodeDiceFormula, range as numRange, renderComponent, encodeDiceFormula } from './util.js'
+import { adoptStyles, combineLatestProps, createKeychain, decodeDiceFormula, encodeDiceFormula, fromEventSelector, range as numRange, renderComponent } from './util.js'
 import css from './app-dice-picker.css'
 
 adoptStyles(css)
@@ -32,11 +32,7 @@ whenAdded('app-dice-picker', (el) => {
     )
   )
 
-  const modifyDice$ = new Subject()
-  const modifyDice = (value) => modifyDice$.next(value)
-
-  const removeAll$ = new Subject()
-  const removeAll = () => removeAll$.next(null)
+  const removeAll$ = fromEvent(document, 'remove-all-dice')
 
   const reducerClearSub = removeAll$.pipe(
     mapTo(''),
@@ -46,38 +42,38 @@ whenAdded('app-dice-picker', (el) => {
     }),
   ).subscribe(value$)
 
-  // TASK
-  // Have a single stream for each action type.
-  // Replace this with custom operator.
-  // modify((count) => (count + 1))
-  // modify((count) => (count <= 0 ? 0 : count - 1))
-  const incrementDice = (key) => modifyDice({ action: 'increment', key })
-  const decrementDice = (key) => modifyDice({ action: 'decrement', key })
-
-  const reducerSub = modifyDice$.pipe(
+  const updateCount = (fn) => (source$) => source$.pipe(
     withLatestFrom(diceSets$),
-    map(([ event, diceSets ]) => {
-      const { action, key } = event
+    map(([ key, diceSets ]) => {
       const { dieCount } = diceSets.find(({ type }) => type === key)
-      const newDieCount = countFromAction({ action, count: dieCount })
-      return diceSets
+      return [ key, fn(dieCount) ]
+    })
+  )
+
+  const addDice$ = fromEventSelector(el, '[data-add] button', 'click').pipe(
+    map(({ target }) => target.closest('app-die-button').dataset.add),
+    updateCount((count) => count + 1)
+  )
+
+  const removeDice$ = fromEventSelector(el, 'button[data-remove]', 'click').pipe(
+    map(({ target }) => target.dataset.remove),
+    updateCount((count) => count <= 0 ? 0 : count - 1)
+  )
+
+  const reducerSub = merge(
+    addDice$,
+    removeDice$
+  ).pipe(
+    withLatestFrom(diceSets$),
+    map(([ [ key, dieCount ], diceSets ]) =>
+      diceSets
         .map((diceSet) => {
           const { type } = diceSet
           return type === key
-            ? { ...diceSet, dieCount: newDieCount }
+            ? { ...diceSet, dieCount }
             : diceSet
         })
-
-      function countFromAction ({ action, count = 0 }) {
-        if (action === 'increment') {
-          return count + 1
-        }
-        if (action === 'decrement') {
-          return count <= 0 ? 0 : count - 1
-        }
-        return count
-      }
-    }),
+    ),
     map(encodeDiceFormula),
     tap(dispatch)
   ).subscribe(value$)
@@ -88,8 +84,6 @@ whenAdded('app-dice-picker', (el) => {
     renderComponent(el, renderRoot)
   ).subscribe()
 
-  el.removeAll = removeAll
-
   return () => {
     reducerClearSub.unsubscribe()
     reducerSub.unsubscribe()
@@ -98,7 +92,7 @@ whenAdded('app-dice-picker', (el) => {
 
   function dispatch (value) {
     el.value = value
-    const event = new CustomEvent('formulaChange', {
+    const event = new CustomEvent('change-formula', {
       bubbles: true,
       detail: value
     })
@@ -118,14 +112,12 @@ whenAdded('app-dice-picker', (el) => {
 
   function renderDieControl (props) {
     const { dieCount, faceCount, type } = props
-    const add = () => incrementDice(type)
-    const remove = () => decrementDice(type)
     return html`
       <div class='picker__label'>
         ${type}
       </div>
       <app-die-button
-        click=${add}
+        data-add=${type}
         description=${`Add ${type}`}
         faces=${faceCount}
         size='small'
@@ -133,8 +125,8 @@ whenAdded('app-dice-picker', (el) => {
       <button
         aria-label=${`Remove ${type}, ${dieCount} total`}
         class='picker__button'
-        disabled=${!dieCount}
-        onclick=${remove}>
+        data-remove=${type}
+        disabled=${!dieCount}>
         &times; ${dieCount}
       </button>
     `

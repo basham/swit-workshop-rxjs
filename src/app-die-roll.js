@@ -2,7 +2,7 @@ import { html } from 'lighterhtml'
 import { BehaviorSubject, Subject, fromEvent, merge, range, timer } from 'rxjs'
 import { concatMap, map, scan, startWith, switchMap, tap, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, fromAttribute, random, randomItem, range as numRange, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, fromAttribute, fromEventSelector, random, randomItem, range as numRange, renderComponent } from './util.js'
 import css from './app-die-roll.css'
 
 adoptStyles(css)
@@ -16,9 +16,7 @@ whenAdded('app-die-roll', (el) => {
     })
   )
   const rollAll$ = fromEvent(document, 'roll-all-dice')
-  const rollDie$ = new Subject()
-  const rollDie = () => rollDie$.next(null)
-  //const rollDie$ = fromEvent(el, 'click')
+  const rollDie$ = fromEventSelector(el, 'button', 'click')
 
   const rollSub = merge(
     rollAll$,
@@ -73,7 +71,6 @@ whenAdded('app-die-roll', (el) => {
     const type = `d${faces}`
     return html`
       <app-die-button
-        click=${rollDie}
         description=${`${value}, ${type}`}
         faces=${faces}
         label=${value}

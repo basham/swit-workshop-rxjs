@@ -1,6 +1,6 @@
 import { render } from 'lighterhtml'
-import { BehaviorSubject, Observable, combineLatest, isObservable, of } from 'rxjs'
-import { map, shareReplay, tap } from 'rxjs/operators'
+import { BehaviorSubject, Observable, combineLatest, from, fromEvent, isObservable, of } from 'rxjs'
+import { distinctUntilChanged, filter, map, mergeMap, shareReplay, switchMap, tap } from 'rxjs/operators'
 import { FACES } from './constants.js'
 
 export function adoptStyles (css) {
@@ -103,6 +103,32 @@ export function fromAttribute (target, name) {
   )
 }
 
+export function fromSelector (target, selector) {
+  return new Observable((subscriber) => {
+    const next = () => {
+      subscriber.next([ ...target.querySelectorAll(selector) ])
+    }
+    next()
+    const mutationObserver = new MutationObserver(() => {
+      next()
+    })
+    mutationObserver.observe(target, {
+      attributes: true,
+      childList: true,
+      subtree: true
+    })
+    return () => mutationObserver.disconnect()
+  }).pipe(
+    distinctUntilChanged(isArrayEqual)
+  )
+}
+
+export function fromEventSelector (target, selector, eventName, options) {
+  return fromSelector(target, selector).pipe(
+    mapEvent(eventName, options)
+  )
+}
+
 // Listen to an element property change.
 // Useful for getting `data` or `props` properties from lighterhtml elements.
 export function fromProperty (target, name) {
@@ -118,6 +144,36 @@ export function fromProperty (target, name) {
   })
   return property$
 }
+
+export function isArrayEqual (a, b) {
+  if (a.length !== b.length) {
+    return false
+  }
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] !== b[i]) {
+      return false
+    }
+  }
+  return true
+}
+
+// Map an array of elements to a stream of events.
+// Only events dispatched from these elements are emitted.
+// All bubbled events from descendant elements are ignored.
+//
+// Inspired by CycleJS DOM
+// https://cycle.js.org/api/dom.html
+export const mapEvent = (eventName, options) => (source$) => source$.pipe(
+  switchMap((elements) =>
+    from(elements).pipe(
+      mergeMap((element) =>
+        fromEvent(element, eventName, options).pipe(
+          filter(({ target }) => target === element)
+        )
+      )
+    )
+  )
+)
 
 export function pluralize (value, str) {
   return `${str}${value === 1 ? '' : 's'}`

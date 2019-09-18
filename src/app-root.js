@@ -8,23 +8,23 @@ import css from './app-root.css'
 adoptStyles(css)
 
 whenAdded('app-root', (el) => {
-  const formula$ = fromEvent(el, 'formulaChange').pipe(
+  const formula$ = fromEvent(el, 'change-formula').pipe(
     map(({ detail }) => detail),
     startWith(''),
   )
 
-  const boardRoll$ = fromEvent(el, 'boardRoll').pipe(
+  const rollBoard$ = fromEvent(el, 'roll-board').pipe(
     map(({ detail }) => detail),
     shareReplay(1)
   )
 
-  const count$ = boardRoll$.pipe(
+  const count$ = rollBoard$.pipe(
     map(({ count }) => count),
     startWith(0),
     distinctUntilChanged()
   )
 
-  const total$ = boardRoll$.pipe(
+  const total$ = rollBoard$.pipe(
     map(({ total }) => total),
     startWith(0),
     distinctUntilChanged()
@@ -43,7 +43,10 @@ whenAdded('app-root', (el) => {
   }
 
   function removeAllDice () {
-    el.querySelector('app-dice-picker').removeAll()
+    const event = new CustomEvent('remove-all-dice', {
+      bubbles: true
+    })
+    el.dispatchEvent(event)
   }
 
   function rollDice () {

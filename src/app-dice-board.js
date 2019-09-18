@@ -54,7 +54,7 @@ whenAdded('app-dice-board', (el) => {
       el.count = count
       el.results = results
       el.total = total
-      const event = new CustomEvent('boardRoll', {
+      const event = new CustomEvent('roll-board', {
         bubbles: true,
         detail: value
       })
