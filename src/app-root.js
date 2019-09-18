@@ -33,9 +33,11 @@ whenAdded('app-root', (el) => {
   const renderSub = combineLatestProps({
     count: count$,
     formula: formula$,
+    removeAllDice,
+    rollDice,
     total: total$
   }).pipe(
-    renderComponent(el, renderRoot)
+    renderComponent(el, render)
   ).subscribe()
 
   return () => {
@@ -55,36 +57,36 @@ whenAdded('app-root', (el) => {
     })
     el.dispatchEvent(event)
   }
-
-  function renderRoot (props) {
-    const { count, formula, total } = props
-    return html`
-      <app-dice-picker />
-      <div class='total'>
-        <div class=${total > 0 ? null : 'hidden'}>
-          <span class='total__count'>
-            ${total}
-          </span>
-          <span class='total__label'>
-            Total
-          </span>
-        </div>
-      </div>
-      <div class='toolbar'>
-        <button
-          class='toolbar__button'
-          disabled=${!count}
-          onclick=${rollDice}>
-          Roll
-        </button>
-        <button
-          class='toolbar__button'
-          disabled=${!count}
-          onclick=${removeAllDice}>
-          Remove all
-        </button>
-      </div>
-      <app-dice-board formula=${formula} />
-    `
-  }
 })
+
+function render (props) {
+  const { count, formula, removeAllDice, rollDice, total } = props
+  return html`
+    <app-dice-picker />
+    <div class='total'>
+      <div class=${total > 0 ? null : 'hidden'}>
+        <span class='total__count'>
+          ${total}
+        </span>
+        <span class='total__label'>
+          Total
+        </span>
+      </div>
+    </div>
+    <div class='toolbar'>
+      <button
+        class='toolbar__button'
+        disabled=${!count}
+        onclick=${rollDice}>
+        Roll
+      </button>
+      <button
+        class='toolbar__button'
+        disabled=${!count}
+        onclick=${removeAllDice}>
+        Remove all
+      </button>
+    </div>
+    <app-dice-board formula=${formula} />
+  `
+}

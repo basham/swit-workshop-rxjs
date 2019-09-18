@@ -65,7 +65,7 @@ whenAdded('app-dice-board', (el) => {
   const renderSub = combineLatestProps({
     diceSets: diceSets$
   }).pipe(
-    renderComponent(el, renderRoot)
+    renderComponent(el, render)
   ).subscribe(componentDidUpdate$)
 
   function roll () {
@@ -79,25 +79,25 @@ whenAdded('app-dice-board', (el) => {
     rollSub.unsubscribe()
     renderSub.unsubscribe()
   }
-
-  function renderRoot (props) {
-    const { diceSets } = props
-    return html`${diceSets.map(renderDiceSet)}`
-  }
-
-  function renderDiceSet (props) {
-    const { dice, key } = props
-    return html.for(key)`
-      <div>
-        ${dice.map(renderDie)}
-      </div>
-    `
-  }
-
-  function renderDie (props) {
-    const { faceCount, key } = props
-    return html.for(key)`
-      <app-die-roll faces=${faceCount} />
-    `
-  }
 })
+
+function render (props) {
+  const { diceSets } = props
+  return html`${diceSets.map(renderDiceSet)}`
+}
+
+function renderDiceSet (props) {
+  const { dice, key } = props
+  return html.for(key)`
+    <div>
+      ${dice.map(renderDie)}
+    </div>
+  `
+}
+
+function renderDie (props) {
+  const { faceCount, key } = props
+  return html.for(key)`
+    <app-die-roll faces=${faceCount} />
+  `
+}

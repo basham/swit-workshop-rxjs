@@ -80,7 +80,7 @@ whenAdded('app-dice-picker', (el) => {
   const renderSub = combineLatestProps({
     picker: picker$
   }).pipe(
-    renderComponent(el, renderRoot)
+    renderComponent(el, render)
   ).subscribe()
 
   return () => {
@@ -97,37 +97,37 @@ whenAdded('app-dice-picker', (el) => {
     })
     el.dispatchEvent(event)
   }
-
-  function renderRoot (props) {
-    const { picker } = props
-    return html`
-      <div
-        class='picker'
-        tabindex='-1'>
-        ${picker.map(renderDieControl)}
-      </div>
-    `
-  }
-
-  function renderDieControl (props) {
-    const { dieCount, faceCount, type } = props
-    return html`
-      <div class='picker__label'>
-        ${type}
-      </div>
-      <app-die-button
-        data-add=${type}
-        description=${`Add ${type}`}
-        faces=${faceCount}
-        size='small'
-        theme=${dieCount ? 'solid' : 'ghost'} />
-      <button
-        aria-label=${`Remove ${type}, ${dieCount} total`}
-        class='picker__button'
-        data-remove=${type}
-        disabled=${!dieCount}>
-        &times; ${dieCount}
-      </button>
-    `
-  }
 })
+
+function render (props) {
+  const { picker } = props
+  return html`
+    <div
+      class='picker'
+      tabindex='-1'>
+      ${picker.map(renderDieControl)}
+    </div>
+  `
+}
+
+function renderDieControl (props) {
+  const { dieCount, faceCount, type } = props
+  return html`
+    <div class='picker__label'>
+      ${type}
+    </div>
+    <app-die-button
+      data-add=${type}
+      description=${`Add ${type}`}
+      faces=${faceCount}
+      size='small'
+      theme=${dieCount ? 'solid' : 'ghost'} />
+    <button
+      aria-label=${`Remove ${type}, ${dieCount} total`}
+      class='picker__button'
+      data-remove=${type}
+      disabled=${!dieCount}>
+      &times; ${dieCount}
+    </button>
+  `
+}

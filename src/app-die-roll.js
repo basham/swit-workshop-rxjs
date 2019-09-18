@@ -65,17 +65,17 @@ whenAdded('app-die-roll', (el) => {
     rollSub.unsubscribe()
     renderSub.unsubscribe()
   }
-
-  function render (props) {
-    const { faces, value } = props
-    const type = `d${faces}`
-    return html`
-      <app-die-button
-        description=${`${value}, ${type}`}
-        faces=${faces}
-        label=${value}
-        size='medium'
-        theme='solid' />
-    `
-  }
 })
+
+function render (props) {
+  const { faces, value } = props
+  const type = `d${faces}`
+  return html`
+    <app-die-button
+      description=${`${value}, ${type}`}
+      faces=${faces}
+      label=${value}
+      size='medium'
+      theme='solid' />
+  `
+}

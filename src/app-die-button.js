@@ -24,22 +24,22 @@ whenAdded('app-die-button', (el) => {
   return () => {
     renderSub.unsubscribe()
   }
-
-  function render (props) {
-    const { description, faces, label } = props
-    const type = `d${faces}`
-    const icon = `dice.svg#${type}`
-    return html`
-      <button
-        aria-label=${description}
-        class='button'>
-        <svg class='icon'>
-          <use xlink:href=${icon} />
-        </svg>
-        <div class='label'>
-          ${label}
-        </div>
-      </button>
-    `
-  }
 })
+
+function render (props) {
+  const { description, faces, label } = props
+  const type = `d${faces}`
+  const icon = `dice.svg#${type}`
+  return html`
+    <button
+      aria-label=${description}
+      class='button'>
+      <svg class='icon'>
+        <use xlink:href=${icon} />
+      </svg>
+      <div class='label'>
+        ${label}
+      </div>
+    </button>
+  `
+}
