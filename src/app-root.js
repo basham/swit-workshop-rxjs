@@ -1,6 +1,6 @@
 import { html } from 'lighterhtml'
 import { fromEvent } from 'rxjs'
-import { distinctUntilChanged, map, startWith } from 'rxjs/operators'
+import { distinctUntilChanged, map, shareReplay, startWith, tap } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import { adoptStyles, combineLatestProps, renderComponent } from './util.js'
 import css from './app-root.css'
@@ -8,13 +8,14 @@ import css from './app-root.css'
 adoptStyles(css)
 
 whenAdded('app-root', (el) => {
-  const dice$ = fromEvent(el, 'dicePickerChange').pipe(
+  const formula$ = fromEvent(el, 'formulaChange').pipe(
     map(({ detail }) => detail),
-    startWith({})
+    startWith(''),
   )
 
   const boardRoll$ = fromEvent(el, 'boardRoll').pipe(
-    map(({ detail }) => detail)
+    map(({ detail }) => detail),
+    shareReplay(1)
   )
 
   const count$ = boardRoll$.pipe(
@@ -31,7 +32,7 @@ whenAdded('app-root', (el) => {
 
   const renderSub = combineLatestProps({
     count: count$,
-    formula: '2d6 1d10',
+    formula: formula$,
     total: total$
   }).pipe(
     renderComponent(el, renderRoot)

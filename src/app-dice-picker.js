@@ -1,30 +1,33 @@
 import { html } from 'lighterhtml'
 import { BehaviorSubject, Subject } from 'rxjs'
-import { map, mapTo, tap, withLatestFrom } from 'rxjs/operators'
+import { map, mapTo, shareReplay, tap, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { FACES } from './constants.js'
-import { adoptStyles, combineLatestProps, createKeychain, range as numRange, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, createKeychain, decodeDiceFormula, range as numRange, renderComponent, encodeDiceFormula } from './util.js'
 import css from './app-dice-picker.css'
 
 adoptStyles(css)
 
 whenAdded('app-dice-picker', (el) => {
-  const dice$ = new BehaviorSubject({ d6: 2, d20: 1 })
-  dispatch(dice$.getValue())
+  const value$ = new BehaviorSubject('3d6 1d10')
+  dispatch(value$.getValue())
+
+  const diceSets$ = value$.pipe(
+    map(decodeDiceFormula),
+    shareReplay(1)
+  )
 
   const getKey = createKeychain()
 
-  const picker$ = dice$.pipe(
-    map((bag) =>
-      FACES
-        .map((faceCount) => {
-          const type = `d${faceCount}`
+  const picker$ = diceSets$.pipe(
+    map((diceSets) =>
+      diceSets
+        .map((diceSet) => {
+          const { dieCount, faceCount, type } = diceSet
           const key = getKey(type)
-          const dieCount = bag[type] || 0
           const dice = numRange(dieCount)
             .map((i) => `${type}-${i}`)
-            .map((id) => ({ key: getKey(id), id, faceCount }))
-          return { dice, dieCount, faceCount, key, type }
+            .map((id) => ({ key: getKey(id), faceCount }))
+          return { ...diceSet, dice, key }
         })
     )
   )
@@ -36,12 +39,12 @@ whenAdded('app-dice-picker', (el) => {
   const removeAll = () => removeAll$.next(null)
 
   const reducerClearSub = removeAll$.pipe(
-    mapTo({}),
+    mapTo(''),
     tap((value) => {
       el.querySelector('.picker').focus()
       dispatch(value)
     }),
-  ).subscribe(dice$)
+  ).subscribe(value$)
 
   // TASK
   // Have a single stream for each action type.
@@ -52,14 +55,18 @@ whenAdded('app-dice-picker', (el) => {
   const decrementDice = (key) => modifyDice({ action: 'decrement', key })
 
   const reducerSub = modifyDice$.pipe(
-    withLatestFrom(dice$),
-    map(([ event, dice ]) => {
+    withLatestFrom(diceSets$),
+    map(([ event, diceSets ]) => {
       const { action, key } = event
-      const count = countFromAction({ action, count: dice[key] })
-      const { [key]: thisFace, ...otherFaces } = dice
-      return count === 0
-        ? otherFaces
-        : { ...otherFaces, [key]: count }
+      const { dieCount } = diceSets.find(({ type }) => type === key)
+      const newDieCount = countFromAction({ action, count: dieCount })
+      return diceSets
+        .map((diceSet) => {
+          const { type } = diceSet
+          return type === key
+            ? { ...diceSet, dieCount: newDieCount }
+            : diceSet
+        })
 
       function countFromAction ({ action, count = 0 }) {
         if (action === 'increment') {
@@ -71,10 +78,9 @@ whenAdded('app-dice-picker', (el) => {
         return count
       }
     }),
+    map(encodeDiceFormula),
     tap(dispatch)
-  ).subscribe((value) => {
-    dice$.next(value)
-  })
+  ).subscribe(value$)
 
   const renderSub = combineLatestProps({
     picker: picker$
@@ -92,7 +98,7 @@ whenAdded('app-dice-picker', (el) => {
 
   function dispatch (value) {
     el.value = value
-    const event = new CustomEvent('dicePickerChange', {
+    const event = new CustomEvent('formulaChange', {
       bubbles: true,
       detail: value
     })
@@ -105,12 +111,12 @@ whenAdded('app-dice-picker', (el) => {
       <div
         class='picker'
         tabindex='-1'>
-        ${picker.map(renderDieInput)}
+        ${picker.map(renderDieControl)}
       </div>
     `
   }
 
-  function renderDieInput (props) {
+  function renderDieControl (props) {
     const { dieCount, faceCount, type } = props
     const add = () => incrementDice(type)
     const remove = () => decrementDice(type)
