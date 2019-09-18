@@ -47,7 +47,10 @@ whenAdded('app-root', (el) => {
   }
 
   function rollDice () {
-    el.querySelector('app-dice-board').roll()
+    const event = new CustomEvent('roll-all-dice', {
+      bubbles: true
+    })
+    el.dispatchEvent(event)
   }
 
   function renderRoot (props) {

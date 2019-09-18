@@ -1,6 +1,6 @@
 import { html } from 'lighterhtml'
-import { BehaviorSubject, Subject, range, timer } from 'rxjs'
-import { concatMap, map, scan, switchMap, tap, withLatestFrom } from 'rxjs/operators'
+import { BehaviorSubject, Subject, fromEvent, merge, range, timer } from 'rxjs'
+import { concatMap, map, scan, startWith, switchMap, tap, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import { adoptStyles, combineLatestProps, fromAttribute, random, randomItem, range as numRange, renderComponent } from './util.js'
 import css from './app-die-roll.css'
@@ -8,23 +8,24 @@ import css from './app-die-roll.css'
 adoptStyles(css)
 
 whenAdded('app-die-roll', (el) => {
+  const value$ = new BehaviorSubject(1)
   const faces$ = fromAttribute(el, 'faces').pipe(
     map((value) => parseInt(value) || 6),
     tap((faces) => {
       el.faces = faces
     })
   )
+  const rollAll$ = fromEvent(document, 'roll-all-dice')
+  const rollDie$ = new Subject()
+  const rollDie = () => rollDie$.next(null)
+  //const rollDie$ = fromEvent(el, 'click')
 
-  const roll$ = new Subject()
-  const value$ = new BehaviorSubject(1)
-
-  function roll () {
-    roll$.next(null)
-  }
-
-  el.roll = roll
-
-  const rollSub = roll$.pipe(
+  const rollSub = merge(
+    rollAll$,
+    rollDie$
+  ).pipe(
+    // Immediately roll.
+    startWith(null),
     // Trigger a roll.
     switchMap(() =>
       // Roll to a new side, a random number of times.
@@ -62,8 +63,6 @@ whenAdded('app-die-roll', (el) => {
     renderComponent(el, render)
   ).subscribe()
 
-  roll()
-
   return () => {
     rollSub.unsubscribe()
     renderSub.unsubscribe()
@@ -74,7 +73,7 @@ whenAdded('app-die-roll', (el) => {
     const type = `d${faces}`
     return html`
       <app-die-button
-        click=${roll}
+        click=${rollDie}
         description=${`${value}, ${type}`}
         faces=${faces}
         label=${value}

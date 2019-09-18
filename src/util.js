@@ -113,7 +113,8 @@ export function fromProperty (target, name) {
     },
     set (value) {
       property$.next(value)
-    }
+    },
+    configurable: true
   })
   return property$
 }
