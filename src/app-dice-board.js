@@ -89,7 +89,7 @@ function render (props) {
 function renderDiceSet (props) {
   const { dice, key } = props
   return html.for(key)`
-    <div>
+    <div class='dice-set'>
       ${dice.map(renderDie)}
     </div>
   `

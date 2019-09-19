@@ -94,24 +94,21 @@
 }
 
 [is="app-die-button"] {
-  display: inline-block;
-  height: var(--size);
-  width: var(--size);
-}
-
-[is="app-die-button"] {
   background-color: transparent;
   border: none;
   color: var(--color-default-text);
+  display: inline-block;
+  height: var(--size);
   padding: 0;
   position: relative;
+  width: var(--size);
 }
 
 [is="app-die-button"] > * {
   pointer-events: none;
 }
 
-[is="app-die-button"] .icon {
+[is="app-die-button"] > .icon {
   fill: var(--color-default-fill);
   height: 100%;
   left: 0;
@@ -123,7 +120,7 @@
   width: 100%;
 }
 
-[is="app-die-button"] .label {
+[is="app-die-button"] > .label {
   font-size: var(--font-size);
   font-weight: bold;
   position: relative;
@@ -133,22 +130,22 @@
   outline: none;
 }
 
-[is="app-die-button"]:focus .icon,
-[is="app-die-button"]:hover .icon {
+[is="app-die-button"]:focus > .icon,
+[is="app-die-button"]:hover > .icon {
   fill: var(--color-focus-fill);
   stroke: var(--color-focus-stroke);
 }
 
-[is="app-die-button"]:focus .label,
-[is="app-die-button"]:hover .label {
+[is="app-die-button"]:focus > .label,
+[is="app-die-button"]:hover > .label {
   color: var(--color-focus-text);
 }
 
-[is="app-die-button"]:active .icon {
+[is="app-die-button"]:active > .icon {
   fill: var(--color-active-fill);
   stroke: var(--color-active-stroke);
 }
 
-[is="app-die-button"]:active .label {
+[is="app-die-button"]:active > .label {
   color: var(--color-active-text);
 }
