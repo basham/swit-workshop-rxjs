@@ -1,6 +1,6 @@
 import { html } from 'lighterhtml'
 import { fromEvent } from 'rxjs'
-import { distinctUntilChanged, map, shareReplay, startWith, tap } from 'rxjs/operators'
+import { distinctUntilChanged, map, shareReplay, startWith } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import { adoptStyles, combineLatestProps, renderComponent } from './util.js'
 import css from './app-root.css'

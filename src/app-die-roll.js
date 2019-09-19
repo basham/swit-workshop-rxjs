@@ -1,5 +1,5 @@
 import { html } from 'lighterhtml'
-import { BehaviorSubject, Subject, fromEvent, merge, range, timer } from 'rxjs'
+import { BehaviorSubject, fromEvent, merge, range, timer } from 'rxjs'
 import { concatMap, map, scan, startWith, switchMap, tap, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import { adoptStyles, combineLatestProps, fromAttribute, fromEventSelector, random, randomItem, range as numRange, renderComponent } from './util.js'
