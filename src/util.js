@@ -71,6 +71,15 @@ export function decodeDiceFormula (formula) {
     })
 }
 
+// Display the current value in the stream.
+export const debug = (message = '', type = 'log') => (source$) => source$.pipe(
+  tap((value) => {
+    console.group(message)
+    console[type](value)
+    console.groupEnd()
+  })
+)
+
 // In:
 //   [
 //     { dieCount: 2, faceCount: 6 },
