@@ -113,25 +113,12 @@ body {
 app-root {
   display: grid;
   grid-template-columns: min-content 1fr;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto 1fr;
   grid-template-areas:
     ". picker"
-    "total board"
     "toolbar board";
   min-height: 100vh;
   min-width: 100vw;
-}
-
-app-root h1 {
-  font-size: 2rem;
-  font-weight: normal;
-  line-height: 2rem;
-  margin: 0;
-}
-
-app-root .toolbar {
-  grid-area: toolbar;
-  padding: 2rem;
 }
 
 app-root > app-dice-picker {
@@ -140,64 +127,13 @@ app-root > app-dice-picker {
   padding: 1.5rem;
 }
 
+app-root > app-toolbar {
+  grid-area: toolbar;
+  padding: 2rem;
+}
+
 app-root > app-dice-board {
   background-color: var(--color-black-08);
   grid-area: board;
   padding: 1.5rem;
-}
-
-app-root .total {
-  color: var(--color-black-01);
-  grid-area: total;
-  padding: 2rem;
-  text-align: center;
-}
-
-app-root .total__count {
-  display: block;
-  font-size: 3rem;
-  font-weight: bold;
-}
-
-app-root .total__label {
-  display: block;
-  font-size: calc(20rem/16);
-  letter-spacing: 0.15ch;
-}
-
-app-root .roll {
-  grid-area: roll;
-  padding: 2rem;
-}
-
-app-root .toolbar__button {
-  background-color: var(--color-black-07);
-  border: calc(4rem/16) solid var(--color-black-05);
-  border-radius: 0.25rem;
-  color: var(--color-black-01);
-  font-size: calc(18rem/16);
-  font-weight: bold;
-  line-height: calc(40rem/16);
-  padding: 0 1rem;
-  white-space: nowrap;
-  width: 100%;
-}
-
-app-root .toolbar__button + .toolbar__button {
-  margin-top: 2rem;
-}
-
-app-root .toolbar__button:focus,
-app-root .toolbar__button:hover {
-  border-color: var(--color-black-01);
-  outline: none;
-}
-
-app-root .toolbar__button:active {
-  background-color: var(--color-black-08);
-}
-
-.hidden,
-app-root .toolbar__button:disabled {
-  visibility: hidden;
 }

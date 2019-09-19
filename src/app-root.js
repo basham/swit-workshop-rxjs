@@ -1,6 +1,6 @@
 import { html } from 'lighterhtml'
 import { fromEvent } from 'rxjs'
-import { distinctUntilChanged, map, shareReplay, startWith } from 'rxjs/operators'
+import { map, startWith } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import { adoptStyles, combineLatestProps, renderComponent } from './util.js'
 import css from './app-root.css'
@@ -10,32 +10,11 @@ adoptStyles(css)
 whenAdded('app-root', (el) => {
   const formula$ = fromEvent(el, 'change-formula').pipe(
     map(({ detail }) => detail),
-    startWith(''),
-  )
-
-  const rollBoard$ = fromEvent(el, 'roll-board').pipe(
-    map(({ detail }) => detail),
-    shareReplay(1)
-  )
-
-  const count$ = rollBoard$.pipe(
-    map(({ count }) => count),
-    startWith(0),
-    distinctUntilChanged()
-  )
-
-  const total$ = rollBoard$.pipe(
-    map(({ total }) => total),
-    startWith(0),
-    distinctUntilChanged()
+    startWith('')
   )
 
   const renderSub = combineLatestProps({
-    count: count$,
-    formula: formula$,
-    removeAllDice,
-    rollDice,
-    total: total$
+    formula: formula$
   }).pipe(
     renderComponent(el, render)
   ).subscribe()
@@ -43,50 +22,13 @@ whenAdded('app-root', (el) => {
   return () => {
     renderSub.unsubscribe()
   }
-
-  function removeAllDice () {
-    const event = new CustomEvent('remove-all-dice', {
-      bubbles: true
-    })
-    el.dispatchEvent(event)
-  }
-
-  function rollDice () {
-    const event = new CustomEvent('roll-all-dice', {
-      bubbles: true
-    })
-    el.dispatchEvent(event)
-  }
 })
 
 function render (props) {
-  const { count, formula, removeAllDice, rollDice, total } = props
+  const { formula } = props
   return html`
     <app-dice-picker />
-    <div class='total'>
-      <div class=${total > 0 ? null : 'hidden'}>
-        <span class='total__count'>
-          ${total}
-        </span>
-        <span class='total__label'>
-          Total
-        </span>
-      </div>
-    </div>
-    <div class='toolbar'>
-      <button
-        class='toolbar__button'
-        disabled=${!count}
-        onclick=${rollDice}>
-        Roll
-      </button>
-      <button
-        class='toolbar__button'
-        disabled=${!count}
-        onclick=${removeAllDice}>
-        Remove all
-      </button>
-    </div>
+    <app-toolbar />
     <app-dice-board formula=${formula} />
   `
 }
