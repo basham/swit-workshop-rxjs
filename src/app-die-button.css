@@ -1,15 +1,15 @@
-app-die-button,
-app-die-button[size="small"] {
+[is="app-die-button"],
+[is="app-die-button"][size="small"] {
   --font-size: calc(14rem/16);
   --size: 2rem;
 }
 
-app-die-button[size="medium"] {
+[is="app-die-button"][size="medium"] {
   --font-size: calc(20rem/16);
   --size: 4rem;
 }
 
-app-die-button {
+[is="app-die-button"] {
   --color-focus-fill: var(--color-default-fill);
   --color-focus-text: var(--color-default-text);
 
@@ -18,7 +18,7 @@ app-die-button {
 }
 
 
-app-die-button[theme="ghost"] {
+[is="app-die-button"][theme="ghost"] {
   --color-default-fill: transparent;
   --color-default-stroke: var(--color-black-05);
   --color-default-text: var(--color-black-01);
@@ -28,7 +28,7 @@ app-die-button[theme="ghost"] {
   --color-active-fill: var(--color-black-09);
 }
 
-app-die-button[theme="solid"] {
+[is="app-die-button"][theme="solid"] {
   --color-default-fill: var(--color-black-06);
   --color-default-stroke: var(--color-default-fill);
   --color-default-text: var(--color-black-00);
@@ -38,7 +38,7 @@ app-die-button[theme="solid"] {
   --color-active-fill: var(--color-black-07);
 }
 
-app-die-button[theme="solid"][faces="4"] {
+[is="app-die-button"][theme="solid"][faces="4"] {
   --color-default-fill: var(--color-blue-04);
   --color-default-text: var(--color-blue-09);
 
@@ -47,7 +47,7 @@ app-die-button[theme="solid"][faces="4"] {
   --color-active-fill: var(--color-blue-05);
 }
 
-app-die-button[theme="solid"][faces="6"] {
+[is="app-die-button"][theme="solid"][faces="6"] {
   --color-default-fill: var(--color-orange-03);
   --color-default-text: var(--color-orange-08);
 
@@ -56,7 +56,7 @@ app-die-button[theme="solid"][faces="6"] {
   --color-active-fill: var(--color-orange-04);
 }
 
-app-die-button[theme="solid"][faces="8"] {
+[is="app-die-button"][theme="solid"][faces="8"] {
   --color-default-fill: var(--color-green-03);
   --color-default-text: var(--color-green-08);
 
@@ -65,7 +65,7 @@ app-die-button[theme="solid"][faces="8"] {
   --color-active-fill: var(--color-green-04);
 }
 
-app-die-button[theme="solid"][faces="10"] {
+[is="app-die-button"][theme="solid"][faces="10"] {
   --color-default-fill: var(--color-purple-04);
   --color-default-text: var(--color-purple-09);
 
@@ -75,7 +75,7 @@ app-die-button[theme="solid"][faces="10"] {
 }
 
 
-app-die-button[theme="solid"][faces="12"] {
+[is="app-die-button"][theme="solid"][faces="12"] {
   --color-default-fill: var(--color-teal-03);
   --color-default-text: var(--color-teal-08);
 
@@ -84,7 +84,7 @@ app-die-button[theme="solid"][faces="12"] {
   --color-active-fill: var(--color-teal-04);
 }
 
-app-die-button[theme="solid"][faces="20"] {
+[is="app-die-button"][theme="solid"][faces="20"] {
   --color-default-fill: var(--color-yellow-02);
   --color-default-text: var(--color-yellow-07);
 
@@ -93,27 +93,25 @@ app-die-button[theme="solid"][faces="20"] {
   --color-active-fill: var(--color-yellow-03);
 }
 
-app-die-button {
+[is="app-die-button"] {
   display: inline-block;
   height: var(--size);
   width: var(--size);
 }
 
-app-die-button .button {
+[is="app-die-button"] {
   background-color: transparent;
   border: none;
   color: var(--color-default-text);
-  height: 100%;
   padding: 0;
   position: relative;
-  width: 100%;
 }
 
-app-die-button .button > * {
+[is="app-die-button"] > * {
   pointer-events: none;
 }
 
-app-die-button .icon {
+[is="app-die-button"] .icon {
   fill: var(--color-default-fill);
   height: 100%;
   left: 0;
@@ -125,32 +123,32 @@ app-die-button .icon {
   width: 100%;
 }
 
-app-die-button .label {
+[is="app-die-button"] .label {
   font-size: var(--font-size);
   font-weight: bold;
   position: relative;
 }
 
-app-die-button .button:focus {
+[is="app-die-button"]:focus {
   outline: none;
 }
 
-app-die-button .button:focus .icon,
-app-die-button .button:hover .icon {
+[is="app-die-button"]:focus .icon,
+[is="app-die-button"]:hover .icon {
   fill: var(--color-focus-fill);
   stroke: var(--color-focus-stroke);
 }
 
-app-die-button .button:focus .label,
-app-die-button .button:hover .label {
+[is="app-die-button"]:focus .label,
+[is="app-die-button"]:hover .label {
   color: var(--color-focus-text);
 }
 
-app-die-button .button:active .icon {
+[is="app-die-button"]:active .icon {
   fill: var(--color-active-fill);
   stroke: var(--color-active-stroke);
 }
 
-app-die-button .button:active .label {
+[is="app-die-button"]:active .label {
   color: var(--color-active-text);
 }

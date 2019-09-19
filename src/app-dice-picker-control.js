@@ -23,7 +23,7 @@ whenAdded('app-dice-picker-control', (el) => {
   el.faces = parseInt(el.getAttribute('faces'))
   dispatch(value$.getValue())
 
-  const increment$ = fromEventSelector(el, '.increment-button > button', 'click').pipe(
+  const increment$ = fromEventSelector(el, '.increment-button', 'click').pipe(
     withLatestFrom(value$),
     map(([ , value ]) => value + 1)
   )
@@ -77,10 +77,11 @@ function render (props) {
     <div class='label'>
       ${type}
     </div>
-    <app-die-button
+    <button
+      aria-label=${`Add ${type}`}
       class='increment-button'
-      description=${`Add ${type}`}
       faces=${faces}
+      is="app-die-button"
       size='small'
       theme=${value ? 'solid' : 'ghost'} />
     <button

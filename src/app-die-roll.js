@@ -71,9 +71,10 @@ function render (props) {
   const { faces, value } = props
   const type = `d${faces}`
   return html`
-    <app-die-button
-      description=${`${value}, ${type}`}
+    <button
+      aria-label=${`${value}, ${type}`}
       faces=${faces}
+      is='app-die-button'
       label=${value}
       size='medium'
       theme='solid' />
