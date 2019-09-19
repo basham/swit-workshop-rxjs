@@ -20,15 +20,15 @@
   "homepage": "https://github.com/basham/swit-workshop-rxjs#readme",
   "dependencies": {
     "conduit-rxjs": "0.5.0",
-    "construct-style-sheets-polyfill": "2.2.7",
-    "es-module-shims": "0.4.0",
-    "lighterhtml": "1.0.4",
-    "rxjs": "6.5.2",
+    "construct-style-sheets-polyfill": "2.2.10",
+    "es-module-shims": "0.4.5",
+    "lighterhtml": "1.2.0",
+    "rxjs": "6.5.3",
     "when-elements": "0.2.1"
   },
   "devDependencies": {
-    "@pika/web": "0.5.3",
-    "es-dev-server": "1.17.1"
+    "@pika/web": "0.6.1",
+    "es-dev-server": "1.18.0"
   },
   "@pika/web": {
     "webDependencies": [
