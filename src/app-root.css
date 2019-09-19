@@ -137,7 +137,7 @@ app-root .toolbar {
 app-root > app-dice-picker {
   background-color: var(--color-black-08);
   grid-area: picker;
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 app-root > app-dice-board {

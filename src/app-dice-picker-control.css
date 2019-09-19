@@ -1,0 +1,44 @@
+app-dice-picker-control {
+  display: inline-block;
+  text-align: center;
+  width: 3rem;
+}
+
+app-dice-picker-control > .label {
+  color: var(--color-black-02);
+  font-size: calc(18rem/16);
+  font-weight: bold;
+  line-height: calc(20rem/16);
+}
+
+app-dice-picker-control > .increment-button {
+  margin: 0.5rem 0;
+}
+
+app-dice-picker-control > .decrement-button {
+  background-color: var(--color-black-05);
+  border: calc(2rem/16) solid var(--color-black-05);
+  border-radius: calc(4rem/16);
+  color: var(--color-black-10);
+  display: block;
+  font-size: calc(14rem/16);
+  font-weight: bold;
+  line-height: calc(16rem/16);
+  padding: 0 0.25rem;
+  white-space: nowrap;
+  width: 100%;
+}
+
+app-dice-picker-control > .decrement-button:focus,
+app-dice-picker-control > .decrement-button:hover {
+  border-color: var(--color-black-02);
+  outline: none;
+}
+
+app-dice-picker-control > .decrement-button:active {
+  background-color: var(--color-black-06);
+}
+
+app-dice-picker-control > .decrement-button:disabled {
+  visibility: hidden;
+}
