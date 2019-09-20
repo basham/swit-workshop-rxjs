@@ -98,6 +98,11 @@ export function encodeDiceFormula (diceSets) {
 
 // options
 //   attribute: true (default), false, 'custom-attr-name'
+//   eventName: `${name}-changed` (default), 'custom-event-name'
+//     Automatically dispatch custom events for property changes.
+//   reflect: true (default), false
+//     Set to false primarily for input values.
+//     Get the default value via attribute, but otherwise ignore it.
 //   type: String (default), Number, Boolean, Array, Object
 //   value: (initial value)
 export function fromProp (target, name, options = {}) {
