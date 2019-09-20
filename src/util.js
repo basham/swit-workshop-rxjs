@@ -96,6 +96,103 @@ export function encodeDiceFormula (diceSets) {
     .join(' ')
 }
 
+// options
+//   attribute: true (default), false, 'custom-attr-name'
+//   type: String (default), Number, Boolean, Array, Object
+//   value: (initial value)
+export function fromProp (target, name, options = {}) {
+  const { attribute = true, type = String, value } = options
+
+  const attributeName = getAttributeName()
+  const defaultValue = value || target[name] || (attribute && getAttribute())
+  let _value = undefined
+
+  return new Observable((subscriber) => {
+    Object.defineProperty(target, name, {
+      configurable: true,
+      get () {
+        return _value
+      },
+      set (value) {
+        if (encode(_value) === encode(value)) {
+          return
+        }
+        _value = value
+        if (attributeName) {
+          if (type === Boolean) {
+            if (value) {
+              target.setAttribute(attributeName, '')
+            } else {
+              target.removeAttribute(attributeName)
+            }
+          } else {
+            target.setAttribute(attributeName, encode(value))
+          }
+        }
+        subscriber.next(value)
+      }
+    })
+
+    target[name] = defaultValue
+
+    const unsubscribe = observeAttribute()
+
+    return unsubscribe
+  })
+
+  function observeAttribute () {
+    if (!attributeName) {
+      return () => {}
+    }
+
+    const mutationObserver = new MutationObserver((mutationsList) =>
+      mutationsList
+        .filter(({ type }) => type === 'attributes')
+        .filter((mutation) => mutation.attributeName === attributeName)
+        .forEach(() => {
+          target[name] = getAttribute()
+        })
+    )
+    mutationObserver.observe(target, { attributes: true });
+    return () => mutationObserver.disconnect()
+  }
+
+  function getAttribute () {
+    return decode(target.getAttribute(attributeName))
+  }
+
+  function getAttributeName () {
+    return typeof attribute === 'string'
+      ? attribute
+      : attribute
+        ? name
+        : undefined
+  }
+
+  function decode (value) {
+    if (type === Boolean) {
+      return Boolean(value)
+    }
+    if (type === Number) {
+      return Number(value)
+    }
+    if (type === String) {
+      return value || ''
+    }
+    return JSON.parse(value)
+  }
+
+  function encode (value) {
+    if (type === Boolean) {
+      return JSON.stringify(!!value)
+    }
+    if (type === String) {
+      return value
+    }
+    return JSON.stringify(value)
+  }
+}
+
 export function fromAttribute (target, name) {
   return new Observable((subscriber) => {
     const next = () => subscriber.next(target.getAttribute(name))
@@ -108,9 +205,23 @@ export function fromAttribute (target, name) {
     )
     mutationObserver.observe(target, { attributes: true });
     return () => mutationObserver.disconnect()
-  }).pipe(
-    shareReplay(1)
-  )
+  })
+}
+
+// Listen to an element property change.
+// Useful for getting `data` or `props` properties from lighterhtml elements.
+export function fromProperty (target, name) {
+  const property$ = new BehaviorSubject(target[name])
+  Object.defineProperty(target, name, {
+    get () {
+      return property$.getValue()
+    },
+    set (value) {
+      property$.next(value)
+    },
+    configurable: true
+  })
+  return property$
 }
 
 export function fromSelector (target, selector) {
@@ -137,22 +248,6 @@ export function fromEventSelector (target, selector, eventName, options) {
   return fromSelector(target, selector).pipe(
     mapEvent(eventName, options)
   )
-}
-
-// Listen to an element property change.
-// Useful for getting `data` or `props` properties from lighterhtml elements.
-export function fromProperty (target, name) {
-  const property$ = new BehaviorSubject(target[name])
-  Object.defineProperty(target, name, {
-    get () {
-      return property$.getValue()
-    },
-    set (value) {
-      property$.next(value)
-    },
-    configurable: true
-  })
-  return property$
 }
 
 export function isArrayEqual (a, b) {

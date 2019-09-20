@@ -1,16 +1,15 @@
 import { html } from 'lighterhtml'
-import { map } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, fromAttribute, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, debug, fromProp, renderComponent } from './util.js'
 import css from './app-die-button.css'
 
 adoptStyles(css)
 
 whenAdded('[is="app-die-button"]', (el) => {
-  const faces$ = fromAttribute(el, 'faces').pipe(
-    map((value) => parseInt(value))
+  const faces$ = fromProp(el, 'faces', { type: Number }).pipe(
+    debug('Faces')
   )
-  const label$ = fromAttribute(el, 'label')
+  const label$ = fromProp(el, 'label')
 
   const renderSub = combineLatestProps({
     faces: faces$,
