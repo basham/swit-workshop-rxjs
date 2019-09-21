@@ -107,12 +107,12 @@ export function encodeDiceFormula (diceSets) {
 //   value: (initial value)
 export function fromProp (target, name, options = {}) {
   const { attribute = true, type = String, value } = options
-
   const attributeName = getAttributeName()
-  const defaultValue = value || target[name] || (attribute && getAttribute())
-  let _value = undefined
 
   return new Observable((subscriber) => {
+    const defaultValue = (attribute && getAttribute()) || value || target[name]
+    let _value = undefined
+
     Object.defineProperty(target, name, {
       configurable: true,
       get () {
