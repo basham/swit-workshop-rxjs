@@ -110,7 +110,8 @@ export function fromProp (target, name, options = {}) {
   const attributeName = getAttributeName()
 
   return new Observable((subscriber) => {
-    const defaultValue = (attribute && getAttribute()) || value || target[name]
+    const defaultValue = (hasAttribute() && getAttribute()) || value || target[name]
+    //const defaultValue = value || target[name] || (hasAttribute() && getAttribute())
     let _value = undefined
 
     Object.defineProperty(target, name, {
@@ -160,6 +161,10 @@ export function fromProp (target, name, options = {}) {
     )
     mutationObserver.observe(target, { attributes: true });
     return () => mutationObserver.disconnect()
+  }
+
+  function hasAttribute () {
+    return !!(attribute && target.getAttribute(attributeName))
   }
 
   function getAttribute () {
