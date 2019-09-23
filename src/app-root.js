@@ -1,31 +1,32 @@
 import { html } from 'lighterhtml'
-import { map, startWith } from 'rxjs/operators'
+import { map, startWith, tap } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, fromEventSelector, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, fromEventSelector, renderComponent, useSubscribe } from './util.js'
 import css from './app-root.css'
 
 adoptStyles(css)
 
 whenAdded('app-root', (el) => {
+  const [ subscribe, unsubscribe ] = useSubscribe()
+
   const formula$ = fromEventSelector(el, 'app-dice-picker', 'formula-changed').pipe(
     map(({ detail }) => detail),
     startWith('')
   )
 
-  const rollAllSub = fromEventSelector(el, 'app-toolbar', 'roll-all-dice').subscribe(() => {
-    el.querySelector('app-dice-board').roll()
-  })
+  const rollAll$ = fromEventSelector(el, 'app-toolbar', 'roll-all-dice').pipe(
+    tap(() => el.querySelector('app-dice-board').roll())
+  )
+  subscribe(rollAll$)
 
-  const renderSub = combineLatestProps({
+  const render$ = combineLatestProps({
     formula: formula$
   }).pipe(
     renderComponent(el, render)
-  ).subscribe()
+  )
+  subscribe(render$)
 
-  return () => {
-    rollAllSub.unsubscribe()
-    renderSub.unsubscribe()
-  }
+  return unsubscribe
 })
 
 function render (props) {

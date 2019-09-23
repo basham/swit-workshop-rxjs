@@ -2,18 +2,20 @@ import { html } from 'lighterhtml'
 import { fromEvent } from 'rxjs'
 import { map, scan, tap, distinctUntilChanged } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, decodeDiceFormula, encodeDiceFormula, fromProperty, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, decodeDiceFormula, encodeDiceFormula, fromProperty, renderComponent, useSubscribe } from './util.js'
 import css from './app-dice-picker.css'
 
 adoptStyles(css)
 
 whenAdded('app-dice-picker', (el) => {
+  const [ subscribe, unsubscribe ] = useSubscribe()
+
   const formula$ = fromProperty(el, 'formula', { defaultValue: '', reflect: false, type: String })
   const picker$ = formula$.pipe(
     map(decodeDiceFormula)
   )
 
-  const changeValueSub = fromEvent(el, 'change-picker-control').pipe(
+  const changeValue$ = fromEvent(el, 'change-picker-control').pipe(
     scan((all, event) => {
       const { detail } = event
       const { faces, value } = detail
@@ -25,29 +27,29 @@ whenAdded('app-dice-picker', (el) => {
         .map(([ faceCount, dieCount ]) => ({ dieCount, faceCount }))
     ),
     map(encodeDiceFormula),
-    distinctUntilChanged()
-  ).subscribe((formula) => {
-    el.formula = formula
-  })
+    distinctUntilChanged(),
+    tap((formula) => {
+      el.formula = formula
+    })
+  )
+  subscribe(changeValue$)
 
-  const removeAllSub = fromEvent(document, 'remove-all-dice').pipe(
+  const removeAll$ = fromEvent(document, 'remove-all-dice').pipe(
     tap(() => {
       el.setAttribute('tabindex', -1)
       el.focus()
-    }),
-  ).subscribe()
+    })
+  )
+  subscribe(removeAll$)
 
-  const renderSub = combineLatestProps({
+  const render$ = combineLatestProps({
     picker: picker$
   }).pipe(
     renderComponent(el, render)
-  ).subscribe()
+  )
+  subscribe(render$)
 
-  return () => {
-    changeValueSub.unsubscribe()
-    removeAllSub.unsubscribe()
-    renderSub.unsubscribe()
-  }
+  return unsubscribe
 })
 
 function render (props) {

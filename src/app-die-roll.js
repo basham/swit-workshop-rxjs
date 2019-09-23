@@ -1,21 +1,22 @@
 import { html } from 'lighterhtml'
-import { fromEvent, merge, range, timer } from 'rxjs'
-import { concatMap, map, scan, startWith, switchMap, withLatestFrom } from 'rxjs/operators'
+import { merge, range, timer } from 'rxjs'
+import { concatMap, map, scan, startWith, switchMap, tap, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, fromEventSelector, fromMethod, fromProperty, random, randomItem, range as numRange, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, fromEventSelector, fromMethod, fromProperty, random, randomItem, range as numRange, renderComponent, useSubscribe } from './util.js'
 import css from './app-die-roll.css'
 
 adoptStyles(css)
 
 whenAdded('app-die-roll', (el) => {
+  const [ subscribe, unsubscribe ] = useSubscribe()
+
   const faces$ = fromProperty(el, 'faces', { defaultValue: 6, type: Number })
   const value$ = fromProperty(el, 'value', { defaultValue: 1, type: Number })
 
-  //const rollAll$ = fromEvent(document, 'roll-all-dice')
   const rollMethod$ = fromMethod(el, 'roll')
   const rollClick$ = fromEventSelector(el, 'button', 'click')
 
-  const rollSub = merge(
+  const roll$ = merge(
     rollMethod$,
     rollClick$
   ).pipe(
@@ -40,22 +41,22 @@ whenAdded('app-die-roll', (el) => {
       const options = numRange(faces, 1)
         .filter((v) => v !== lastRoll)
       return randomItem(options)
-    }, -1)
-  ).subscribe((value) => {
-    el.value = value
-  })
+    }, -1),
+    tap((value) => {
+      el.value = value
+    })
+  )
+  subscribe(roll$)
 
-  const renderSub = combineLatestProps({
+  const render$ = combineLatestProps({
     faces: faces$,
     value: value$
   }).pipe(
     renderComponent(el, render)
-  ).subscribe()
+  )
+  subscribe(render$)
 
-  return () => {
-    rollSub.unsubscribe()
-    renderSub.unsubscribe()
-  }
+  return unsubscribe
 })
 
 function render (props) {

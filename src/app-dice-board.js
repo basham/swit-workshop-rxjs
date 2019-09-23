@@ -2,12 +2,14 @@ import { html } from 'lighterhtml'
 import { Subject, merge } from 'rxjs'
 import { map, shareReplay, tap } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, createKeychain, decodeDiceFormula, fromEventSelector, fromMethod, fromProperty, range as numRange, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, createKeychain, decodeDiceFormula, fromEventSelector, fromMethod, fromProperty, next, range as numRange, renderComponent, useSubscribe } from './util.js'
 import css from './app-dice-board.css'
 
 adoptStyles(css)
 
 whenAdded('app-dice-board', (el) => {
+  const [ subscribe, unsubscribe ] = useSubscribe()
+
   const formula$ = fromProperty(el, 'formula', { defaultValue: '', type: String })
   const getKey = createKeychain()
 
@@ -29,7 +31,7 @@ whenAdded('app-dice-board', (el) => {
 
   const componentDidUpdate$ = new Subject()
 
-  const resultsSub = merge(
+  const results$ = merge(
     fromEventSelector(el, 'app-die-roll', 'value-changed'),
     componentDidUpdate$
   ).pipe(
@@ -61,25 +63,26 @@ whenAdded('app-dice-board', (el) => {
       })
       el.dispatchEvent(event)
     })
-  ).subscribe()
+  )
+  subscribe(results$)
 
-  const roll$ = fromMethod(el, 'roll')
-  const rollSub = roll$.subscribe(() => {
-    el.querySelectorAll('app-die-roll')
-      .forEach((die) => die.roll())
-  })
+  const roll$ = fromMethod(el, 'roll').pipe(
+    tap(() => {
+      el.querySelectorAll('app-die-roll')
+        .forEach((die) => die.roll())
+    })
+  )
+  subscribe(roll$)
 
-  const renderSub = combineLatestProps({
+  const render$ = combineLatestProps({
     diceSets: diceSets$
   }).pipe(
-    renderComponent(el, render)
-  ).subscribe(componentDidUpdate$)
+    renderComponent(el, render),
+    next(componentDidUpdate$)
+  )
+  subscribe(render$)
 
-  return () => {
-    resultsSub.unsubscribe()
-    rollSub.unsubscribe()
-    renderSub.unsubscribe()
-  }
+  return unsubscribe
 })
 
 function render (props) {

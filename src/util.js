@@ -1,5 +1,5 @@
 import { render } from 'lighterhtml'
-import { Observable, Subject, combineLatest, from, fromEvent, isObservable, of } from 'rxjs'
+import { Observable, Subject, Subscription, combineLatest, from, fromEvent, isObservable, of } from 'rxjs'
 import { distinctUntilChanged, filter, map, mergeMap, shareReplay, switchMap, tap } from 'rxjs/operators'
 import { FACES } from './constants.js'
 
@@ -286,6 +286,14 @@ export const mapEvent = (eventName, options) => (source$) => source$.pipe(
   )
 )
 
+// Operator for pushing the current value of a stream to a Subject.
+// Equivalent effect of: source$.subscribe(subject$)
+export const next = (subject$) => (source$) => source$.pipe(
+  tap((value) => {
+    subject$.next(value)
+  })
+)
+
 export function pluralize (value, str) {
   return `${str}${value === 1 ? '' : 's'}`
 }
@@ -307,3 +315,37 @@ export function range (size, startAt = 0) {
 export const renderComponent = (element, renderer) => (source$) => source$.pipe(
   tap((props) => render(element, () => renderer(props)))
 )
+
+export function useCallbackStack () {
+  const stack = new Set()
+  const add = (value) => {
+    if (typeof value === 'function') {
+      stack.add(value)
+    }
+  }
+  const call = () => {
+    stack.forEach((callback) => callback())
+    stack.clear()
+  }
+  return [ add, call ]
+}
+
+export function useSubscribe () {
+  const [ add, unsubscribe ] = useCallbackStack()
+  const subscribe = (source) => {
+    if (isObservable(source)) {
+      const sub = source.subscribe()
+      add(() => sub.unsubscribe())
+      return sub
+    }
+    if (source instanceof Subscription) {
+      add(() => source.unsubscribe())
+      return source
+    }
+    if (typeof source === 'function') {
+      add(source)
+      return
+    }
+  }
+  return [ subscribe, unsubscribe ]
+}

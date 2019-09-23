@@ -1,13 +1,15 @@
 import { html } from 'lighterhtml'
 import { combineLatest, fromEvent, merge } from 'rxjs'
-import { map, mapTo, withLatestFrom } from 'rxjs/operators'
+import { map, mapTo, tap, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, fromEventSelector, fromProperty, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, fromEventSelector, fromProperty, renderComponent, useSubscribe } from './util.js'
 import css from './app-dice-picker-control.css'
 
 adoptStyles(css)
 
 whenAdded('app-dice-picker-control', (el) => {
+  const [ subscribe, unsubscribe ] = useSubscribe()
+
   const faces$ = fromProperty(el, 'faces', { defaultValue: 6, type: Number })
   const value$ = fromProperty(el, 'value', { defaultValue: 0, type: Number })
 
@@ -26,41 +28,44 @@ whenAdded('app-dice-picker-control', (el) => {
   const reset$ = fromEvent(document, 'remove-all-dice').pipe(
     mapTo(0)
   )
-  const changeValueSub = merge(
+  const changeValue$ = merge(
     increment$,
     decrement$,
     reset$
-  ).subscribe((value) => {
-    el.value = value
-  })
+  ).pipe(
+    tap((value) => {
+      el.value = value
+    })
+  )
+  subscribe(changeValue$)
 
-  const dispatchSub = combineLatest(
+  const dispatch$ = combineLatest(
     faces$,
     value$
-  ).subscribe(([ faces, value ]) => {
-    const event = new CustomEvent('change-picker-control', {
-      bubbles: true,
-      detail: {
-        faces,
-        value
-      }
+  ).pipe(
+    tap(([ faces, value ]) => {
+      const event = new CustomEvent('change-picker-control', {
+        bubbles: true,
+        detail: {
+          faces,
+          value
+        }
+      })
+      el.dispatchEvent(event)
     })
-    el.dispatchEvent(event)
-  })
+  )
+  subscribe(dispatch$)
 
-  const renderSub = combineLatestProps({
+  const render$ = combineLatestProps({
     faces: faces$,
     type: type$,
     value: value$
   }).pipe(
     renderComponent(el, render)
-  ).subscribe()
+  )
+  subscribe(render$)
 
-  return () => {
-    changeValueSub.unsubscribe()
-    dispatchSub.unsubscribe()
-    renderSub.unsubscribe()
-  }
+  return unsubscribe
 })
 
 function render (props) {

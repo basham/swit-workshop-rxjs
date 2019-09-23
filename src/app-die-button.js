@@ -1,24 +1,25 @@
 import { html } from 'lighterhtml'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, fromProperty, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, fromProperty, renderComponent, useSubscribe } from './util.js'
 import css from './app-die-button.css'
 
 adoptStyles(css)
 
 whenAdded('[is="app-die-button"]', (el) => {
+  const [ subscribe, unsubscribe ] = useSubscribe()
+
   const faces$ = fromProperty(el, 'faces', { defaultValue: 6, type: Number })
   const label$ = fromProperty(el, 'label', { defaultValue: '', type: String })
 
-  const renderSub = combineLatestProps({
+  const render$ = combineLatestProps({
     faces: faces$,
     label: label$
   }).pipe(
     renderComponent(el, render)
-  ).subscribe()
+  )
+  subscribe(render$)
 
-  return () => {
-    renderSub.unsubscribe()
-  }
+  return unsubscribe
 })
 
 function render (props) {

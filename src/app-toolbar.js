@@ -2,12 +2,14 @@ import { html } from 'lighterhtml'
 import { fromEvent } from 'rxjs'
 import { distinctUntilChanged, map, shareReplay, startWith } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, renderComponent, useSubscribe } from './util.js'
 import css from './app-toolbar.css'
 
 adoptStyles(css)
 
 whenAdded('app-toolbar', (el) => {
+  const [ subscribe, unsubscribe ] = useSubscribe()
+
   const rollBoard$ = fromEvent(document, 'roll-board').pipe(
     map(({ detail }) => detail),
     shareReplay(1)
@@ -25,18 +27,17 @@ whenAdded('app-toolbar', (el) => {
     distinctUntilChanged()
   )
 
-  const renderSub = combineLatestProps({
+  const render$ = combineLatestProps({
     count: count$,
     removeAllDice,
     rollDice,
     total: total$
   }).pipe(
     renderComponent(el, render)
-  ).subscribe()
+  )
+  subscribe(render$)
 
-  return () => {
-    renderSub.unsubscribe()
-  }
+  return unsubscribe
 
   function removeAllDice () {
     const event = new CustomEvent('remove-all-dice', {
