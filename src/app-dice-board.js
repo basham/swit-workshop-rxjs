@@ -2,15 +2,16 @@ import { html } from 'lighterhtml'
 import { Subject, fromEvent, merge } from 'rxjs'
 import { map, shareReplay, tap } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, createKeychain, decodeDiceFormula, fromAttribute, range as numRange, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, createKeychain, decodeDiceFormula, fromProperty, range as numRange, renderComponent } from './util.js'
 import css from './app-dice-board.css'
 
 adoptStyles(css)
 
 whenAdded('app-dice-board', (el) => {
+  const formula$ = fromProperty(el, 'formula', { defaultValue: '', type: String })
   const getKey = createKeychain()
 
-  const diceSets$ = fromAttribute(el, 'formula').pipe(
+  const diceSets$ = formula$.pipe(
     map(decodeDiceFormula),
     map((diceSet) =>
       diceSet

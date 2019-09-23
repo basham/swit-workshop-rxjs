@@ -1,15 +1,15 @@
 import { html } from 'lighterhtml'
-import { fromEvent, of } from 'rxjs'
+import { fromEvent } from 'rxjs'
 import { map, scan, tap, distinctUntilChanged } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, decodeDiceFormula, encodeDiceFormula, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, decodeDiceFormula, encodeDiceFormula, fromProperty, renderComponent } from './util.js'
 import css from './app-dice-picker.css'
 
 adoptStyles(css)
 
 whenAdded('app-dice-picker', (el) => {
-  const picker$ = of('').pipe(
-    tap(dispatch),
+  const formula$ = fromProperty(el, 'formula', { defaultValue: '', reflect: false, type: String })
+  const picker$ = formula$.pipe(
     map(decodeDiceFormula)
   )
 
@@ -25,16 +25,16 @@ whenAdded('app-dice-picker', (el) => {
         .map(([ faceCount, dieCount ]) => ({ dieCount, faceCount }))
     ),
     map(encodeDiceFormula),
-    distinctUntilChanged(),
-    tap(dispatch)
-  ).subscribe()
+    distinctUntilChanged()
+  ).subscribe((formula) => {
+    el.formula = formula
+  })
 
   const removeAllSub = fromEvent(document, 'remove-all-dice').pipe(
     tap(() => {
       el.setAttribute('tabindex', -1)
       el.focus()
     }),
-    tap(dispatch)
   ).subscribe()
 
   const renderSub = combineLatestProps({
@@ -47,15 +47,6 @@ whenAdded('app-dice-picker', (el) => {
     changeValueSub.unsubscribe()
     removeAllSub.unsubscribe()
     renderSub.unsubscribe()
-  }
-
-  function dispatch (value) {
-    el.value = value
-    const event = new CustomEvent('change-formula', {
-      bubbles: true,
-      detail: value
-    })
-    el.dispatchEvent(event)
   }
 })
 

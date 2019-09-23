@@ -108,7 +108,7 @@ export function encodeDiceFormula (diceSets) {
 //   type: String (default), Number, Boolean, Array, Object
 //   value: (any)
 //     Initial value regardless of initial attribute or property values.
-export function fromProp (target, name, options = {}) {
+export function fromProperty (target, name, options = {}) {
   const { attribute = true, defaultValue, eventName = `${name}-changed`, reflect = true, type = String, value } = options
   const attributeName = getAttributeName()
 
@@ -221,37 +221,6 @@ export function fromProp (target, name, options = {}) {
     mutationObserver.observe(target, { attributes: true });
     return () => mutationObserver.disconnect()
   }
-}
-
-export function fromAttribute (target, name) {
-  return new Observable((subscriber) => {
-    const next = () => subscriber.next(target.getAttribute(name))
-    next()
-    const mutationObserver = new MutationObserver((mutationsList) =>
-      mutationsList
-        .filter(({ type }) => type === 'attributes')
-        .filter(({ attributeName }) => attributeName === name)
-        .forEach(next)
-    )
-    mutationObserver.observe(target, { attributes: true });
-    return () => mutationObserver.disconnect()
-  })
-}
-
-// Listen to an element property change.
-// Useful for getting `data` or `props` properties from lighterhtml elements.
-export function fromProperty (target, name) {
-  const property$ = new BehaviorSubject(target[name])
-  Object.defineProperty(target, name, {
-    get () {
-      return property$.getValue()
-    },
-    set (value) {
-      property$.next(value)
-    },
-    configurable: true
-  })
-  return property$
 }
 
 export function fromSelector (target, selector) {

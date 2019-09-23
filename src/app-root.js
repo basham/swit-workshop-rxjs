@@ -1,14 +1,13 @@
 import { html } from 'lighterhtml'
-import { fromEvent } from 'rxjs'
 import { map, startWith } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, fromEventSelector, renderComponent } from './util.js'
 import css from './app-root.css'
 
 adoptStyles(css)
 
 whenAdded('app-root', (el) => {
-  const formula$ = fromEvent(el, 'change-formula').pipe(
+  const formula$ = fromEventSelector(el, 'app-dice-picker', 'formula-changed').pipe(
     map(({ detail }) => detail),
     startWith('')
   )
