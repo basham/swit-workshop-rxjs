@@ -109,7 +109,7 @@ export function encodeDiceFormula (diceSets) {
 //   value: (any)
 //     Initial value regardless of initial attribute or property values.
 export function fromProp (target, name, options = {}) {
-  const { attribute = true, defaultValue, type = String, value } = options
+  const { attribute = true, defaultValue, eventName = `${name}-changed`, type = String, value } = options
   const attributeName = getAttributeName()
 
   return new Observable((subscriber) => {
@@ -136,6 +136,11 @@ export function fromProp (target, name, options = {}) {
             target.setAttribute(attributeName, encode(value))
           }
         }
+        const event = new CustomEvent(eventName, {
+          bubbles: true,
+          detail: value
+        })
+        target.dispatchEvent(event)
         subscriber.next(value)
       }
     })
