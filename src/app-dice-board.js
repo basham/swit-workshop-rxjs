@@ -1,8 +1,8 @@
 import { html } from 'lighterhtml'
-import { Subject, fromEvent, merge } from 'rxjs'
+import { Subject, merge } from 'rxjs'
 import { map, shareReplay, tap } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, createKeychain, decodeDiceFormula, fromProperty, range as numRange, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, createKeychain, decodeDiceFormula, fromEventSelector, fromProperty, range as numRange, renderComponent } from './util.js'
 import css from './app-dice-board.css'
 
 adoptStyles(css)
@@ -30,7 +30,7 @@ whenAdded('app-dice-board', (el) => {
   const componentDidUpdate$ = new Subject()
 
   const rollSub = merge(
-    fromEvent(el, 'roll'),
+    fromEventSelector(el, 'app-die-roll', 'value-changed'),
     componentDidUpdate$
   ).pipe(
     map(() => {
