@@ -150,7 +150,9 @@ export function fromProp (target, name, options = {}) {
     const unsubscribe = observeAttribute()
 
     return unsubscribe
-  })
+  }).pipe(
+    shareReplay(1)
+  )
 
   function decode (value) {
     if (type === Boolean) {
