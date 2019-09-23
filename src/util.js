@@ -1,5 +1,5 @@
 import { render } from 'lighterhtml'
-import { BehaviorSubject, Observable, combineLatest, from, fromEvent, isObservable, of } from 'rxjs'
+import { Observable, Subject, combineLatest, from, fromEvent, isObservable, of } from 'rxjs'
 import { distinctUntilChanged, filter, map, mergeMap, shareReplay, switchMap, tap } from 'rxjs/operators'
 import { FACES } from './constants.js'
 
@@ -94,6 +94,13 @@ export function encodeDiceFormula (diceSets) {
     .sort((a, b) => a.faceCount - b.faceCount)
     .map(({ dieCount, faceCount }) => `${dieCount}d${faceCount}`)
     .join(' ')
+}
+
+export function fromMethod (target, name) {
+  const method$ = new Subject()
+  const handler = (value) => method$.next(value)
+  target[name] = handler
+  return method$
 }
 
 // options

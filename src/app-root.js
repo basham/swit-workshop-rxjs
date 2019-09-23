@@ -12,6 +12,10 @@ whenAdded('app-root', (el) => {
     startWith('')
   )
 
+  const rollAllSub = fromEventSelector(el, 'app-toolbar', 'roll-all-dice').subscribe(() => {
+    el.querySelector('app-dice-board').roll()
+  })
+
   const renderSub = combineLatestProps({
     formula: formula$
   }).pipe(
@@ -19,6 +23,7 @@ whenAdded('app-root', (el) => {
   ).subscribe()
 
   return () => {
+    rollAllSub.unsubscribe()
     renderSub.unsubscribe()
   }
 })

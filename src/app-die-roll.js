@@ -2,7 +2,7 @@ import { html } from 'lighterhtml'
 import { fromEvent, merge, range, timer } from 'rxjs'
 import { concatMap, map, scan, startWith, switchMap, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, fromEventSelector, fromProperty, random, randomItem, range as numRange, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, fromEventSelector, fromMethod, fromProperty, random, randomItem, range as numRange, renderComponent } from './util.js'
 import css from './app-die-roll.css'
 
 adoptStyles(css)
@@ -11,12 +11,13 @@ whenAdded('app-die-roll', (el) => {
   const faces$ = fromProperty(el, 'faces', { defaultValue: 6, type: Number })
   const value$ = fromProperty(el, 'value', { defaultValue: 1, type: Number })
 
-  const rollAll$ = fromEvent(document, 'roll-all-dice')
-  const rollDie$ = fromEventSelector(el, 'button', 'click')
+  //const rollAll$ = fromEvent(document, 'roll-all-dice')
+  const rollMethod$ = fromMethod(el, 'roll')
+  const rollClick$ = fromEventSelector(el, 'button', 'click')
 
   const rollSub = merge(
-    rollAll$,
-    rollDie$
+    rollMethod$,
+    rollClick$
   ).pipe(
     // Immediately roll.
     startWith(null),

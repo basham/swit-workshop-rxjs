@@ -2,7 +2,7 @@ import { html } from 'lighterhtml'
 import { Subject, merge } from 'rxjs'
 import { map, shareReplay, tap } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, createKeychain, decodeDiceFormula, fromEventSelector, fromProperty, range as numRange, renderComponent } from './util.js'
+import { adoptStyles, combineLatestProps, createKeychain, decodeDiceFormula, fromEventSelector, fromMethod, fromProperty, range as numRange, renderComponent } from './util.js'
 import css from './app-dice-board.css'
 
 adoptStyles(css)
@@ -29,7 +29,7 @@ whenAdded('app-dice-board', (el) => {
 
   const componentDidUpdate$ = new Subject()
 
-  const rollSub = merge(
+  const resultsSub = merge(
     fromEventSelector(el, 'app-die-roll', 'value-changed'),
     componentDidUpdate$
   ).pipe(
@@ -63,20 +63,20 @@ whenAdded('app-dice-board', (el) => {
     })
   ).subscribe()
 
+  const roll$ = fromMethod(el, 'roll')
+  const rollSub = roll$.subscribe(() => {
+    el.querySelectorAll('app-die-roll')
+      .forEach((die) => die.roll())
+  })
+
   const renderSub = combineLatestProps({
     diceSets: diceSets$
   }).pipe(
     renderComponent(el, render)
   ).subscribe(componentDidUpdate$)
 
-  function roll () {
-    el.querySelectorAll('app-die-roll')
-      .forEach((die) => die.roll())
-  }
-
-  el.roll = roll
-
   return () => {
+    resultsSub.unsubscribe()
     rollSub.unsubscribe()
     renderSub.unsubscribe()
   }
