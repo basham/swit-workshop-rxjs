@@ -98,20 +98,21 @@ export function encodeDiceFormula (diceSets) {
 
 // options
 //   attribute: true (default), false, 'custom-attr-name'
+//   defaultValue: (any)
+//     Initial value if the attribute or property isn't already set.
 //   eventName: `${name}-changed` (default), 'custom-event-name'
 //     Automatically dispatch custom events for property changes.
 //   reflect: true (default), false
 //     Set to false primarily for input values.
 //     Get the default value via attribute, but otherwise ignore it.
 //   type: String (default), Number, Boolean, Array, Object
-//   value: (initial value)
+//   value: (any)
+//     Initial value regardless of initial attribute or property values.
 export function fromProp (target, name, options = {}) {
-  const { attribute = true, type = String, value } = options
+  const { attribute = true, defaultValue, type = String, value } = options
   const attributeName = getAttributeName()
 
   return new Observable((subscriber) => {
-    const defaultValue = (hasAttribute() && getAttribute()) || value || target[name]
-    //const defaultValue = value || target[name] || (hasAttribute() && getAttribute())
     let _value = undefined
 
     Object.defineProperty(target, name, {
@@ -139,45 +140,12 @@ export function fromProp (target, name, options = {}) {
       }
     })
 
-    target[name] = defaultValue
+    target[name] = initialValue()
 
     const unsubscribe = observeAttribute()
 
     return unsubscribe
   })
-
-  function observeAttribute () {
-    if (!attributeName) {
-      return () => {}
-    }
-
-    const mutationObserver = new MutationObserver((mutationsList) =>
-      mutationsList
-        .filter(({ type }) => type === 'attributes')
-        .filter((mutation) => mutation.attributeName === attributeName)
-        .forEach(() => {
-          target[name] = getAttribute()
-        })
-    )
-    mutationObserver.observe(target, { attributes: true });
-    return () => mutationObserver.disconnect()
-  }
-
-  function hasAttribute () {
-    return !!(attribute && target.getAttribute(attributeName))
-  }
-
-  function getAttribute () {
-    return decode(target.getAttribute(attributeName))
-  }
-
-  function getAttributeName () {
-    return typeof attribute === 'string'
-      ? attribute
-      : attribute
-        ? name
-        : undefined
-  }
 
   function decode (value) {
     if (type === Boolean) {
@@ -200,6 +168,51 @@ export function fromProp (target, name, options = {}) {
       return value
     }
     return JSON.stringify(value)
+  }
+
+  function getAttribute () {
+    return decode(target.getAttribute(attributeName))
+  }
+
+  function getAttributeName () {
+    return typeof attribute === 'string'
+      ? attribute
+      : attribute
+        ? name
+        : undefined
+  }
+
+  function initialValue () {
+    if (value !== undefined) {
+      return value
+    }
+    if (attributeName) {
+      const attr = getAttribute()
+      if (attr) {
+        return attr
+      }
+    }
+    if (target[name] !== undefined) {
+      return target[name]
+    }
+    return defaultValue
+  }
+
+  function observeAttribute () {
+    if (!attributeName) {
+      return () => {}
+    }
+
+    const mutationObserver = new MutationObserver((mutationsList) =>
+      mutationsList
+        .filter(({ type }) => type === 'attributes')
+        .filter((mutation) => mutation.attributeName === attributeName)
+        .forEach(() => {
+          target[name] = getAttribute()
+        })
+    )
+    mutationObserver.observe(target, { attributes: true });
+    return () => mutationObserver.disconnect()
   }
 }
 

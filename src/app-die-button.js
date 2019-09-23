@@ -6,8 +6,8 @@ import css from './app-die-button.css'
 adoptStyles(css)
 
 whenAdded('[is="app-die-button"]', (el) => {
-  const faces$ = fromProp(el, 'faces', { type: Number })
-  const label$ = fromProp(el, 'label')
+  const faces$ = fromProp(el, 'faces', { defaultValue: 6, type: Number })
+  const label$ = fromProp(el, 'label', { defaultValue: '', type: String })
 
   const renderSub = combineLatestProps({
     faces: faces$,
