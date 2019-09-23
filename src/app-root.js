@@ -1,5 +1,5 @@
 import { html } from 'lighterhtml'
-import { map, startWith, tap } from 'rxjs/operators'
+import { distinctUntilChanged, map, startWith, tap } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import { adoptStyles, combineLatestProps, fromEventSelector, renderComponent, useSubscribe } from './util.js'
 import css from './app-root.css'
@@ -14,13 +14,34 @@ whenAdded('app-root', (el) => {
     startWith('')
   )
 
-  const rollAll$ = fromEventSelector(el, 'app-toolbar', 'roll-all-dice').pipe(
+  const rollBoard$ = fromEventSelector(el, 'app-dice-board', 'roll-board').pipe(
+    map(({ detail }) => detail)
+  )
+  const count$ = rollBoard$.pipe(
+    map(({ count }) => count),
+    startWith(0),
+    distinctUntilChanged()
+  )
+  const total$ = rollBoard$.pipe(
+    map(({ total }) => total),
+    startWith(0),
+    distinctUntilChanged()
+  )
+
+  const rollAll$ = fromEventSelector(el, 'app-toolbar button[data-roll]', 'click').pipe(
     tap(() => el.querySelector('app-dice-board').roll())
   )
   subscribe(rollAll$)
 
+  const removeAll$ = fromEventSelector(el, 'app-toolbar button[data-reset]', 'click').pipe(
+    tap(() => el.querySelector('app-dice-picker').reset())
+  )
+  subscribe(removeAll$)
+
   const render$ = combineLatestProps({
-    formula: formula$
+    count: count$,
+    formula: formula$,
+    total: total$
   }).pipe(
     renderComponent(el, render)
   )
@@ -30,10 +51,12 @@ whenAdded('app-root', (el) => {
 })
 
 function render (props) {
-  const { formula } = props
+  const { count, formula, total } = props
   return html`
     <app-dice-picker />
-    <app-toolbar />
+    <app-toolbar
+      count=${count}
+      total=${total} />
     <app-dice-board formula=${formula} />
   `
 }

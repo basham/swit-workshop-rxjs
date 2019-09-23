@@ -1,8 +1,8 @@
 import { html } from 'lighterhtml'
-import { combineLatest, fromEvent, merge } from 'rxjs'
+import { combineLatest, merge } from 'rxjs'
 import { map, mapTo, tap, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, fromEventSelector, fromProperty, renderComponent, useSubscribe } from './util.js'
+import { adoptStyles, combineLatestProps, fromEventSelector, fromMethod, fromProperty, renderComponent, useSubscribe } from './util.js'
 import css from './app-dice-picker-control.css'
 
 adoptStyles(css)
@@ -25,7 +25,7 @@ whenAdded('app-dice-picker-control', (el) => {
     withLatestFrom(value$),
     map(([ , value ]) => value <= 0 ? 0 : value - 1)
   )
-  const reset$ = fromEvent(document, 'remove-all-dice').pipe(
+  const reset$ = fromMethod(el, 'reset').pipe(
     mapTo(0)
   )
   const changeValue$ = merge(

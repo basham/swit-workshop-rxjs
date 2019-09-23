@@ -2,7 +2,7 @@ import { html } from 'lighterhtml'
 import { fromEvent } from 'rxjs'
 import { map, scan, tap, distinctUntilChanged } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, decodeDiceFormula, encodeDiceFormula, fromProperty, renderComponent, useSubscribe } from './util.js'
+import { adoptStyles, combineLatestProps, decodeDiceFormula, encodeDiceFormula, fromMethod, fromProperty, renderComponent, useSubscribe } from './util.js'
 import css from './app-dice-picker.css'
 
 adoptStyles(css)
@@ -34,13 +34,15 @@ whenAdded('app-dice-picker', (el) => {
   )
   subscribe(changeValue$)
 
-  const removeAll$ = fromEvent(document, 'remove-all-dice').pipe(
+  const reset$ = fromMethod(el, 'reset').pipe(
     tap(() => {
+      el.querySelectorAll('app-dice-picker-control')
+        .forEach((control) => control.reset())
       el.setAttribute('tabindex', -1)
       el.focus()
     })
   )
-  subscribe(removeAll$)
+  subscribe(reset$)
 
   const render$ = combineLatestProps({
     picker: picker$

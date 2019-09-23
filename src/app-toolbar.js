@@ -1,8 +1,6 @@
 import { html } from 'lighterhtml'
-import { fromEvent } from 'rxjs'
-import { distinctUntilChanged, map, shareReplay, startWith } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, renderComponent, useSubscribe } from './util.js'
+import { adoptStyles, combineLatestProps, fromProperty, renderComponent, useSubscribe } from './util.js'
 import css from './app-toolbar.css'
 
 adoptStyles(css)
@@ -10,27 +8,11 @@ adoptStyles(css)
 whenAdded('app-toolbar', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()
 
-  const rollBoard$ = fromEvent(document, 'roll-board').pipe(
-    map(({ detail }) => detail),
-    shareReplay(1)
-  )
-
-  const count$ = rollBoard$.pipe(
-    map(({ count }) => count),
-    startWith(0),
-    distinctUntilChanged()
-  )
-
-  const total$ = rollBoard$.pipe(
-    map(({ total }) => total),
-    startWith(0),
-    distinctUntilChanged()
-  )
+  const count$ = fromProperty(el, 'count', { defaultValue: 0, type: Number })
+  const total$ = fromProperty(el, 'total', { defaultValue: 0, type: Number })
 
   const render$ = combineLatestProps({
     count: count$,
-    removeAllDice,
-    rollDice,
     total: total$
   }).pipe(
     renderComponent(el, render)
@@ -38,24 +20,10 @@ whenAdded('app-toolbar', (el) => {
   subscribe(render$)
 
   return unsubscribe
-
-  function removeAllDice () {
-    const event = new CustomEvent('remove-all-dice', {
-      bubbles: true
-    })
-    el.dispatchEvent(event)
-  }
-
-  function rollDice () {
-    const event = new CustomEvent('roll-all-dice', {
-      bubbles: true
-    })
-    el.dispatchEvent(event)
-  }
 })
 
 function render (props) {
-  const { count, removeAllDice, rollDice, total } = props
+  const { count, total } = props
   return html`
     <div class=${count ? '' : 'hidden'}>
       <div class='total'>
@@ -68,12 +36,12 @@ function render (props) {
       </div>
       <button
         class='button'
-        onclick=${rollDice}>
+        data-roll>
         Roll
       </button>
       <button
         class='button'
-        onclick=${removeAllDice}>
+        data-reset>
         Remove all
       </button>
     </div>
