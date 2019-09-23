@@ -109,7 +109,7 @@ export function encodeDiceFormula (diceSets) {
 //   value: (any)
 //     Initial value regardless of initial attribute or property values.
 export function fromProp (target, name, options = {}) {
-  const { attribute = true, defaultValue, eventName = `${name}-changed`, type = String, value } = options
+  const { attribute = true, defaultValue, eventName = `${name}-changed`, reflect = true, type = String, value } = options
   const attributeName = getAttributeName()
 
   return new Observable((subscriber) => {
@@ -125,7 +125,7 @@ export function fromProp (target, name, options = {}) {
           return
         }
         _value = value
-        if (attributeName) {
+        if (attributeName && reflect) {
           if (type === Boolean) {
             if (value) {
               target.setAttribute(attributeName, '')
@@ -204,7 +204,7 @@ export function fromProp (target, name, options = {}) {
   }
 
   function observeAttribute () {
-    if (!attributeName) {
+    if (!attributeName || !reflect) {
       return () => {}
     }
 
