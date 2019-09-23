@@ -1,5 +1,5 @@
 import { html } from 'lighterhtml'
-import { distinctUntilChanged, map, startWith, tap } from 'rxjs/operators'
+import { distinctUntilChanged, map, shareReplay, startWith, tap } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
 import { adoptStyles, combineLatestProps, fromEventSelector, renderComponent, useSubscribe } from './util.js'
 import css from './app-root.css'
@@ -15,7 +15,8 @@ whenAdded('app-root', (el) => {
   )
 
   const rollBoard$ = fromEventSelector(el, 'app-dice-board', 'roll-board').pipe(
-    map(({ detail }) => detail)
+    map(({ detail }) => detail),
+    shareReplay(1)
   )
   const count$ = rollBoard$.pipe(
     map(({ count }) => count),
