@@ -1,5 +1,6 @@
 import { render } from 'lighterhtml'
 import { tap } from 'rxjs/operators'
+import { distinctUntilObjectChanged } from './rx.js'
 
 export * from 'lighterhtml'
 export * from 'when-elements'
@@ -26,5 +27,6 @@ export function keychain () {
 }
 
 export const renderComponent = (element, renderer) => (source$) => source$.pipe(
+  distinctUntilObjectChanged(),
   tap((props) => render(element, () => renderer(props)))
 )
