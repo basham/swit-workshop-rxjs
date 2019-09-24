@@ -1,8 +1,9 @@
-import { html } from 'lighterhtml'
 import { merge, range, timer } from 'rxjs'
-import { concatMap, map, scan, startWith, switchMap, tap, withLatestFrom } from 'rxjs/operators'
-import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, fromEventSelector, fromMethod, fromProperty, next, random, randomItem, range as numRange, renderComponent, useSubscribe } from './util.js'
+import { concatMap, map, scan, startWith, switchMap, withLatestFrom } from 'rxjs/operators'
+import { randomItem, range as numRange } from './util/array.js'
+import { adoptStyles, html, renderComponent, whenAdded } from './util/dom.js'
+import { random } from './util/math.js'
+import { combineLatestProps, fromEventSelector, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
 import css from './app-die-roll.css'
 
 adoptStyles(css)

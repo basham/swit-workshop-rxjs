@@ -1,8 +1,9 @@
-import { html } from 'lighterhtml'
 import { Subject, merge } from 'rxjs'
 import { map, shareReplay, tap } from 'rxjs/operators'
-import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, createKeychain, decodeDiceFormula, fromEventSelector, fromMethod, fromProperty, next, range as numRange, renderComponent, useSubscribe } from './util.js'
+import { range } from './util/array.js'
+import { decodeFormula } from './util/dice.js'
+import { adoptStyles, html, keychain, renderComponent, whenAdded } from './util/dom.js'
+import { combineLatestProps, fromEventSelector, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
 import css from './app-dice-board.css'
 
 adoptStyles(css)
@@ -11,16 +12,16 @@ whenAdded('app-dice-board', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()
 
   const formula$ = fromProperty(el, 'formula', { defaultValue: '', type: String })
-  const getKey = createKeychain()
+  const getKey = keychain()
 
   const diceSets$ = formula$.pipe(
-    map(decodeDiceFormula),
+    map(decodeFormula),
     map((diceSet) =>
       diceSet
         .filter(({ dieCount }) => dieCount)
         .map(({ dieCount, faceCount, type }) => {
           const key = getKey(type)
-          const dice = numRange(dieCount)
+          const dice = range(dieCount)
             .map((i) => getKey(`${type}-${i}`))
             .map((key) => ({ key, faceCount }))
           return { dieCount, dice, key }

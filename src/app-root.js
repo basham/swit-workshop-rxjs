@@ -1,7 +1,6 @@
-import { html } from 'lighterhtml'
 import { distinctUntilChanged, map, shareReplay, startWith, tap } from 'rxjs/operators'
-import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, fromEventSelector, renderComponent, useSubscribe } from './util.js'
+import { adoptStyles, html, renderComponent, whenAdded } from './util/dom.js'
+import { combineLatestProps, fromEventSelector, useSubscribe } from './util/rx.js'
 import css from './app-root.css'
 
 adoptStyles(css)

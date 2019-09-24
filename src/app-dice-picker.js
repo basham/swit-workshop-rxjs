@@ -1,8 +1,8 @@
-import { html } from 'lighterhtml'
 import { fromEvent } from 'rxjs'
 import { map, scan, tap, distinctUntilChanged } from 'rxjs/operators'
-import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, decodeDiceFormula, encodeDiceFormula, fromMethod, fromProperty, next, renderComponent, useSubscribe } from './util.js'
+import { decodeFormula, encodeFormula } from './util/dice.js'
+import { adoptStyles, html, renderComponent, whenAdded } from './util/dom.js'
+import { combineLatestProps, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
 import css from './app-dice-picker.css'
 
 adoptStyles(css)
@@ -12,7 +12,7 @@ whenAdded('app-dice-picker', (el) => {
 
   const formula$ = fromProperty(el, 'formula', { defaultValue: '', reflect: false, type: String })
   const picker$ = formula$.pipe(
-    map(decodeDiceFormula)
+    map(decodeFormula)
   )
 
   const changeValue$ = fromEvent(el, 'change-picker-control').pipe(
@@ -26,7 +26,7 @@ whenAdded('app-dice-picker', (el) => {
         .map((entry) => entry.map((v) => parseInt(v)))
         .map(([ faceCount, dieCount ]) => ({ dieCount, faceCount }))
     ),
-    map(encodeDiceFormula),
+    map(encodeFormula),
     distinctUntilChanged(),
     next(formula$)
   )

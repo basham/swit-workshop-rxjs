@@ -1,8 +1,7 @@
-import { html } from 'lighterhtml'
 import { combineLatest, merge } from 'rxjs'
 import { map, mapTo, tap, withLatestFrom } from 'rxjs/operators'
-import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, fromEventSelector, fromMethod, fromProperty, next, renderComponent, useSubscribe } from './util.js'
+import { adoptStyles, html, renderComponent, whenAdded } from './util/dom.js'
+import { combineLatestProps, fromEventSelector, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
 import css from './app-dice-picker-control.css'
 
 adoptStyles(css)

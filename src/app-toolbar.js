@@ -1,6 +1,5 @@
-import { html } from 'lighterhtml'
-import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, fromProperty, renderComponent, useSubscribe } from './util.js'
+import { adoptStyles, html, renderComponent, whenAdded } from './util/dom.js'
+import { combineLatestProps, fromProperty, useSubscribe } from './util/rx.js'
 import css from './app-toolbar.css'
 
 adoptStyles(css)
