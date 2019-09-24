@@ -108,7 +108,7 @@ export function fromProperty (target, name, options) {
 }
 
 // options
-//   attribute: true (default), false, 'custom-attr-name', false
+//   attribute: true (default), false, 'custom-attribute-name', false
 //     If false, the attribute is ignored.
 //   defaultValue: (any)
 //     Initial value if the attribute or property are not already set.
