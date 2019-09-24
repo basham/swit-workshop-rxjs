@@ -1,5 +1,5 @@
 import { render } from 'lighterhtml'
-import { Observable, Subject, Subscription, combineLatest, from, fromEvent, isObservable, of } from 'rxjs'
+import { Observable, Subject, Subscription, combineLatest, from, fromEvent, isObservable, of, BehaviorSubject } from 'rxjs'
 import { distinctUntilChanged, filter, map, mergeMap, shareReplay, switchMap, tap } from 'rxjs/operators'
 import { FACES } from './constants.js'
 
@@ -103,130 +103,214 @@ export function fromMethod (target, name) {
   return method$
 }
 
+export function fromProperty (target, name, options) {
+  return new PropertySubject(target, name, options)
+}
+
 // options
-//   attribute: true (default), false, 'custom-attr-name'
+//   attribute: true (default), false, 'custom-attr-name', false
+//     If false, the attribute is ignored.
 //   defaultValue: (any)
-//     Initial value if the attribute or property isn't already set.
-//   eventName: `${name}-changed` (default), 'custom-event-name'
+//     Initial value if the attribute or property are not already set.
+//   event: true (default), false, 'custom-event-name'
 //     Automatically dispatch custom events for property changes.
+//     If true, event names will be in the form of `${name}-changed`.
 //   reflect: true (default), false
-//     Set to false primarily for input values.
-//     Get the default value via attribute, but otherwise ignore it.
+//     If true, property changes are syncronized with the attribute.
+//     Note, input controls tend to not reflect their value as an attribute.
 //   type: String (default), Number, Boolean, Array, Object
+//     Automatically encode and decode string-based attribute values to other types.
 //   value: (any)
 //     Initial value regardless of initial attribute or property values.
-export function fromProperty (target, name, options = {}) {
-  const { attribute = true, defaultValue, eventName = `${name}-changed`, reflect = true, type = String, value } = options
-  const attributeName = getAttributeName()
+export function PropertySubject (target, name, options = {}) {
+  const {
+    attribute = true,
+    defaultValue,
+    event = true,
+    reflect = true,
+    type = String,
+    value
+  } = options
+  this._private = { attribute, defaultValue, event, name, target, reflect, type, value }
+  this._private.attributeName = getAttributeName.call(this)
+  this._private.eventName = getEventName.call(this)
 
-  return new Observable((subscriber) => {
-    let _value = undefined
+  const initialValue = getInitialValue.call(this)
+  this._super.call(this, initialValue)
 
-    Object.defineProperty(target, name, {
-      configurable: true,
-      get () {
-        return _value
-      },
-      set (value) {
-        if (encode(_value) === encode(value)) {
-          return
-        }
-        _value = value
-        if (attributeName && reflect) {
-          if (type === Boolean) {
-            if (value) {
-              target.setAttribute(attributeName, '')
-            } else {
-              target.removeAttribute(attributeName)
-            }
-          } else {
-            target.setAttribute(attributeName, encode(value))
-          }
-        }
-        const event = new CustomEvent(eventName, {
-          bubbles: true,
-          detail: value
-        })
-        target.dispatchEvent(event)
-        subscriber.next(value)
-      }
-    })
+  reflectAttribute.call(this)
+  observeProperty.call(this)
+  this._private.unsubscribe = observeAttribute.call(this)
+}
 
-    target[name] = initialValue()
+PropertySubject.prototype = Object.create(BehaviorSubject.prototype)
 
-    const unsubscribe = observeAttribute()
+PropertySubject.prototype.constructor = PropertySubject
 
-    return unsubscribe
-  }).pipe(
-    shareReplay(1)
+PropertySubject.prototype._super = BehaviorSubject
+
+PropertySubject.prototype.next = function (value) {
+  const { _super } = this
+  const isEqual = encode.call(this, this.getValue()) === encode.call(this, value)
+
+  if (isEqual) {
+    return
+  }
+
+  _super.prototype.next.call(this, value)
+  reflectAttribute.call(this)
+  dispatchPropertyChangeEvent.call(this)
+}
+
+PropertySubject.prototype._subscribe = function (subscriber) {
+  const { _private, _super } = this
+  const { unsubscribe } = _private
+  const subscription = _super.prototype._subscribe.call(this, subscriber)
+  subscription.add(unsubscribe)
+  return subscription
+}
+
+function decode (value) {
+  const { _private } = this
+  const { type } = _private
+  if (type === Boolean) {
+    return Boolean(value)
+  }
+  if (type === Number) {
+    return Number(value)
+  }
+  if (type === String) {
+    return value || ''
+  }
+  return JSON.parse(value)
+}
+
+function dispatchPropertyChangeEvent () {
+  const { _private, value } = this
+  const { eventName, target } = _private
+
+  if (!eventName) {
+    return
+  }
+
+  const event = new CustomEvent(eventName, {
+    bubbles: true,
+    detail: value
+  })
+  target.dispatchEvent(event)
+}
+
+function encode (value) {
+  const { _private } = this
+  const { type } = _private
+  if (type === Boolean) {
+    return JSON.stringify(!!value)
+  }
+  if (type === String) {
+    return value
+  }
+  return JSON.stringify(value)
+}
+
+function getAttribute () {
+  const { _private } = this
+  const { attributeName, target } = _private
+  const value = target.getAttribute(attributeName)
+  return decode.call(this, value)
+}
+
+function getAttributeName () {
+  const { _private } = this
+  const { attribute, name } = _private
+  return typeof attribute === 'string'
+    ? attribute
+    : attribute
+      ? name
+      : undefined
+}
+
+function getEventName () {
+  const { _private } = this
+  const { event, name } = _private
+  return typeof event === 'string'
+    ? event
+    : event
+      ? `${name}-changed`
+      : undefined
+}
+
+function getInitialValue () {
+  const { _private } = this
+  const { attributeName, defaultValue, name, target, value } = _private
+  if (value !== undefined) {
+    return value
+  }
+  if (attributeName) {
+    const attr = getAttribute.call(this)
+    if (attr) {
+      return attr
+    }
+  }
+  if (target[name] !== undefined) {
+    return target[name]
+  }
+  return defaultValue
+}
+
+function observeAttribute () {
+  const { _private } = this
+  const { attributeName, reflect, target } = _private
+
+  if (!attributeName || !reflect) {
+    return () => {}
+  }
+
+  const subject$ = this
+
+  const mutationObserver = new MutationObserver((mutationsList) =>
+    mutationsList
+      .filter(({ type }) => type === 'attributes')
+      .filter((mutation) => mutation.attributeName === attributeName)
+      .forEach(() => {
+        subject$.next(getAttribute.call(subject$))
+      })
   )
+  mutationObserver.observe(target, { attributes: true });
+  return () => mutationObserver.disconnect()
+}
 
-  function decode (value) {
-    if (type === Boolean) {
-      return Boolean(value)
+function observeProperty () {
+  const { _private } = this
+  const { name, target } = _private
+  const subject$ = this
+
+  Object.defineProperty(target, name, {
+    configurable: true,
+    get () {
+      return subject$.getValue()
+    },
+    set (value) {
+      subject$.next(value)
     }
-    if (type === Number) {
-      return Number(value)
-    }
-    if (type === String) {
-      return value || ''
-    }
-    return JSON.parse(value)
+  })
+}
+
+function reflectAttribute () {
+  const { _private, value } = this
+  const { attributeName, reflect, target, type } = _private
+
+  if (!attributeName || !reflect) {
+    return
   }
 
-  function encode (value) {
-    if (type === Boolean) {
-      return JSON.stringify(!!value)
+  if (type === Boolean) {
+    if (value) {
+      target.setAttribute(attributeName, '')
+    } else {
+      target.removeAttribute(attributeName)
     }
-    if (type === String) {
-      return value
-    }
-    return JSON.stringify(value)
-  }
-
-  function getAttribute () {
-    return decode(target.getAttribute(attributeName))
-  }
-
-  function getAttributeName () {
-    return typeof attribute === 'string'
-      ? attribute
-      : attribute
-        ? name
-        : undefined
-  }
-
-  function initialValue () {
-    if (value !== undefined) {
-      return value
-    }
-    if (attributeName) {
-      const attr = getAttribute()
-      if (attr) {
-        return attr
-      }
-    }
-    if (target[name] !== undefined) {
-      return target[name]
-    }
-    return defaultValue
-  }
-
-  function observeAttribute () {
-    if (!attributeName || !reflect) {
-      return () => {}
-    }
-
-    const mutationObserver = new MutationObserver((mutationsList) =>
-      mutationsList
-        .filter(({ type }) => type === 'attributes')
-        .filter((mutation) => mutation.attributeName === attributeName)
-        .forEach(() => {
-          target[name] = getAttribute()
-        })
-    )
-    mutationObserver.observe(target, { attributes: true });
-    return () => mutationObserver.disconnect()
+  } else {
+    target.setAttribute(attributeName, encode.call(this, value))
   }
 }
 

@@ -2,7 +2,7 @@ import { html } from 'lighterhtml'
 import { fromEvent } from 'rxjs'
 import { map, scan, tap, distinctUntilChanged } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, decodeDiceFormula, encodeDiceFormula, fromMethod, fromProperty, renderComponent, useSubscribe } from './util.js'
+import { adoptStyles, combineLatestProps, decodeDiceFormula, encodeDiceFormula, fromMethod, fromProperty, next, renderComponent, useSubscribe } from './util.js'
 import css from './app-dice-picker.css'
 
 adoptStyles(css)
@@ -28,9 +28,7 @@ whenAdded('app-dice-picker', (el) => {
     ),
     map(encodeDiceFormula),
     distinctUntilChanged(),
-    tap((formula) => {
-      el.formula = formula
-    })
+    next(formula$)
   )
   subscribe(changeValue$)
 

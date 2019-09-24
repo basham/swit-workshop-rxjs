@@ -2,7 +2,7 @@ import { html } from 'lighterhtml'
 import { merge, range, timer } from 'rxjs'
 import { concatMap, map, scan, startWith, switchMap, tap, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, fromEventSelector, fromMethod, fromProperty, random, randomItem, range as numRange, renderComponent, useSubscribe } from './util.js'
+import { adoptStyles, combineLatestProps, fromEventSelector, fromMethod, fromProperty, next, random, randomItem, range as numRange, renderComponent, useSubscribe } from './util.js'
 import css from './app-die-roll.css'
 
 adoptStyles(css)
@@ -42,9 +42,7 @@ whenAdded('app-die-roll', (el) => {
         .filter((v) => v !== lastRoll)
       return randomItem(options)
     }, -1),
-    tap((value) => {
-      el.value = value
-    })
+    next(value$)
   )
   subscribe(roll$)
 

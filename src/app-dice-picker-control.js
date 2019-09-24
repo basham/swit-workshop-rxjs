@@ -2,7 +2,7 @@ import { html } from 'lighterhtml'
 import { combineLatest, merge } from 'rxjs'
 import { map, mapTo, tap, withLatestFrom } from 'rxjs/operators'
 import { whenAdded } from 'when-elements'
-import { adoptStyles, combineLatestProps, fromEventSelector, fromMethod, fromProperty, renderComponent, useSubscribe } from './util.js'
+import { adoptStyles, combineLatestProps, fromEventSelector, fromMethod, fromProperty, next, renderComponent, useSubscribe } from './util.js'
 import css from './app-dice-picker-control.css'
 
 adoptStyles(css)
@@ -33,9 +33,7 @@ whenAdded('app-dice-picker-control', (el) => {
     decrement$,
     reset$
   ).pipe(
-    tap((value) => {
-      el.value = value
-    })
+    next(value$)
   )
   subscribe(changeValue$)
 
