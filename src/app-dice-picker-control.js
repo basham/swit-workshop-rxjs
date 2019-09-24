@@ -1,7 +1,7 @@
 import { combineLatest, merge } from 'rxjs'
 import { map, mapTo, tap, withLatestFrom } from 'rxjs/operators'
 import { adoptStyles, html, renderComponent, whenAdded } from './util/dom.js'
-import { combineLatestProps, fromEventSelector, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
+import { combineLatestObject, fromEventSelector, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
 import css from './app-dice-picker-control.css'
 
 adoptStyles(css)
@@ -53,7 +53,7 @@ whenAdded('app-dice-picker-control', (el) => {
   )
   subscribe(dispatch$)
 
-  const render$ = combineLatestProps({
+  const render$ = combineLatestObject({
     faces: faces$,
     type: type$,
     value: value$

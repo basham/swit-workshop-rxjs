@@ -1,5 +1,5 @@
 import { adoptStyles, html, renderComponent, whenAdded } from './util/dom.js'
-import { combineLatestProps, fromProperty, useSubscribe } from './util/rx.js'
+import { combineLatestObject, fromProperty, useSubscribe } from './util/rx.js'
 import css from './app-die-button.css'
 
 adoptStyles(css)
@@ -10,7 +10,7 @@ whenAdded('[is="app-die-button"]', (el) => {
   const faces$ = fromProperty(el, 'faces', { defaultValue: 6, type: Number })
   const label$ = fromProperty(el, 'label', { defaultValue: '', type: String })
 
-  const render$ = combineLatestProps({
+  const render$ = combineLatestObject({
     faces: faces$,
     label: label$
   }).pipe(

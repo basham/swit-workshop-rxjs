@@ -1,5 +1,5 @@
 export * from './rx/animationFrame.js'
-export * from './rx/combineLatestProps.js'
+export * from './rx/combineLatestObject.js'
 export * from './rx/debug.js'
 export * from './rx/distinctUntilObjectChanged.js'
 export * from './rx/fromEventSelector.js'

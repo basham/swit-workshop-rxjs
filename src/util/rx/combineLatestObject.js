@@ -1,7 +1,7 @@
 import { combineLatest, isObservable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
 
-export const combineLatestProps = (source) => {
+export const combineLatestObject = (source) => {
   const streamKeys = Object.keys(source)
     .filter((key) => isObservable(source[key]))
   if (!streamKeys.length) {

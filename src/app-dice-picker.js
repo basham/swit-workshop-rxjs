@@ -2,7 +2,7 @@ import { fromEvent } from 'rxjs'
 import { map, scan, tap, distinctUntilChanged } from 'rxjs/operators'
 import { decodeFormula, encodeFormula } from './util/dice.js'
 import { adoptStyles, html, renderComponent, whenAdded } from './util/dom.js'
-import { combineLatestProps, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
+import { combineLatestObject, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
 import css from './app-dice-picker.css'
 
 adoptStyles(css)
@@ -42,7 +42,7 @@ whenAdded('app-dice-picker', (el) => {
   )
   subscribe(reset$)
 
-  const render$ = combineLatestProps({
+  const render$ = combineLatestObject({
     picker: picker$
   }).pipe(
     renderComponent(el, render)

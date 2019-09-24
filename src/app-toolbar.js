@@ -1,5 +1,5 @@
 import { adoptStyles, html, renderComponent, whenAdded } from './util/dom.js'
-import { combineLatestProps, fromProperty, useSubscribe } from './util/rx.js'
+import { combineLatestObject, fromProperty, useSubscribe } from './util/rx.js'
 import css from './app-toolbar.css'
 
 adoptStyles(css)
@@ -10,7 +10,7 @@ whenAdded('app-toolbar', (el) => {
   const count$ = fromProperty(el, 'count', { defaultValue: 0, type: Number })
   const total$ = fromProperty(el, 'total', { defaultValue: 0, type: Number })
 
-  const render$ = combineLatestProps({
+  const render$ = combineLatestObject({
     count: count$,
     total: total$
   }).pipe(

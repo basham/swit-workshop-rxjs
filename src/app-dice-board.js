@@ -3,7 +3,7 @@ import { map, shareReplay, tap } from 'rxjs/operators'
 import { range } from './util/array.js'
 import { decodeFormula } from './util/dice.js'
 import { adoptStyles, html, keychain, renderComponent, whenAdded } from './util/dom.js'
-import { combineLatestProps, fromEventSelector, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
+import { combineLatestObject, fromEventSelector, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
 import css from './app-dice-board.css'
 
 adoptStyles(css)
@@ -75,7 +75,7 @@ whenAdded('app-dice-board', (el) => {
   )
   subscribe(roll$)
 
-  const render$ = combineLatestProps({
+  const render$ = combineLatestObject({
     diceSets: diceSets$
   }).pipe(
     renderComponent(el, render),

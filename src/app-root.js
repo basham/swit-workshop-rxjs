@@ -1,6 +1,6 @@
 import { distinctUntilChanged, map, shareReplay, startWith, tap } from 'rxjs/operators'
 import { adoptStyles, html, renderComponent, whenAdded } from './util/dom.js'
-import { combineLatestProps, fromEventSelector, useSubscribe } from './util/rx.js'
+import { combineLatestObject, fromEventSelector, useSubscribe } from './util/rx.js'
 import css from './app-root.css'
 
 adoptStyles(css)
@@ -38,7 +38,7 @@ whenAdded('app-root', (el) => {
   )
   subscribe(removeAll$)
 
-  const render$ = combineLatestProps({
+  const render$ = combineLatestObject({
     count: count$,
     formula: formula$,
     total: total$
