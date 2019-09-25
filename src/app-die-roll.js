@@ -1,14 +1,14 @@
 import { merge, range, timer } from 'rxjs'
 import { concatMap, map, scan, startWith, switchMap, withLatestFrom } from 'rxjs/operators'
 import { randomItem, range as numRange } from './util/array.js'
-import { adoptStyles, html, renderComponent, whenAdded } from './util/dom.js'
+import { adoptStyles, define, html, renderComponent } from './util/dom.js'
 import { random } from './util/math.js'
 import { combineLatestObject, fromEventSelector, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
 import css from './app-die-roll.css'
 
 adoptStyles(css)
 
-whenAdded('app-die-roll', (el) => {
+define('app-die-roll', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()
 
   const faces$ = fromProperty(el, 'faces', { defaultValue: 6, type: Number })

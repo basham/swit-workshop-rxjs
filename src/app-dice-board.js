@@ -2,13 +2,13 @@ import { Subject, merge } from 'rxjs'
 import { map, shareReplay, tap } from 'rxjs/operators'
 import { range } from './util/array.js'
 import { decodeFormula } from './util/dice.js'
-import { adoptStyles, html, keychain, renderComponent, whenAdded } from './util/dom.js'
+import { adoptStyles, define, html, keychain, renderComponent } from './util/dom.js'
 import { combineLatestObject, fromEventSelector, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
 import css from './app-dice-board.css'
 
 adoptStyles(css)
 
-whenAdded('app-dice-board', (el) => {
+define('app-dice-board', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()
 
   const formula$ = fromProperty(el, 'formula', { defaultValue: '', type: String })

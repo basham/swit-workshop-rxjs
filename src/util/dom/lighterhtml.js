@@ -4,6 +4,7 @@ import { renderComponentFactory } from '../rx.js'
 export * from 'lighterhtml'
 export * from 'when-elements'
 export * from './adoptStyles.js'
+export * from './define.js'
 
 // Map empty objects to strings.
 // Use for render looping with lighterhtml's html.for(ref) API.

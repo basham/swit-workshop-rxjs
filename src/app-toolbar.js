@@ -1,10 +1,10 @@
-import { adoptStyles, html, renderComponent, whenAdded } from './util/dom.js'
+import { adoptStyles, define, html, renderComponent } from './util/dom.js'
 import { combineLatestObject, fromProperty, useSubscribe } from './util/rx.js'
 import css from './app-toolbar.css'
 
 adoptStyles(css)
 
-whenAdded('app-toolbar', (el) => {
+define('app-toolbar', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()
 
   const count$ = fromProperty(el, 'count', { defaultValue: 0, type: Number })

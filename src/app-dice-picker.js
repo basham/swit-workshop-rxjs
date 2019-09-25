@@ -1,13 +1,13 @@
 import { fromEvent } from 'rxjs'
 import { map, scan, tap, distinctUntilChanged } from 'rxjs/operators'
 import { decodeFormula, encodeFormula } from './util/dice.js'
-import { adoptStyles, html, renderComponent, whenAdded } from './util/dom.js'
+import { adoptStyles, define, html, renderComponent } from './util/dom.js'
 import { combineLatestObject, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
 import css from './app-dice-picker.css'
 
 adoptStyles(css)
 
-whenAdded('app-dice-picker', (el) => {
+define('app-dice-picker', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()
 
   const formula$ = fromProperty(el, 'formula', { defaultValue: '', reflect: false, type: String })
@@ -63,5 +63,6 @@ function renderControl (props) {
   const { faceCount } = props
   return html`
     <app-dice-picker-control faces=${faceCount} />
+    <app-dice-picker-control-2 faces=${faceCount} />
   `
 }
