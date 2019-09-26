@@ -63,6 +63,5 @@ function renderControl (props) {
   const { faceCount } = props
   return html`
     <app-dice-picker-control faces=${faceCount} />
-    <app-dice-picker-control-2 faces=${faceCount} />
   `
 }
