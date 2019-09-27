@@ -1,11 +1,8 @@
 # Reactive Web Components with RxJS
 
-Tools and techniques for component lifecycle, rendering, data flow, and communication.
-
-Follow along: https://github.com/basham/swit-workshop-rxjs
-
-October 2019
+## https://github.com/basham/swit-workshop-rxjs
 
 Chris Basham  
-https://bash.am  
-[@chrisbasham](https://twitter.com/chrisbasham)
+https://bash.am
+
+October 2019
