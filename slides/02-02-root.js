@@ -1,4 +1,4 @@
-window.customElements.define('dice-root', class DiceRoot extends HTMLElement {
+window.customElements.define('root-custom-elements', class RootCustomElements extends HTMLElement {
   constructor () {
     super()
     // In general, the constructor should be used
