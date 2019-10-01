@@ -1,8 +1,9 @@
 # Reactive programming
 
-- Streams (observables) push data to listeners (subscribers) once emitted
+- Observables emit data
+- Subscribers listen to emitted data
 - Everything is asynchronous
-- Does everything that a Promise can, but much more
+- Observables do more than Promises
 - Code reads more naturally: top → down
 
 ```js
