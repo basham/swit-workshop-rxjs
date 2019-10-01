@@ -2,7 +2,7 @@ import { define } from '../src/util/dom/define.js'
 
 define('countdown-innerhtml', (el) => {
   const duration = 1000
-  let count = 10
+  let count = 20
 
   // Initial render.
   renderComponent()

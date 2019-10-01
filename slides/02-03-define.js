@@ -1,7 +1,7 @@
 import { define } from '../src/util/dom.js'
 
-define('root-define', (el) => {
+define('component-define', (el) => {
   el.innerHTML = `
-    Root
+    Component
   `
 })

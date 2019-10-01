@@ -1,4 +1,4 @@
-window.customElements.define('root-custom-elements', class RootCustomElements extends HTMLElement {
+window.customElements.define('component-custom-elements', class RootCustomElements extends HTMLElement {
   constructor () {
     super()
     // In general, the constructor should be used
@@ -15,7 +15,7 @@ window.customElements.define('root-custom-elements', class RootCustomElements ex
     // to prevent it from running twice.
     // https://html.spec.whatwg.org/multipage/custom-elements.html#custom-element-conformance
     this.innerHTML = `
-      Root
+      Component
     `
   }
 

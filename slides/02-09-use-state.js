@@ -1,8 +1,8 @@
-import { define } from '../src/util/dom/define.js'
+import { define, html, render } from '../src/util/dom/lighterhtml.js'
 
-define('countdown-state', (el) => {
+define('countdown-use-state', (el) => {
   const duration = 1000
-  const countState = useState(10)
+  const countState = useState(20)
 
   countState.on((count) => renderComponent(el, count))
 
@@ -25,14 +25,19 @@ define('countdown-state', (el) => {
 })
 
 function renderComponent (el, count) {
-  el.innerHTML = `
+  render(el, () => html`
     Countdown: ${count}
-  `
+  `)
 }
 
+// Get a value.
+// Set a value.
+// Listen to a value.
+// Stop listening to a value.
+//
 // Inspired by React hooks.
 // https://reactjs.org/docs/hooks-state.html
-export function useState (initialState) {
+function useState (initialState) {
   let state = initialState
   const listeners = new Set()
   const get = () => state
