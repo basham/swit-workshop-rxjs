@@ -2,8 +2,7 @@ import { define } from '../src/util/dom/define.js'
 
 define('countdown-innerhtml', (el) => {
   const duration = 1000
-  const count = 10
-  let currentCount = count
+  let count = 10
 
   // Initial render.
   renderComponent()
@@ -11,10 +10,10 @@ define('countdown-innerhtml', (el) => {
   // Countdown every second.
   // Stop when zero.
   const timerId = setInterval(() => {
-    currentCount = currentCount - 1
+    count = count - 1
     renderComponent()
 
-    if (currentCount === 0) {
+    if (count === 0) {
       clear()
     }
   }, duration)
@@ -27,7 +26,7 @@ define('countdown-innerhtml', (el) => {
   // Use a library to diff the DOM.
   function renderComponent () {
     el.innerHTML = `
-      Countdown: ${currentCount}
+      Countdown: ${count}
     `
   }
 

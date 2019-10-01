@@ -32,7 +32,8 @@ function renderComponent (el, count) {
 
 // Inspired by React hooks.
 // https://reactjs.org/docs/hooks-state.html
-export function useState (state = null) {
+export function useState (initialState) {
+  let state = initialState
   const listeners = new Set()
   const get = () => state
   const set = (callback) => {
