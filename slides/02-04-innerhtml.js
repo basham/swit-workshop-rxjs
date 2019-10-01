@@ -25,9 +25,7 @@ define('countdown-innerhtml', (el) => {
   // This will clear the container's DOM every time.
   // Use a library to diff the DOM.
   function renderComponent () {
-    el.innerHTML = `
-      Countdown: ${count}
-    `
+    el.innerHTML = `Countdown: ${count}`
   }
 
   // Cancel the interval when the component

@@ -20,9 +20,7 @@ define('countdown-lighterhtml', (el) => {
   }
 
   function renderComponent () {
-    render(el, () => html`
-      Countdown: ${count}
-    `)
+    render(el, () => html`Countdown: ${count}`)
   }
 
   return () => clear()

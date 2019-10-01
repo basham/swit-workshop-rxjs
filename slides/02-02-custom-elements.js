@@ -14,9 +14,7 @@ window.customElements.define('component-custom-elements', class RootCustomElemen
     // work that is truly one-time will need a guard
     // to prevent it from running twice.
     // https://html.spec.whatwg.org/multipage/custom-elements.html#custom-element-conformance
-    this.innerHTML = `
-      Component
-    `
+    this.innerHTML = 'Component'
   }
 
   connectedCallback () {

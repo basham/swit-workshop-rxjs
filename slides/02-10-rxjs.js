@@ -23,7 +23,5 @@ define('countdown-rxjs', (el) => {
 })
 
 function renderComponent (el, count) {
-  render(el, () => html`
-    Countdown: ${count}
-  `)
+  render(el, () => html`Countdown: ${count}`)
 }

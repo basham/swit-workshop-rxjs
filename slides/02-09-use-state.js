@@ -25,9 +25,7 @@ define('countdown-use-state', (el) => {
 })
 
 function renderComponent (el, count) {
-  render(el, () => html`
-    Countdown: ${count}
-  `)
+  render(el, () => html`Countdown: ${count}`)
 }
 
 // Get a value.

@@ -20,9 +20,7 @@ define('countdown-react', (el) => {
   }
 
   function renderComponent () {
-    render(html`
-      Countdown: ${count}
-    `, el)
+    render(html`Countdown: ${count}`, el)
   }
 
   return () => clear()
