@@ -20,6 +20,8 @@ render(what, where)
 
 Use [`lighterhtml`](https://github.com/WebReflection/lighterhtml) to avoid overhead of virtual DOM.
 
+Supports: IE9+, iOS8+, Android 4+, and every modern mobile or desktop browser
+
 ```js
 import { html, render } from 'lighterhtml' // 6.5kb (v1.2.1) *
 
