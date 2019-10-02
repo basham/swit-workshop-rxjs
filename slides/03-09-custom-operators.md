@@ -5,7 +5,9 @@ Custom ["pipeable" operators](https://rxjs-dev.firebaseapp.com/guide/operators) 
 ```js
 // Compose one operator
 const simpleOperator = () => foo()
+```
 
+```js
 // Compose multiple operators
 import { pipe } from 'rxjs'
 
