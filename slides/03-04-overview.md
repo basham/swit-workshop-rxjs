@@ -8,19 +8,12 @@ Observable
 └─ Subject
    │ .next(value) → void
    │
-   ├─ BehaviorSubject(initialValue)
-   │    .getValue() → any
-   │    .value → any
-   │
-   ├─ ReplaySubject(bufferCount)
-   │
-   └─ AsyncSubject
+   └─ BehaviorSubject(initialValue)
+        .getValue() → any
+        .value → any
 
-Static operator
-  Function(args) → Observable
-
-Pipeable operator
-  Function(Observable) → Observable
+Operator
+  Function → Observable
 
 Subscription
   .add(Subscription) → Subscription
