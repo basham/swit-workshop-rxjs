@@ -5,13 +5,12 @@ Display the current value in the stream
 ```js
 import { tap } from 'rxjs/operators'
 
-export const debug = (message = '') => (source$) => source$.pipe(
+export const debug = (message = '') =>
   tap((value) => {
     console.group(message)
     console.log(value)
     console.groupEnd()
   })
-)
 ```
 
 ```js

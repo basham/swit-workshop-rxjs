@@ -7,7 +7,7 @@ import { filter, mergeMap, switchMap } from 'rxjs/operators'
 //
 // Inspired by CycleJS DOM
 // https://cycle.js.org/api/dom.html
-export const mapEvent = (eventName, options) => (source$) => source$.pipe(
+export const mapEvent = (eventName, options) =>
   switchMap((elements) =>
     from(elements).pipe(
       mergeMap((element) =>
@@ -17,4 +17,3 @@ export const mapEvent = (eventName, options) => (source$) => source$.pipe(
       )
     )
   )
-)
