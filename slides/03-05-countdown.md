@@ -1,3 +1,22 @@
+# Countdown example
+
+```
+Observables
+  count$ (BehaviorSubject)
+  countdown$
+
+Operators
+  interval
+  map
+  takeWhile
+  withLatestFrom
+
+Subscriptions
+  countdownSubscription
+  renderSubscription
+```
+
+```js
 import { BehaviorSubject, interval } from 'rxjs'
 import { map, takeWhile, withLatestFrom } from 'rxjs/operators'
 import { define, html, render } from '../src/util/dom/lighterhtml.js'
@@ -27,3 +46,4 @@ define('countdown-rxjs', (el) => {
 function renderComponent (el, count) {
   render(el, () => html`Countdown: ${count}`)
 }
+```
