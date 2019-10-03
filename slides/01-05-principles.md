@@ -2,11 +2,11 @@
 
 ## 1. DOM is the interface
 
-- Attributes, properties, and methods push data down
+Attributes, properties, and methods push data down
 
-- Events bubble data up
+Events bubble data up
 
-- Use JSON-friendly data types (strings, numbers, booleans, objects, arrays)
+Use JSON-friendly data types (strings, numbers, booleans, objects, arrays)
 
 ```
 <thing attribute="value">
@@ -18,11 +18,11 @@ document.addEventListener('event', callback)
 
 ## 2. Reduce and isolate side effects
 
-- Don't mutate data (prefer `const` over `let`)
+Don't mutate data (prefer `const` over `let`)
 
-- Write pure functions (same output for same input)
+Write pure functions (same output for same input)
 
-- More testable code
+More testable code
 
 ```
 fn(a, b) === fn(a, b)
@@ -30,9 +30,9 @@ fn(a, b) === fn(a, b)
 
 ## 3. React, don't command
 
-- Self-determine how and when to respond (reactive)
+Self-determine how and when to respond (reactive)
 
-- Don't let things determine how and when other things respond (imperative)
+Don't let things determine how and when other things respond (imperative)
 
 ```
 Imperative      vs     Reactive
