@@ -1,12 +1,10 @@
 # Functional programming
 
-- Use functions to perform operations on data structures
+Describes *what* to do, not *how* to do it
 
-- Describes *what* to do, not *how* to do it
+Data tends to be immutable
 
-- Data tends to be immutable
-
-- No (or few) side effects
+No or few side effects
 
 ```js
 // Functional example

@@ -1,14 +1,8 @@
 # Reactive programming
 
-- Observables emit data
+Publish and subscribe
 
-- Subscribers listen to emitted data
-
-- Everything is asynchronous
-
-- Observables do more than Promises
-
-- Code reads more naturally: top → down
+Code reads: top → down
 
 ```js
 // Whenever a$ or b$ emits, c$ emits.
