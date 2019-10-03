@@ -1,4 +1,4 @@
-# Countdown example
+# Example
 
 ```
 Observables
