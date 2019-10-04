@@ -12,14 +12,14 @@ define('countdown-rxjs', (el) => {
     takeWhile((count) => count >= 0)
   )
 
-  const countdownSubscription = countdown$.subscribe(count$)
+  const updateCountSubscription = countdown$.subscribe(count$)
 
   const renderSubscription = count$.subscribe((count) => {
     renderComponent(el, count)
   })
 
   return () => {
-    countdownSubscription.unsubscribe()
+    updateCountSubscription.unsubscribe()
     renderSubscription.unsubscribe()
   }
 })
