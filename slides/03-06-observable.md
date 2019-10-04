@@ -1,6 +1,6 @@
 # Observable
 
-|Type|Values|Sync<br>(pull)|Async<br>(push)|
+|Type|Values|Sync|Async|
 |---|:-:|:-:|:-:|---|---|
 |[Function]|0/1|✓||
 |[Iterator] *|0+|✓||
