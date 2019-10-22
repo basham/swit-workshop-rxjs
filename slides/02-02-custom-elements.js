@@ -2,9 +2,8 @@ window.customElements.define('component-custom-elements', class RootCustomElemen
   constructor () {
     super()
     // In general, the constructor should be used
-    // to set up initial state and default values,
-    // and to set up event listeners and possibly
-    // a shadow root.
+    // to set up initial state, default values,
+    // event listeners, and a shadow root.
     //
     // In general, work should be deferred to
     // connectedCallback as much as possible —
