@@ -26,22 +26,20 @@ interval(1000).pipe(
   debug('B')
 ).subscribe()
 
-/*
-Console output:
-
-A
-  0
-B
-  0
-
-A
-  1
-B
-  2
-
-A
-  2
-B
-  4
-*/
+// Console output:
+//
+// A
+//   0
+// B
+//   0
+//
+// A
+//   1
+// B
+//   2
+//
+// A
+//   2
+// B
+//   4
 ```

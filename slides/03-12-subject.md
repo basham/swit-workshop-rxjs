@@ -36,8 +36,8 @@ CONTRA_CODE.forEach((key) => {
 
 ```js
 // Instead of `forEach`, try `from`.
-// Automatically unsubscribes when the
-// last item in the array emits.
+// Automatically unsubscribes ("completes")
+// when the last item in the array emits.
 import { from } from 'rxjs'
 
 from(CONTRA_CODE).subscribe((key) => {
