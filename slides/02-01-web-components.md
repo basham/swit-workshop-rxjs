@@ -31,7 +31,7 @@ window.customElements.define('my-component', class MyComponent extends HTMLEleme
 ### Customized built-in element
 
 ```html
-<my-button>Do something</my-button>
+<button is="my-button">Do something</button>
 ```
 
 ```js
