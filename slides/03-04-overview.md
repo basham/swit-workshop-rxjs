@@ -20,4 +20,4 @@ Subscription
   .unsubscribe() → void
 ```
 
-See: https://rxjs-dev.firebaseapp.com/guide/overview
+More: https://rxjs-dev.firebaseapp.com/guide/overview
