@@ -1,82 +1,77 @@
 # Subscription
 
-```js
-import { interval } from 'rxjs'
+Nothing happens within an observable unless it is subscribed to
 
-// Never unsubscribe.
-interval(1000).subscribe()
-```
-
-## Unsubscribe explicitly
+Calling `.subscribe()` returns a Subscription
 
 ```js
 import { interval } from 'rxjs'
 
-// Unsubscribe after 5 seconds.
-const subscription = interval(1000).subscribe()
-setTimeout(() => {
-  subscription.unsubscribe()
-}, 5000)
+// Observable created but never does any work
+const i$ = interval(1000)
 ```
 
 ```js
 import { interval } from 'rxjs'
 
-// Unsubscribe a child subscription
-// when the parent subscription unsubscribes.
-const subscription = interval(1000).subscribe()
-const childSubscription = interval(1500).subscribe()
-subscription.add(childSubscription)
-
-setTimeout(() => {
-  subscription.unsubscribe()
-}, 5000)
+// Observable emits a value every second
+const i$ = interval(1000)
+const subscription = i$.subscribe()
 ```
+
+Subscribe with an [Observer object](https://rxjs-dev.firebaseapp.com/api/index/interface/Observer)
 
 ```js
 import { interval } from 'rxjs'
-import { filter } from 'rxjs/operators'
-import { define } from '../src/util/dom/define.js'
 
-// Remove the element after the interval emits 5 times.
-// Removing the element unsubscribes the interval
-// via the returned callback.
-define('timer-component', (el) => {
-  const subscription = interval(1000).pipe(
-    filter((i) => i > 5)
-  ).subscribe(() => el.remove())
-  return () => subscription.unsubscribe()
+const i$ = interval(1000)
+const subscription = i$.subscribe({
+  next: (value) => {
+    // Called for each emitted value
+  },
+  error: (err) => {
+    // Called if an emitted error is not caught.
+    // This will never happen in this particular case.
+  },
+  complete: () => {
+    // Called if the observable "completes",
+    // indicating there will be no more emitted values.
+    // This will never happen in this particular case.
+  }
 })
 ```
 
-## Unsubscribe with operators
+Subscribe with callbacks
 
 ```js
 import { interval } from 'rxjs'
-import { take } from 'rxjs/operators'
 
-// Unsubscribe after emitting 5 items.
-interval(1000).pipe(
-  take(5)
-).subscribe()
+const i$ = interval(1000)
+const subscription = i$.subscribe(
+  // Next callback
+  (value) => { /* ... */ },
+  // Not providing an Error callback
+  undefined,
+  // Complete callback
+  () => { /* ... */ }
+)
 ```
 
 ```js
 import { interval } from 'rxjs'
-import { takeWhile } from 'rxjs/operators'
 
-// Unsubscribe after the value of interval is more than 4.
-interval(1000).pipe(
-  takeWhile((i) => i < 5)
-).subscribe()
+const i$ = interval(1000)
+// Subscribe with Next callback
+const subscription = i$.subscribe((value) => { /* ... */ })
 ```
+
+Subscribe with a Subject (or BehaviorSubject)
 
 ```js
 import { interval } from 'rxjs'
-import { takeUntil } from 'rxjs/operators'
 
-// Unsubscribe after 5 seconds.
-interval(1000).pipe(
-  takeUntil(interval(5000))
-).subscribe()
+const value$ = new BehaviorSubject(0)
+const i$ = interval(1000)
+// Push emitted values from i$ on to value$
+const subscription = i$.subscribe(value$)
 ```
