@@ -13,9 +13,11 @@
 |---|---|---|
 |`faces`|Attribute, Property|Number (`4`, `6`, `8`, `10`, `12`, `20`)|
 |`label`|Attribute, Property|String|
+|`size`|Attribute|String (`small`, `medium`), used for styling|
+|`theme`|Attribute|String (`ghost`, `solid`), used for styling|
 
 ```html
-<button is="dice-button" faces="6" label="3" />
+<button is="dice-button" faces="6" label="3" size="medium" theme="solid" />
 ```
 
 ### Root
