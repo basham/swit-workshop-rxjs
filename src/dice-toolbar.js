@@ -1,10 +1,10 @@
 import { adoptStyles, define, html, renderComponent } from './util/dom.js'
 import { combineLatestObject, fromProperty, useSubscribe } from './util/rx.js'
-import css from './app-toolbar.css'
+import css from './dice-toolbar.css'
 
 adoptStyles(css)
 
-define('app-toolbar', (el) => {
+define('dice-toolbar', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()
 
   const count$ = fromProperty(el, 'count', { defaultValue: 0, type: Number })

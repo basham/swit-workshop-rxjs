@@ -3,11 +3,11 @@ import { map, scan, tap, distinctUntilChanged } from 'rxjs/operators'
 import { decodeFormula, encodeFormula } from './util/dice.js'
 import { adoptStyles, define, html, renderComponent } from './util/dom.js'
 import { combineLatestObject, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
-import css from './app-dice-picker.css'
+import css from './dice-picker.css'
 
 adoptStyles(css)
 
-define('app-dice-picker', (el) => {
+define('dice-picker', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()
 
   const formula$ = fromProperty(el, 'formula', { defaultValue: '', reflect: false, type: String })
@@ -15,7 +15,7 @@ define('app-dice-picker', (el) => {
     map(decodeFormula)
   )
 
-  const changeValue$ = fromEvent(el, 'change-picker-control').pipe(
+  const changeValue$ = fromEvent(el, 'dice-input-changed').pipe(
     scan((all, event) => {
       const { detail } = event
       const { faces, value } = detail
@@ -34,7 +34,7 @@ define('app-dice-picker', (el) => {
 
   const reset$ = fromMethod(el, 'reset').pipe(
     tap(() => {
-      el.querySelectorAll('app-dice-picker-control')
+      el.querySelectorAll('dice-input')
         .forEach((control) => control.reset())
       el.setAttribute('tabindex', -1)
       el.focus()
@@ -62,6 +62,6 @@ function render (props) {
 function renderControl (props) {
   const { faceCount } = props
   return html`
-    <app-dice-picker-control faces=${faceCount} />
+    <dice-input faces=${faceCount} />
   `
 }

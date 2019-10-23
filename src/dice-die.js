@@ -4,11 +4,11 @@ import { randomItem, range as numRange } from './util/array.js'
 import { adoptStyles, define, html, renderComponent } from './util/dom.js'
 import { random } from './util/math.js'
 import { combineLatestObject, fromEventSelector, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
-import css from './app-die-roll.css'
+import css from './dice-die.css'
 
 adoptStyles(css)
 
-define('app-die-roll', (el) => {
+define('dice-die', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()
 
   const faces$ = fromProperty(el, 'faces', { defaultValue: 6, type: Number })
@@ -65,7 +65,7 @@ function render (props) {
     <button
       aria-label=${`${value}, ${type}`}
       faces=${faces}
-      is='app-die-button'
+      is='dice-button'
       label=${value}
       size='medium'
       theme='solid' />

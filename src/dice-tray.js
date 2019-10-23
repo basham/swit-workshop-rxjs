@@ -4,11 +4,11 @@ import { range } from './util/array.js'
 import { decodeFormula } from './util/dice.js'
 import { adoptStyles, define, html, keychain, renderComponent } from './util/dom.js'
 import { combineLatestObject, fromEventSelector, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
-import css from './app-dice-board.css'
+import css from './dice-tray.css'
 
 adoptStyles(css)
 
-define('app-dice-board', (el) => {
+define('dice-tray', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()
 
   const formula$ = fromProperty(el, 'formula', { defaultValue: '', type: String })
@@ -33,11 +33,11 @@ define('app-dice-board', (el) => {
   const componentDidUpdate$ = new Subject()
 
   const results$ = merge(
-    fromEventSelector(el, 'app-die-roll', 'value-changed'),
+    fromEventSelector(el, 'dice-die', 'value-changed'),
     componentDidUpdate$
   ).pipe(
     map(() => {
-      const dice = [ ...el.querySelectorAll('app-die-roll') ]
+      const dice = [ ...el.querySelectorAll('dice-die') ]
         .map(({ faces, value }) => ({ faces, value }))
         .filter(({ value }) => value)
       const count = dice.length
@@ -58,7 +58,7 @@ define('app-dice-board', (el) => {
       el.count = count
       el.results = results
       el.total = total
-      const event = new CustomEvent('roll-board', {
+      const event = new CustomEvent('tray-changed', {
         bubbles: true,
         detail: value
       })
@@ -69,7 +69,7 @@ define('app-dice-board', (el) => {
 
   const roll$ = fromMethod(el, 'roll').pipe(
     tap(() => {
-      el.querySelectorAll('app-die-roll')
+      el.querySelectorAll('dice-die')
         .forEach((die) => die.roll())
     })
   )
@@ -103,6 +103,6 @@ function renderDiceSet (props) {
 function renderDie (props) {
   const { faceCount, key } = props
   return html.for(key)`
-    <app-die-roll faces=${faceCount} />
+    <dice-die faces=${faceCount} />
   `
 }

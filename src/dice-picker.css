@@ -1,0 +1,11 @@
+dice-picker {
+  display: block;
+}
+
+dice-picker:focus {
+  outline: none;
+}
+
+dice-picker > dice-input {
+  margin: 0.5rem;
+}

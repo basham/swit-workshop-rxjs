@@ -2,11 +2,11 @@ import { combineLatest, merge } from 'rxjs'
 import { map, mapTo, tap, withLatestFrom } from 'rxjs/operators'
 import { adoptStyles, define, html, renderComponent } from './util/dom.js'
 import { combineLatestObject, fromEventSelector, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
-import css from './app-dice-picker-control.css'
+import css from './dice-input.css'
 
 adoptStyles(css)
 
-define('app-dice-picker-control', (el) => {
+define('dice-input', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()
 
   const faces$ = fromProperty(el, 'faces', { defaultValue: 6, type: Number })
@@ -41,7 +41,7 @@ define('app-dice-picker-control', (el) => {
     value$
   ).pipe(
     tap(([ faces, value ]) => {
-      const event = new CustomEvent('change-picker-control', {
+      const event = new CustomEvent('dice-input-changed', {
         bubbles: true,
         detail: {
           faces,
@@ -75,7 +75,7 @@ function render (props) {
       aria-label=${`Add ${type}`}
       class='increment-button'
       faces=${faces}
-      is="app-die-button"
+      is="dice-button"
       size='small'
       theme=${value ? 'solid' : 'ghost'} />
     <button

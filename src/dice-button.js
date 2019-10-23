@@ -1,10 +1,10 @@
-import { adoptStyles, define, html, renderComponent, whenAdded } from './util/dom.js'
+import { adoptStyles, define, html, renderComponent } from './util/dom.js'
 import { combineLatestObject, fromProperty, useSubscribe } from './util/rx.js'
-import css from './app-die-button.css'
+import css from './dice-button.css'
 
 adoptStyles(css)
 
-define('app-die-button', 'button', (el) => {
+define('dice-button', 'button', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()
 
   const faces$ = fromProperty(el, 'faces', { defaultValue: 6, type: Number })

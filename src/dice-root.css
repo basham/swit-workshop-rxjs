@@ -110,7 +110,7 @@ body {
   padding: 0;
 }
 
-app-root {
+dice-root {
   display: grid;
   grid-template-columns: min-content 1fr;
   grid-template-rows: auto 1fr;
@@ -121,18 +121,18 @@ app-root {
   min-width: 100vw;
 }
 
-app-root > app-dice-picker {
+dice-root > dice-picker {
   background-color: var(--color-black-08);
   grid-area: picker;
   padding: 1.5rem;
 }
 
-app-root > app-toolbar {
+dice-root > dice-toolbar {
   grid-area: toolbar;
   padding: 2rem;
 }
 
-app-root > app-dice-board {
+dice-root > dice-tray {
   background-color: var(--color-black-08);
   grid-area: board;
   padding: 1.5rem;

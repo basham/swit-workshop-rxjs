@@ -1,19 +1,19 @@
 import { distinctUntilChanged, map, shareReplay, startWith, tap } from 'rxjs/operators'
 import { adoptStyles, define, html, renderComponent } from './util/dom.js'
 import { combineLatestObject, fromEventSelector, useSubscribe } from './util/rx.js'
-import css from './app-root.css'
+import css from './dice-root.css'
 
 adoptStyles(css)
 
-define('app-root', (el) => {
+define('dice-root', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()
 
-  const formula$ = fromEventSelector(el, 'app-dice-picker', 'formula-changed').pipe(
+  const formula$ = fromEventSelector(el, 'dice-picker', 'formula-changed').pipe(
     map(({ detail }) => detail),
     startWith('')
   )
 
-  const rollBoard$ = fromEventSelector(el, 'app-dice-board', 'roll-board').pipe(
+  const rollBoard$ = fromEventSelector(el, 'dice-tray', 'tray-changed').pipe(
     map(({ detail }) => detail),
     shareReplay(1)
   )
@@ -28,13 +28,13 @@ define('app-root', (el) => {
     distinctUntilChanged()
   )
 
-  const rollAll$ = fromEventSelector(el, 'app-toolbar button[data-roll]', 'click').pipe(
-    tap(() => el.querySelector('app-dice-board').roll())
+  const rollAll$ = fromEventSelector(el, 'dice-toolbar button[data-roll]', 'click').pipe(
+    tap(() => el.querySelector('dice-tray').roll())
   )
   subscribe(rollAll$)
 
-  const removeAll$ = fromEventSelector(el, 'app-toolbar button[data-reset]', 'click').pipe(
-    tap(() => el.querySelector('app-dice-picker').reset())
+  const removeAll$ = fromEventSelector(el, 'dice-toolbar button[data-reset]', 'click').pipe(
+    tap(() => el.querySelector('dice-picker').reset())
   )
   subscribe(removeAll$)
 
@@ -53,10 +53,10 @@ define('app-root', (el) => {
 function render (props) {
   const { count, formula, total } = props
   return html`
-    <app-dice-picker />
-    <app-toolbar
+    <dice-picker />
+    <dice-toolbar
       count=${count}
       total=${total} />
-    <app-dice-board formula=${formula} />
+    <dice-tray formula=${formula} />
   `
 }
