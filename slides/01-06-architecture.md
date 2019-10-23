@@ -5,7 +5,7 @@ Root <dice-root>
 │
 ├─ Picker <dice-picker>
 │  └─ Input <dice-input> (×6)
-│     ├─ Add die button <dice-button>
+│     ├─ Add die button <button is="dice-button">
 │     └─ Remove die button <button>
 │
 ├─ Toolbar <dice-toolbar>
@@ -15,5 +15,5 @@ Root <dice-root>
 │
 └─ Tray <dice-tray>
    └─ Die <dice-die> (×N)
-      └─ Button <dice-button>
+      └─ Button <button is="dice-button">
 ```
