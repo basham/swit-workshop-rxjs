@@ -2,9 +2,8 @@
 
 ## Goals
 
-1. Create `<dice-root>` component as the container for other components.
-2. Render 1 row of 6 `<button is="dice-button" theme="ghost">` components. Each button should have a different `faces` attribute.
-3. Render 1 row of 6 `<button is="dice-button" theme="solid" label="1">` components. Each button should have a different `faces` attribute.
+1. Create the `<dice-root>` component as the container for other components.
+2. Render 6 `<button is="dice-button" label="1" size="medium" theme="solid">` components. Each button should have a different `faces` attribute.
 
 ## APIs
 

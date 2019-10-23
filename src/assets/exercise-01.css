@@ -1,11 +1,8 @@
 .exercise-1 dice-root {
   display: block;
-}
-
-.exercise-1 dice-root > .section {
   margin: 2rem;
 }
 
-.exercise-1 dice-root > .section > button[is="dice-button"] {
+.exercise-1 dice-root button[is="dice-button"] {
   margin: 0.5rem;
 }
