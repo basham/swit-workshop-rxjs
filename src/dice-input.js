@@ -1,10 +1,7 @@
 import { combineLatest, merge } from 'rxjs'
 import { map, mapTo, tap, withLatestFrom } from 'rxjs/operators'
-import { adoptStyles, define, html, renderComponent } from './util/dom.js'
+import { define, html, renderComponent } from './util/dom.js'
 import { combineLatestObject, fromEventSelector, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
-import css from './dice-input.css'
-
-adoptStyles(css)
 
 define('dice-input', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()

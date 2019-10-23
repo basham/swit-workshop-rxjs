@@ -1,9 +1,6 @@
 import { distinctUntilChanged, map, shareReplay, startWith, tap } from 'rxjs/operators'
-import { adoptStyles, define, html, renderComponent } from './util/dom.js'
+import { define, html, renderComponent } from './util/dom.js'
 import { combineLatestObject, fromEventSelector, useSubscribe } from './util/rx.js'
-import css from './dice-root.css'
-
-adoptStyles(css)
 
 define('dice-root', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()

@@ -1,8 +1,5 @@
-import { adoptStyles, define, html, renderComponent } from './util/dom.js'
+import { define, html, renderComponent } from './util/dom.js'
 import { combineLatestObject, fromProperty, useSubscribe } from './util/rx.js'
-import css from './dice-toolbar.css'
-
-adoptStyles(css)
 
 define('dice-toolbar', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()

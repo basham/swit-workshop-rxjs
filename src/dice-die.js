@@ -1,12 +1,9 @@
 import { merge, range, timer } from 'rxjs'
 import { concatMap, map, scan, startWith, switchMap, withLatestFrom } from 'rxjs/operators'
 import { randomItem, range as numRange } from './util/array.js'
-import { adoptStyles, define, html, renderComponent } from './util/dom.js'
+import { define, html, renderComponent } from './util/dom.js'
 import { random } from './util/math.js'
 import { combineLatestObject, fromEventSelector, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
-import css from './dice-die.css'
-
-adoptStyles(css)
 
 define('dice-die', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()

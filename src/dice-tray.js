@@ -2,11 +2,8 @@ import { Subject, merge } from 'rxjs'
 import { map, shareReplay, tap } from 'rxjs/operators'
 import { range } from './util/array.js'
 import { decodeFormula } from './util/dice.js'
-import { adoptStyles, define, html, keychain, renderComponent } from './util/dom.js'
+import { define, html, keychain, renderComponent } from './util/dom.js'
 import { combineLatestObject, fromEventSelector, fromMethod, fromProperty, next, useSubscribe } from './util/rx.js'
-import css from './dice-tray.css'
-
-adoptStyles(css)
 
 define('dice-tray', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()

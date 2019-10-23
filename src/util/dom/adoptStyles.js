@@ -6,6 +6,6 @@
 
 import 'construct-style-sheets-polyfill'
 
-export function adoptStyles (css) {
-  document.adoptedStyleSheets = [ ...document.adoptedStyleSheets, css ]
+export function adoptStyles () {
+  document.adoptedStyleSheets = [ ...document.adoptedStyleSheets, ...arguments ]
 }

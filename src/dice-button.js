@@ -1,8 +1,5 @@
-import { adoptStyles, define, html, renderComponent } from './util/dom.js'
+import { define, html, renderComponent } from './util/dom.js'
 import { combineLatestObject, fromProperty, useSubscribe } from './util/rx.js'
-import css from './dice-button.css'
-
-adoptStyles(css)
 
 define('dice-button', 'button', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()
@@ -24,7 +21,7 @@ define('dice-button', 'button', (el) => {
 function render (props) {
   const { faces, label } = props
   const type = `d${faces}`
-  const icon = `dice.svg#${type}`
+  const icon = `assets/dice.svg#${type}`
   return html`
     <svg class='icon'>
       <use xlink:href=${icon} />
