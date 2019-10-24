@@ -1,0 +1,6 @@
+import '../assets/styles.js'
+import '../dice-button.js'
+import '../dice-die.js'
+import '../dice-tray.js'
+import './dice-root.js'
+import './dice-toolbar.js'
