@@ -1,5 +1,5 @@
-import { define, html, render } from '../util/dom.js'
-import { FACES } from '../constants.js'
+import { define, html, render } from '/lib/util/dom.js'
+import { FACES } from '/lib/constants.js'
 
 define('dice-root', (el) => {
   render(el, renderComponent)

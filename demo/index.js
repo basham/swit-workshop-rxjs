@@ -1,0 +1,8 @@
+import '/lib/styles.js'
+import '/lib/components/dice-button.js'
+import '/lib/components/dice-die.js'
+import '/lib/components/dice-input.js'
+import '/lib/components/dice-picker.js'
+import '/lib/components/dice-root.js'
+import '/lib/components/dice-toolbar.js'
+import '/lib/components/dice-tray.js'
