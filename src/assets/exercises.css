@@ -8,3 +8,7 @@
 .exercise-2 dice-root > * {
   margin: 0.5rem;
 }
+
+.exercise-5 dice-picker {
+  margin: 2rem;
+}
