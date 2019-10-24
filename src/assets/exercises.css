@@ -9,6 +9,7 @@
   margin: 0.5rem;
 }
 
-.exercise-5 dice-picker {
+.exercise-5 dice-picker,
+.exercise-6 dice-picker {
   margin: 2rem;
 }
