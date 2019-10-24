@@ -1,8 +1,0 @@
-.exercise-1 dice-root {
-  display: block;
-  margin: 2rem;
-}
-
-.exercise-1 dice-root button[is="dice-button"] {
-  margin: 0.5rem;
-}

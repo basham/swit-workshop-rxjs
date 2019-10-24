@@ -1,0 +1,10 @@
+.exercise-1 dice-root,
+.exercise-2 dice-root {
+  display: block;
+  margin: 2rem;
+}
+
+.exercise-1 dice-root > *,
+.exercise-2 dice-root > * {
+  margin: 0.5rem;
+}
