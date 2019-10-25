@@ -55,6 +55,53 @@ range(3, 2)
 // [ 2, 3, 4 ]
 ```
 
+### Dice
+
+#### `decodeFormula`
+
+Translate a dice formula in the format of `<diceCount>d<faceCount>` into an array of `DiceStruct` objects.
+
+```
+decodeFormula(formula: String): Array of DiceSet
+
+DiceSet: { dieCount: Number, faceCount: Number, notation: String, type: String }
+```
+
+```js
+import { decodeFormula } from '/lib/util/dice.js'
+
+decodeFormula('2d6 1d20')
+// [
+//   { dieCount: 0, faceCount: 4, notation: '0d4', type: 'd4' },
+//   { dieCount: 2, faceCount: 6, notation: '2d6', type: 'd6' },
+//   { dieCount: 0, faceCount: 8, notation: '0d8', type: 'd8' },
+//   { dieCount: 0, faceCount: 10, notation: '0d10', type: 'd10' },
+//   { dieCount: 0, faceCount: 12, notation: '0d12', type: 'd12' },
+//   { dieCount: 1, faceCount: 20, notation: '1d20', type: 'd20' }
+// ]
+```
+
+#### `encodeFormula`
+
+Translate an array of `DiceSet` objects to a string equivalent.
+
+```
+encodeFormula(diceSets: Array of DiceSet): String
+
+DiceSet: { dieCount: Number, faceCount: Number }
+```
+
+```js
+import { decodeFormula } from '/lib/util/dice.js'
+
+const diceSets = [
+  { dieCount: 2, faceCount: 6 },
+  { dieCount: 1, faceCount: 20 }
+]
+encodeFormula(diceSets)
+// '2d6 1d20'
+```
+
 ### Math
 
 #### `random`
@@ -70,4 +117,31 @@ import { random } from '/lib/util/math.js'
 
 random(0, 4)
 // Either: 0, 1, 2, 3, or 4
+```
+
+### Use
+
+#### `useCallbackStack`
+
+Add functions to a stack and call them in batch later.
+
+```
+useCallbackStack(): [ add: Function, call: Function ]
+```
+
+```js
+import { useCallbackStack } from '/lib/util/use.js'
+
+const [ add, call ] = useCallbackStack()
+
+const a = () => console.log('Called "a"')
+const b = () => console.log('Called "b"')
+
+add(a)
+add(b)
+
+call()
+
+// Called "a"
+// Called "b"
 ```
