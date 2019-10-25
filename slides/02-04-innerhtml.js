@@ -1,4 +1,4 @@
-import { define } from '../src/util/dom/define.js'
+import { define } from '/lib/util/dom/define.js'
 
 define('countdown-innerhtml', (el) => {
   const duration = 1000

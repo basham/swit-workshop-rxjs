@@ -1,4 +1,4 @@
-import { define, html, render } from '../src/util/dom/react.js'
+import { define, html, render } from '/lib/util/dom/react.js'
 
 define('countdown-react', (el) => {
   const duration = 1000

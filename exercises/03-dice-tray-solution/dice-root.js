@@ -1,4 +1,4 @@
-import { define, html, render } from '../util/dom.js'
+import { define, html, render } from '/lib/util/dom.js'
 
 define('dice-root', (el) => {
   render(el, renderComponent)

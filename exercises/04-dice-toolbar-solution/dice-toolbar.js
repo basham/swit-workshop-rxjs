@@ -1,5 +1,5 @@
-import { define, html, renderComponent } from '../util/dom.js'
-import { combineLatestObject, fromProperty, useSubscribe } from '../util/rx.js'
+import { define, html, renderComponent } from '/lib/util/dom.js'
+import { combineLatestObject, fromProperty, useSubscribe } from '/lib/util/rx.js'
 
 define('dice-toolbar', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()

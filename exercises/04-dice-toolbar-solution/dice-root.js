@@ -1,7 +1,7 @@
 import { BehaviorSubject } from 'rxjs'
 import { distinctUntilChanged, map, mapTo, shareReplay, startWith, tap } from 'rxjs/operators'
-import { define, html, renderComponent } from '../util/dom.js'
-import { combineLatestObject, fromEventSelector, next, useSubscribe } from '../util/rx.js'
+import { define, html, renderComponent } from '/lib/util/dom.js'
+import { combineLatestObject, fromEventSelector, next, useSubscribe } from '/lib/util/rx.js'
 
 define('dice-root', (el) => {
   const [ subscribe, unsubscribe ] = useSubscribe()

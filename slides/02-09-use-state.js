@@ -1,4 +1,4 @@
-import { define, html, render } from '../src/util/dom/lighterhtml.js'
+import { define, html, render } from '/lib/util/dom/lighterhtml.js'
 
 define('countdown-use-state', (el) => {
   const duration = 1000

@@ -6,7 +6,7 @@
   "scripts": {
     "dep": "pika-web --clean --optimize --no-source-map",
     "postinstall": "npm run dep",
-    "start": "es-dev-server --open ./src/index.html --watch ./src"
+    "start": "es-dev-server --open ./ --watch ./src"
   },
   "repository": {
     "type": "git",
