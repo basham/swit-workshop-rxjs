@@ -12,7 +12,7 @@ npm install
 
 ## Start
 
-Start the local development server, and open the browser to [`http://localhost:8000/`](http://localhost:8000/). The opened page [`/index.html`](./index.html) provides links to the app demo ([`/demo/`](./demo/)), slide examples ([`/slides/`](./slides/index.html)), and exercises ([`/exercises/`](./exercises/)).
+Start the local development server, and open the browser to [`http://localhost:8000/`](http://localhost:8000/). The opened page ([`/index.html`](./index.html)) provides links to the app demo ([`/demo/`](./demo/)), slide examples ([`/slides/`](./slides/index.html)), and exercises ([`/exercises/`](./exercises/)).
 
 ```
 npm run start
