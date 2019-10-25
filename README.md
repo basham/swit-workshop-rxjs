@@ -6,7 +6,7 @@ Workshop for Statewide IT 2019, Indiana University.
 
 Learn how to integrate [RxJS](https://github.com/ReactiveX/rxjs) with web components and rendering libraries ([lighterhtml](https://github.com/WebReflection/lighterhtml) and [React](https://reactjs.org/)). Leverage observables, discover patterns for compositing complex components, learn to position components so they can effectively communicate and cooperate, no matter the technologies you use now or in the future.
 
-[Chris Basham](https://bash.am/) is a designer and front-end developer for Indiana University, specializing in functional reactive programming with RxJS.
+[Chris Basham](https://bash.am/) leads the workshop. He is a designer and front-end developer for Indiana University, specializing in functional reactive programming with RxJS.
 
 ## Install
 
