@@ -4,7 +4,7 @@ RxJS utilities.
 
 ## `combineLatestObject`
 
-Transform an object containing Observables into an Observable emitting objects of the same keys but with values matching the latest value of each of its input Observables.
+Transform an object containing Observables into an Observable. This emits objects of the same keys but with values matching the latest value of each of its input Observables.
 
 This is inspired by the [`combineLatest` operator](https://rxjs-dev.firebaseapp.com/api/index/function/combineLatest), but this is more useful for creating inputs for DOM rendering.
 
@@ -43,9 +43,9 @@ setInterval(() => {
 Display the current value in the console for every emission on the source Observable, but return an Observable that is identical to the source.
 
 ```
-debug(message?: String, type?: String of ConsoleTypes = 'log'])
+debug(message?: String, type?: ConsoleType = 'log')
 
-ConsoleTypes: 'dir', 'error', 'log', 'table', 'warn'
+ConsoleType: 'dir', 'error', 'log', 'table', 'warn'
 ```
 
 ```js
@@ -110,4 +110,39 @@ setTimeout(() => {
     el.classList.add('visible')
   })
 }, 2000)
+```
+
+## `fromMethod`
+
+Attach a method to an element.
+
+```
+fromMethod(target: HTMLElement, name: String): Subject
+```
+
+```html
+<output id='output'></output>
+```
+
+```js
+import { scan } from 'rxjs/operators'
+import { fromMethod } from '/lib/util/rx.js'
+
+const el = document.getElementById('output')
+
+fromMethod(el, 'add').pipe(
+  scan((acc, value) => (acc + value), 0)
+).subscribe((total) => {
+  el.innerHTML = total
+  console.log('Total', total)
+})
+
+el.add(1)
+// 1
+
+el.add(2)
+// 3
+
+el.add(3)
+// 6
 ```
