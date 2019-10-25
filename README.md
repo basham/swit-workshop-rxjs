@@ -1,6 +1,8 @@
 # Reactive Components with RxJS
 
-Workshop for Statewide IT 2019, Indiana University.
+Workshop for [Statewide IT Conference](https://statewideit.iu.edu/) at Indiana University
+
+October 28, 2019
 
 ## Description
 
