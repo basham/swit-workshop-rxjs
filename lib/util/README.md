@@ -40,7 +40,7 @@ randomItem([ 1, 2, 3 ])
 Generate an array of sequential numbers given a size. Optionally, start the sequence from a given start number.
 
 ```
-range(size: Number, [startAt: Number]): Array
+range(size: Number, startAt?: Number): Array
 ```
 
 ```js
