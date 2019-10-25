@@ -81,6 +81,8 @@ import { distinctUntilObjectChanged } from '/lib/util/rx.js'
 
 Similar to the [`fromEvent` operator](https://rxjs-dev.firebaseapp.com/api/index/function/fromEvent), but instead of emitting events from a given target, it emits events from any elements matching the selector within the scope of the given target.
 
+This makes it easier to listen to events from dynamic DOM elements. It also removes the need to attach handlers directly to elements (`<button onclick=${handleClick}>`). Separating handlers from the template makes the code more testable.
+
 ```
 fromEventSelector(target: HTMLElement, selector: String, eventName: String, options?: EventListenerOptions): Observable
 ```
@@ -92,10 +94,11 @@ fromEventSelector(target: HTMLElement, selector: String, eventName: String, opti
 ```
 
 ```js
+import { map } from 'rxjs/operators'
 import { fromEventSelector } from '/lib/util/rx.js'
 
 // After 2 seconds, the hidden button becomes visible.
-// It can be clicked on and its event emits in the Observable.
+// It can now be clicked on and its events emit in the Observable.
 
 fromEventSelector(document, 'button.visible', 'click').pipe(
   map(({ target }) => target.value)
