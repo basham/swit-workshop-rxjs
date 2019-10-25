@@ -19,7 +19,7 @@ Subscriptions
 ```js
 import { BehaviorSubject, interval } from 'rxjs'
 import { map, takeWhile, withLatestFrom } from 'rxjs/operators'
-import { define, html, render } from '../src/util/dom/lighterhtml.js'
+import { define, html, render } from '/lib/util/dom/lighterhtml.js'
 
 define('countdown-rxjs', (el) => {
   const duration = 1000

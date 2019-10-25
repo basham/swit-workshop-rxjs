@@ -6,7 +6,7 @@ Track values
 
 ```js
 import { BehaviorSubject } from 'rxjs'
-import { debug } from '../src/util/rx/debug.js'
+import { debug } from '/lib/util/rx/debug.js'
 
 const ON = true
 const OFF = false
@@ -33,7 +33,7 @@ toggle()
 ```js
 import { BehaviorSubject, Subject } from 'rxjs'
 import { map, withLatestFrom } from 'rxjs/operators'
-import { debug } from '../src/util/rx/debug.js'
+import { debug } from '/lib/util/rx/debug.js'
 
 const ON = true
 const OFF = false

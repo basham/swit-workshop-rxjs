@@ -13,7 +13,7 @@ setTimeout(() => {
 ```js
 import { interval } from 'rxjs'
 import { filter } from 'rxjs/operators'
-import { define } from '../src/util/dom/define.js'
+import { define } from '/lib/util/dom/define.js'
 
 // Remove the element after the interval emits 5 times.
 // Removing the element unsubscribes the interval

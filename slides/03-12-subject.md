@@ -6,7 +6,7 @@ Track events
 
 ```js
 import { Subject } from 'rxjs'
-import { debug } from '../src/util/rx/debug.js'
+import { debug } from '/lib/util/rx/debug.js'
 
 const keydown$ = new Subject()
 

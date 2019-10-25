@@ -18,7 +18,7 @@ export const debug = (message = '') =>
 ```
 
 ```js
-import { debug } from '../src/util/rx/debug.js'
+import { debug } from '/lib/util/rx/debug.js'
 
 interval(1000).pipe(
   debug('A'),

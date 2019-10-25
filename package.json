@@ -43,6 +43,7 @@
       "react",
       "react-dom",
       "rxjs",
+      "rxjs/ajax",
       "rxjs/operators",
       "when-elements"
     ]

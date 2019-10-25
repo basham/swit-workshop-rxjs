@@ -5,7 +5,7 @@ Catch errors with with the [`catchError()` operator](https://rxjs-dev.firebaseap
 ```js
 import { of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
-import { debug } from '../src/util/rx/debug.js'
+import { debug } from '/lib/util/rx/debug.js'
 
 of(1, 2, 3, 4, 5).pipe(
   map((n) => {
@@ -14,7 +14,7 @@ of(1, 2, 3, 4, 5).pipe(
     }
     return n
   }),
-  catchError((error) => of(`Caught error: ${error.message}`)),
+  catchError((error) => of(`Caught error: ${error}`)),
   debug()
 ).subscribe()
 
@@ -29,13 +29,14 @@ Most useful for catching errors from [`ajax()` responses](https://rxjs-dev.fireb
 ```js
 import { of } from 'rxjs'
 import { ajax } from 'rxjs/ajax'
-import { catchError, filter } from 'rxjs/operators'
-import { debug } from '../src/util/rx/debug.js'
+import { catchError, filter, map } from 'rxjs/operators'
+import { debug } from '/lib/util/rx/debug.js'
 
 const request = 'https://api.github.com/users?per_page=5'
 const successfulResponse$ = ajax(request).pipe(
   catchError((error) => of({ error })),
   filter(({ error }) => !error),
+  map(({ response }) => response),
   debug('GitHub users')
 ).subscribe()
 
