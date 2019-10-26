@@ -58,7 +58,13 @@ const markup = html`<p>React markup</p>`
 
 Use this only if using [lighterhtml](https://github.com/WebReflection/lighterhtml) (by importing via `/lib/util/dom.js` or `/lib/util/dom/lighterhtml.js`).
 
-When rendering lists of element, rendering engines need to keep track of which elements get moved or inserted at any given index. Without providing some way to "key" elements, elements may be unnecessarily destroyed or reconfigured to look like sibling elements. [React uses a `key` prop](https://reactjs.org/docs/lists-and-keys.html) with a string value to key elements. Rather than using props on a single element, lighterhtml uses `html.for(refObject)` to key any string of markup. Keychain maps a string to a unique object (`refObject`), to simplify the keying process.
+When rendering lists of elements, rendering engines need to keep track of which elements get moved or inserted at any given index. Without providing some way to "key" elements, elements may be unnecessarily destroyed or reconfigured to look like sibling elements. [React uses a `key` prop](https://reactjs.org/docs/lists-and-keys.html) with a string value to key elements. Rather than using props on a single element, lighterhtml uses `html.for(refObject)` to key any string of markup. Keychain maps a string to a unique object (`refObject`), to simplify the keying process.
+
+```
+keychain(): getKey
+
+getKey(key: String): Object
+```
 
 ```html
 <div id="root"></div>
