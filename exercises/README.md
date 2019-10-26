@@ -1,6 +1,6 @@
 # Exercises
 
-Complete all 7 exercises to build the app, as shown in the demo. Each exercise will build one web component using [RxJS](https://github.com/ReactiveX/rxjs), a rendering library ([lighterhtml](https://github.com/WebReflection/lighterhtml) or [React](https://reactjs.org/)), and some custom utilities ((`/lib/util/`)[../lib/util/]).
+Complete all 7 exercises to build the app, as shown in the demo. Each exercise will build one web component using [RxJS](https://github.com/ReactiveX/rxjs), a rendering library ([lighterhtml](https://github.com/WebReflection/lighterhtml) or [React](https://reactjs.org/)), and some custom utilities ([`/lib/util/`](../lib/util/)).
 
 Each exercise has a starting point and the intended ending point ("solution"). This allows you to work on any exercise without needing to complete any prior exercise.
 
