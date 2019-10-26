@@ -1,12 +1,12 @@
-# Exercise 1
+# Exercise 1: Dice Button
 
 ## Goals
 
-1. Render 6 `<button is="dice-button" label="1" size="medium" theme="solid">` components. Each button should have a different `faces` attribute.
+1. Create the `<button is="dice-button">` component in `./dice-button.js`.
+2. Render 6 `<button is="dice-button" label="1" size="medium" theme="solid">` components. This is already set up in `./dice-root.js`.
+3. Each button should have a different `faces` attribute.
 
-## APIs
-
-### Button
+## API
 
 |Name|Type|Description|
 |---|---|---|
@@ -17,16 +17,6 @@
 
 ```html
 <button is="dice-button" faces="6" label="3" size="medium" theme="solid" />
-```
-
-### Root
-
-|Name|Type|Description|
-|---|---|---|
-|`<button is="dice-button">`|Child||
-
-```html
-<dice-root />
 ```
 
 ## Dependencies
