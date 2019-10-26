@@ -2,8 +2,7 @@
 
 ## Goals
 
-1. Create the `<dice-root>` component as the container for other components.
-2. Render 6 `<button is="dice-button" label="1" size="medium" theme="solid">` components. Each button should have a different `faces` attribute.
+1. Render 6 `<button is="dice-button" label="1" size="medium" theme="solid">` components. Each button should have a different `faces` attribute.
 
 ## APIs
 
@@ -29,3 +28,14 @@
 ```html
 <dice-root />
 ```
+
+## Dependencies
+
+|Dependency|Path|
+|---|---|
+|`define`|`/lib/util/dom.js`|
+|`html`|`/lib/util/dom.js`|
+|`renderComponent`|`/lib/util/dom.js`|
+|[`combineLatestObject`](../../lib/util/rx/README.md#combinelatestobject)|`/lib/util/rx.js`|
+|[`fromProperty`](../../lib/util/rx/README.md#fromproperty)|`/lib/util/rx.js`|
+|[`useSubscribe`](../../lib/util/rx/README.md#usesubscribe)|`/lib/util/rx.js`|
