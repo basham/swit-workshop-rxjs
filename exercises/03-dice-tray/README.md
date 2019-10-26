@@ -8,6 +8,8 @@
 
 ## API
 
+### Dice Tray
+
 |Name|Type|Description|
 |---|---|---|
 |`formula`|Attribute, Property|String (`'1d4'`, `'2d6 1d20'`)|

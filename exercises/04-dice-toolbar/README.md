@@ -11,7 +11,7 @@
 
 ## API
 
-### Toolbar
+### Dice Toolbar
 
 |Name|Type|Description|
 |---|---|---|
@@ -24,7 +24,7 @@
 <dice-toolbar count="3" total="22" />
 ```
 
-### Root
+### Dice Root
 
 |Name|Type|Description|
 |---|---|---|

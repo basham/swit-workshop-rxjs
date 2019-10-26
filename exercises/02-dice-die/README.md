@@ -7,6 +7,8 @@
 
 ## API
 
+### Dice Die
+
 |Name|Type|Description|
 |---|---|---|
 |`faces`|Attribute, Property|Number (`4`, `6`, `8`, `10`, `12`, `20`)|
