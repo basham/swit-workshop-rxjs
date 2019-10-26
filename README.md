@@ -12,6 +12,26 @@ Learn how to integrate [RxJS](https://github.com/ReactiveX/rxjs) with web compon
 
 ## Install
 
+Fork this repo if you want to save progress on your exercises to GitHub.
+
+Open a terminal window and navigate to a folder which will hold a clone of this repo.
+
+```
+cd ~/GitHub
+```
+
+Clone or download this repo.
+
+```
+git clone https://github.com/basham/swit-workshop-rxjs.git
+```
+
+Open the folder in terminal.
+
+```
+cd swit-workshop-rxjs/
+```
+
 Install dependencies.
 
 ```
@@ -20,10 +40,16 @@ npm install
 
 ## Start
 
-Start the local development server, and open the browser to [`http://localhost:8000/`](http://localhost:8000/). The opened page ([`/index.html`](./index.html)) provides links to the app demo, slide examples, and exercises.
+Start the local development server. It should automatically open the browser to [`http://localhost:8000/`](http://localhost:8000/), which provides links to the app demo, slide examples, and exercises.
 
 ```
 npm run start
+```
+
+If following along with the exercises, it is recommended you work on a branch different than `master` (such as `workshop`). This allows you to commit your progress and switch back to the original `master` version without hassle.
+
+```
+git checkout -b workshop
 ```
 
 ## Development environment
