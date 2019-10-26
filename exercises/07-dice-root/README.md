@@ -1,12 +1,12 @@
-# Exercise 7
+# Exercise 7: Dice Root
 
 ## Goals
 
-1. Integrate `<dice-picker>` with `<dice-root>`.
+1. Integrate `<dice-picker>` with `<dice-root>` in `./dice-root.js`.
 
-## APIs
+## API
 
-### Root
+### Dice Root
 
 |Name|Type|Description|
 |---|---|---|
@@ -22,3 +22,19 @@
 ```html
 <dice-root />
 ```
+
+## Dependencies
+
+|Dependency|Path|
+|---|---|
+|[`distinctUntilChanged`](https://rxjs-dev.firebaseapp.com/api/operators/distinctUntilChanged)|`rxjs/operators`|
+|[`map`](https://rxjs-dev.firebaseapp.com/api/operators/map)|`rxjs/operators`|
+|[`shareReplay`](https://rxjs-dev.firebaseapp.com/api/operators/shareReplay)|`rxjs/operators`|
+|[`startWith`](https://rxjs-dev.firebaseapp.com/api/operators/startWith)|`rxjs/operators`|
+|[`tap`](https://rxjs-dev.firebaseapp.com/api/operators/tap)|`rxjs/operators`|
+|`define`|`/lib/util/dom.js`|
+|`html`|`/lib/util/dom.js`|
+|`renderComponent`|`/lib/util/dom.js`|
+|[`combineLatestObject`](../../lib/util/rx/README.md#combinelatestobject)|`/lib/util/rx.js`|
+|[`fromEventSelector`](../../lib/util/rx/README.md#fromeventselector)|`/lib/util/rx.js`|
+|[`useSubscribe`](../../lib/util/rx/README.md#usesubscribe)|`/lib/util/rx.js`|

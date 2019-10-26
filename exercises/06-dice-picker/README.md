@@ -1,8 +1,8 @@
-# Exercise 6
+# Exercise 6: Dice Picker
 
 ## Goals
 
-1. Create the `<dice-picker>` component.
+1. Create the `<dice-picker>` component in `./dice-picker.js`.
 
 ## API
 
