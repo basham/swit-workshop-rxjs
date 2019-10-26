@@ -14,19 +14,19 @@ Learn how to integrate [RxJS](https://github.com/ReactiveX/rxjs) with web compon
 
 Fork this repo if you want to save progress on your exercises to GitHub.
 
-Open a terminal window and navigate to a folder which will hold a clone of this repo.
+Open a terminal window. Navigate to a folder which will hold a clone of this repo.
 
 ```
 cd ~/GitHub
 ```
 
-Clone or download this repo.
+Clone this repo.
 
 ```
 git clone https://github.com/basham/swit-workshop-rxjs.git
 ```
 
-Open the folder in terminal.
+Open the folder.
 
 ```
 cd swit-workshop-rxjs/
