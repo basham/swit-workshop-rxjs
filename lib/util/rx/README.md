@@ -146,3 +146,114 @@ el.add(2)
 el.add(3)
 // 6
 ```
+
+## `fromProperty`
+
+Attach a property to an element.
+
+```
+fromProperty(target: HTMLElement, name: String, options?: Object): PropertySubject
+
+PropertySubject extends BehaviorSubject
+```
+
+Options
+
+- `attribute`: `true` (default), `false`, `'custom-attribute-name'`, `false`  
+  If false, the attribute is ignored.
+- `defaultValue`: (any)  
+  Initial value if the attribute or property are not already set.
+- `event`: `true` (default), `false`, `'custom-event-name'`  
+  Automatically dispatch custom events for property changes. If true, event names will be in the form of `${name}-changed`.
+- `reflect`: `true` (default), `false`  
+  If true, property changes are syncronized with the attribute. Note, input controls tend to not reflect their value as an attribute.
+- `type`: `String` (default), `Number`, `Boolean`, `Array`, `Object`  
+  Automatically encode and decode string-based attribute values to other types.
+- `value`: (any)  
+  Initial value regardless of initial attribute or property values.
+
+```html
+<output id='output'></output>
+```
+
+```js
+import { fromProperty } from '/lib/util/rx.js'
+
+const el = document.getElementById('output')
+
+const value$ = fromProperty(el, 'value', { defaultValue: 0, type: Number })
+
+value$.subscribe((value) => {
+  el.innerHTML = value
+})
+
+el.addEventListener('value-changed', (event) => {
+  console.log(event.detail)
+  // 1
+  // 2
+  // 3
+})
+
+el.value
+// 0
+
+el.value = 1
+el.value
+// 1
+
+el.setAttribute('value', 2)
+el.value
+// 2
+
+value$.next(3)
+el.value
+// 3
+```
+
+## `useSubscribe`
+
+Subscribe to Observables and unsubscribe them in batch later. This is a cleaner way to organize multiple subscriptions.
+
+```
+useSubscribe(): [ subscribe: Function, unsubscribe: Function ]
+
+subscribe(Observable or Subscription or Function): Subscription
+
+unsubscribe(): void
+```
+
+```js
+import { interval } from 'rxjs'
+import { useSubscribe } from '/lib/util/use.js'
+
+const [ subscribe, unsubscribe ] = useSubscribe()
+
+const a$ = interval(1000)
+subscribe(a$)
+
+const b$ = interval(1500)
+subscribe(b$)
+
+// Unsubscribe from all Observables
+// after 5 seconds.
+setTimeout(() => {
+  unsubscribe()
+}, 5000)
+```
+
+Without `useSubscribe`:
+
+```js
+import { interval } from 'rxjs'
+
+const a$ = interval(1000)
+const aSubscription = a$.subscribe()
+
+const b$ = interval(1500)
+const bSubscription = b$.subscribe()
+
+setTimeout(() => {
+  aSubscription.unsubscribe()
+  bSubscription.unsubscribe()
+}, 5000)
+```
