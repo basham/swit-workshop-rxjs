@@ -36,9 +36,9 @@
 |[`withLatestFrom`](https://rxjs-dev.firebaseapp.com/api/operators/withLatestFrom)|`rxjs/operators`|
 |[`randomItem`](../../lib/util/README.md#randomitem)|`/lib/util/array.js`|
 |[`range`](../../lib/util/README.md#range)|`/lib/util/array.js`|
-|`define`|`/lib/util/dom.js`|
-|`html`|`/lib/util/dom.js`|
-|`renderComponent`|`/lib/util/dom.js`|
+|[`define`](../../lib/util/dom/README.md#define)|`/lib/util/dom.js`|
+|[`html`](../../lib/util/dom/README.md#html)|`/lib/util/dom.js`|
+|[`renderComponent`](../../lib/util/dom/README.md#rendercomponent)|`/lib/util/dom.js`|
 |[`random`](../../lib/util/README.md#random)|`/lib/util/math.js`|
 |[`combineLatestObject`](../../lib/util/rx/README.md#combinelatestobject)|`/lib/util/rx.js`|
 |[`fromEventSelector`](../../lib/util/rx/README.md#fromeventselector)|`/lib/util/rx.js`|

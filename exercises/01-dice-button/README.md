@@ -25,9 +25,9 @@
 
 |Dependency|Path|
 |---|---|
-|`define`|`/lib/util/dom.js`|
-|`html`|`/lib/util/dom.js`|
-|`renderComponent`|`/lib/util/dom.js`|
+|[`define`](../../lib/util/dom/README.md#define)|`/lib/util/dom.js`|
+|[`html`](../../lib/util/dom/README.md#html)|`/lib/util/dom.js`|
+|[`renderComponent`](../../lib/util/dom/README.md#rendercomponent)|`/lib/util/dom.js`|
 |[`combineLatestObject`](../../lib/util/rx/README.md#combinelatestobject)|`/lib/util/rx.js`|
 |[`fromProperty`](../../lib/util/rx/README.md#fromproperty)|`/lib/util/rx.js`|
 |[`useSubscribe`](../../lib/util/rx/README.md#usesubscribe)|`/lib/util/rx.js`|

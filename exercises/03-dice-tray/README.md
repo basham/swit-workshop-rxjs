@@ -31,10 +31,10 @@
 |[`tap`](https://rxjs-dev.firebaseapp.com/api/operators/tap)|`rxjs/operators`|
 |[`range`](../../lib/util/README.md#range)|`/lib/util/array.js`|
 |[`decodeFormula`](../../lib/util/README.md#decodeformula)|`/lib/util/dice.js`|
-|`define`|`/lib/util/dom.js`|
-|`html`|`/lib/util/dom.js`|
-|`keychain`|`/lib/util/dom.js`|
-|`renderComponent`|`/lib/util/dom.js`|
+|[`define`](../../lib/util/dom/README.md#define)|`/lib/util/dom.js`|
+|[`html`](../../lib/util/dom/README.md#html)|`/lib/util/dom.js`|
+|[`keychain`](../../lib/util/dom/README.md#keychain)|`/lib/util/dom.js`|
+|[`renderComponent`](../../lib/util/dom/README.md#rendercomponent)|`/lib/util/dom.js`|
 |[`combineLatestObject`](../../lib/util/rx/README.md#combinelatestobject)|`/lib/util/rx.js`|
 |[`fromEventSelector`](../../lib/util/rx/README.md#fromeventselector)|`/lib/util/rx.js`|
 |[`fromMethod`](../../lib/util/rx/README.md#frommethod)|`/lib/util/rx.js`|

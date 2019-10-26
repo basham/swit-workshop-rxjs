@@ -50,9 +50,9 @@
 |[`shareReplay`](https://rxjs-dev.firebaseapp.com/api/operators/shareReplay)|`rxjs/operators`|
 |[`startWith`](https://rxjs-dev.firebaseapp.com/api/operators/startWith)|`rxjs/operators`|
 |[`tap`](https://rxjs-dev.firebaseapp.com/api/operators/tap)|`rxjs/operators`|
-|`define`|`/lib/util/dom.js`|
-|`html`|`/lib/util/dom.js`|
-|`renderComponent`|`/lib/util/dom.js`|
+|[`define`](../../lib/util/dom/README.md#define)|`/lib/util/dom.js`|
+|[`html`](../../lib/util/dom/README.md#html)|`/lib/util/dom.js`|
+|[`renderComponent`](../../lib/util/dom/README.md#rendercomponent)|`/lib/util/dom.js`|
 |[`combineLatestObject`](../../lib/util/rx/README.md#combinelatestobject)|`/lib/util/rx.js`|
 |[`fromEventSelector`](../../lib/util/rx/README.md#fromeventselector)|`/lib/util/rx.js`|
 |[`fromProperty`](../../lib/util/rx/README.md#fromproperty)|`/lib/util/rx.js`|

@@ -33,9 +33,9 @@
 |[`mapTo`](https://rxjs-dev.firebaseapp.com/api/operators/mapTo)|`rxjs/operators`|
 |[`tap`](https://rxjs-dev.firebaseapp.com/api/operators/tap)|`rxjs/operators`|
 |[`withLatestFrom`](https://rxjs-dev.firebaseapp.com/api/operators/withLatestFrom)|`rxjs/operators`|
-|`define`|`/lib/util/dom.js`|
-|`html`|`/lib/util/dom.js`|
-|`renderComponent`|`/lib/util/dom.js`|
+|[`define`](../../lib/util/dom/README.md#define)|`/lib/util/dom.js`|
+|[`html`](../../lib/util/dom/README.md#html)|`/lib/util/dom.js`|
+|[`renderComponent`](../../lib/util/dom/README.md#rendercomponent)|`/lib/util/dom.js`|
 |[`combineLatestObject`](../../lib/util/rx/README.md#combinelatestobject)|`/lib/util/rx.js`|
 |[`fromEventSelector`](../../lib/util/rx/README.md#fromeventselector)|`/lib/util/rx.js`|
 |[`fromMethod`](../../lib/util/rx/README.md#frommethod)|`/lib/util/rx.js`|
