@@ -1,14 +1,15 @@
-# Exercise 4
+# Exercise 4: Dice Toolbar
 
 ## Goals
 
-1. Create `<dice-toolbar>`.
+1. Create the `<dice-toolbar>` component in `./dice-toolbar.js`.
 2. Display the roll total.
 3. Add a button to roll all the dice at once.
 4. Add a button to remove all the dice at once.
 5. Hide the toolbar when there are no dice in the tray.
+6. Update `<dice-root>` to support `<dice-toolbar>`.
 
-## APIs
+## API
 
 ### Toolbar
 
@@ -37,3 +38,23 @@
 ```html
 <dice-root />
 ```
+
+## Dependencies
+
+|Dependency|Path|
+|---|---|
+|[`BehaviorSubject`](https://rxjs-dev.firebaseapp.com/api/index/class/BehaviorSubject)|`rxjs`|
+|[`distinctUntilChanged`](https://rxjs-dev.firebaseapp.com/api/operators/distinctUntilChanged)|`rxjs/operators`|
+|[`map`](https://rxjs-dev.firebaseapp.com/api/operators/map)|`rxjs/operators`|
+|[`mapTo`](https://rxjs-dev.firebaseapp.com/api/operators/mapTo)|`rxjs/operators`|
+|[`shareReplay`](https://rxjs-dev.firebaseapp.com/api/operators/shareReplay)|`rxjs/operators`|
+|[`startWith`](https://rxjs-dev.firebaseapp.com/api/operators/startWith)|`rxjs/operators`|
+|[`tap`](https://rxjs-dev.firebaseapp.com/api/operators/tap)|`rxjs/operators`|
+|`define`|`/lib/util/dom.js`|
+|`html`|`/lib/util/dom.js`|
+|`renderComponent`|`/lib/util/dom.js`|
+|[`combineLatestObject`](../../lib/util/rx/README.md#combinelatestobject)|`/lib/util/rx.js`|
+|[`fromEventSelector`](../../lib/util/rx/README.md#fromeventselector)|`/lib/util/rx.js`|
+|[`fromProperty`](../../lib/util/rx/README.md#fromproperty)|`/lib/util/rx.js`|
+|[`next`](../../lib/util/rx/README.md#next)|`/lib/util/rx.js`|
+|[`useSubscribe`](../../lib/util/rx/README.md#usesubscribe)|`/lib/util/rx.js`|
