@@ -210,6 +210,35 @@ el.value
 // 3
 ```
 
+## `next`
+
+Call a Subject's `next` method with the value of the current Observable. Return an Observable that is identical to the source. This accomplishes the same as `.subscribe(subject$)`, except it is a pipeable operator.
+
+```
+next(source: Subject): Observable
+```
+
+```js
+import { BehaviorSubject, interval } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { next } from '/lib/util/rx.js'
+
+const a$ = new BehaviorSubject(-1)
+
+interval(1000).pipe(
+  map((value) => value * 2),
+  next(a$)
+).subscribe()
+
+// a$:
+//   -1
+//   0
+//   2
+//   4
+//   6
+//   ...
+```
+
 ## `useSubscribe`
 
 Subscribe to Observables and unsubscribe them in batch later. This is a cleaner way to organize multiple subscriptions.
