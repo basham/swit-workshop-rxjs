@@ -1,5 +1,5 @@
 import { fromEvent } from 'rxjs'
-import { map, scan, tap, distinctUntilChanged } from 'rxjs/operators'
+import { distinctUntilChanged, map, scan, tap } from 'rxjs/operators'
 import { decodeFormula, encodeFormula } from '/lib/util/dice.js'
 import { define, html, renderComponent } from '/lib/util/dom.js'
 import { combineLatestObject, fromMethod, fromProperty, next, useSubscribe } from '/lib/util/rx.js'

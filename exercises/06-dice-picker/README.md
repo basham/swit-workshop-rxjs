@@ -4,9 +4,9 @@
 
 1. Create the `<dice-picker>` component.
 
-## APIs
+## API
 
-### Picker
+### Dice Picker
 
 |Name|Type|Description|
 |---|---|---|
@@ -18,3 +18,24 @@
 ```html
 <dice-picker />
 ```
+
+## Dependencies
+
+|Dependency|Path|
+|---|---|
+|[`fromEvent`](https://rxjs-dev.firebaseapp.com/api/index/function/fromEvent)|`rxjs`|
+|[`merge`](https://rxjs-dev.firebaseapp.com/api/index/function/merge)|`rxjs`|
+|[`distinctUntilChanged`](https://rxjs-dev.firebaseapp.com/api/operators/distinctUntilChanged)|`rxjs/operators`|
+|[`map`](https://rxjs-dev.firebaseapp.com/api/operators/map)|`rxjs/operators`|
+|[`scan`](https://rxjs-dev.firebaseapp.com/api/operators/scan)|`rxjs/operators`|
+|[`tap`](https://rxjs-dev.firebaseapp.com/api/operators/tap)|`rxjs/operators`|
+|[`decodeFormula`](../../lib/util/README.md#decodeformula)|`/lib/util/dice.js`|
+|[`encodeFormula`](../../lib/util/README.md#encodeformula)|`/lib/util/dice.js`|
+|`define`|`/lib/util/dom.js`|
+|`html`|`/lib/util/dom.js`|
+|`renderComponent`|`/lib/util/dom.js`|
+|[`combineLatestObject`](../../lib/util/rx/README.md#combinelatestobject)|`/lib/util/rx.js`|
+|[`fromMethod`](../../lib/util/rx/README.md#frommethod)|`/lib/util/rx.js`|
+|[`fromProperty`](../../lib/util/rx/README.md#fromproperty)|`/lib/util/rx.js`|
+|[`next`](../../lib/util/rx/README.md#next)|`/lib/util/rx.js`|
+|[`useSubscribe`](../../lib/util/rx/README.md#usesubscribe)|`/lib/util/rx.js`|
