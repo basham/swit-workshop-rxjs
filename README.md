@@ -8,7 +8,9 @@ Recording (2h:32m): https://www.youtube.com/watch?v=SdqgmU0CARg
 
 ## Description
 
-Learn how to integrate [RxJS](https://github.com/ReactiveX/rxjs) with web components and rendering libraries ([lighterhtml](https://github.com/WebReflection/lighterhtml) and [React](https://reactjs.org/)). Leverage observables, discover patterns for compositing complex components, learn to position components so they can effectively communicate and cooperate, no matter the technologies you use now or in the future.
+Learn about Observables using [RxJS](https://github.com/ReactiveX/rxjs) and how to integrate them with web components and rendering libraries ([lighterhtml](https://github.com/WebReflection/lighterhtml) and [React](https://reactjs.org/)). Follow along with the seven exercises to build a dice rolling app using these techniques.
+
+**Note:** This workshop does not address state management patterns and techniques. Instead, all components communicate exclusively via attributes, properties, methods, and event bubbling. See [`conduit-rxjs`](https://github.com/indiana-university/conduit) for ways to implement more complex state management with RxJS.
 
 [Chris Basham](https://bash.am/) leads the workshop. He is a designer and front-end developer for Indiana University, specializing in functional reactive programming with RxJS.
 
