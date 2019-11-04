@@ -4,6 +4,8 @@ Workshop for [Statewide IT Conference](https://statewideit.iu.edu/) at Indiana U
 
 October 28, 2019
 
+Recording (2h:32m): https://www.youtube.com/watch?v=SdqgmU0CARg
+
 ## Description
 
 Learn how to integrate [RxJS](https://github.com/ReactiveX/rxjs) with web components and rendering libraries ([lighterhtml](https://github.com/WebReflection/lighterhtml) and [React](https://reactjs.org/)). Leverage observables, discover patterns for compositing complex components, learn to position components so they can effectively communicate and cooperate, no matter the technologies you use now or in the future.
