@@ -3,6 +3,8 @@
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
 
 ```js
+const expression = 'expression'
+
 const a = 'This string with an ' + expression + '.'
 
 function tag (string) {
@@ -13,6 +15,8 @@ const b = tag(a)
 ```
 
 ```js
+const expression = 'expression'
+
 const a = `This string with an ${expression}.`
 
 const b = tag`This string with an ${expression} will be processed through the tag function.`
