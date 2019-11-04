@@ -1,4 +1,4 @@
-window.customElements.define('component-custom-elements', class RootCustomElements extends HTMLElement {
+window.customElements.define('component-custom-elements', class ComponentCustomElements extends HTMLElement {
   constructor () {
     super()
     // In general, the constructor should be used
