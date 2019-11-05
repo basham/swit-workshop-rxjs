@@ -4,7 +4,7 @@ Workshop for [Statewide IT Conference](https://statewideit.iu.edu/) at Indiana U
 
 October 28, 2019
 
-Recording (2h:32m): https://www.youtube.com/watch?v=SdqgmU0CARg
+Recording (2h:29m): https://www.youtube.com/watch?v=SdqgmU0CARg
 
 ## Description
 
